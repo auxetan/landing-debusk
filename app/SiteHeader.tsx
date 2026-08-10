@@ -1,34 +1,54 @@
 "use client";
 
 import {
+  useCallback,
   useEffect,
   useRef,
   useState,
   type CSSProperties,
   type MouseEvent,
 } from "react";
+import { ContactDialog } from "./ContactDialog";
 
-const navigation = [
+type NavigationItem = {
+  label: string;
+  href: string;
+  contact?: boolean;
+};
+
+const navigation: NavigationItem[] = [
   { label: "Accueil", href: "#top" },
   { label: "Comment ça marche ?", href: "#comment-ca-marche" },
   { label: "La communauté", href: "#communaute" },
   { label: "Télécharger", href: "#telecharger" },
   {
     label: "Nous contacter",
-    href: "https://aix-en-bus-live.vercel.app/#contact",
-    external: true,
+    href: "#contact",
+    contact: true,
   },
 ];
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const contactTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle("menu-open", isOpen);
 
     return () => document.documentElement.classList.remove("menu-open");
   }, [isOpen]);
+
+  useEffect(
+    () => () => {
+      if (contactTimerRef.current !== null) {
+        window.clearTimeout(contactTimerRef.current);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!isOpen) return;
@@ -65,6 +85,22 @@ export function SiteHeader() {
     }, reduceMotion ? 0 : 260);
   };
 
+  const openContact = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    setIsOpen(false);
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    contactTimerRef.current = window.setTimeout(
+      () => setIsContactOpen(true),
+      reduceMotion ? 0 : 280,
+    );
+  };
+
+  const closeContact = useCallback(() => {
+    setIsContactOpen(false);
+    window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+  }, []);
+
   return (
     <header className={`site-header ${isOpen ? "menu-is-open" : ""}`}>
       <div className="header-inner">
@@ -90,6 +126,7 @@ export function SiteHeader() {
         <div className="header-actions">
           <button
             className={`menu-toggle ${isOpen ? "is-open" : ""}`}
+            ref={menuButtonRef}
             type="button"
             aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={isOpen}
@@ -122,20 +159,18 @@ export function SiteHeader() {
               ref={index === 0 ? firstLinkRef : undefined}
               tabIndex={isOpen ? 0 : -1}
               onClick={
-                item.external
-                  ? () => setIsOpen(false)
+                item.contact
+                  ? openContact
                   : (event) => navigateTo(event, item.href)
               }
-              target={item.external ? "_blank" : undefined}
-              rel={item.external ? "noreferrer" : undefined}
               style={{ "--menu-delay": `${index * 70}ms` } as CSSProperties}
             >
               <span className="menu-index">0{index + 1}</span>
-              <span className={item.external ? "menu-contact-label" : undefined}>
+              <span className={item.contact ? "menu-contact-label" : undefined}>
                 {item.label}
               </span>
               <span className="menu-arrow" aria-hidden="true">
-                {item.external ? "↗" : "↘"}
+                {item.contact ? "↗" : "↘"}
               </span>
             </a>
           ))}
@@ -143,6 +178,8 @@ export function SiteHeader() {
 
         <p className="menu-signature">Aix-en-Provence · Ensemble, en direct.</p>
       </nav>
+
+      <ContactDialog isOpen={isContactOpen} onClose={closeContact} />
     </header>
   );
 }

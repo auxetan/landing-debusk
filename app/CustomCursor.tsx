@@ -82,14 +82,13 @@ export function CustomCursor() {
         setKind(nextKind);
       }
 
-      cursor.classList.toggle(
-        "is-on-dark",
-        Boolean(
-          element?.closest(
-            '.menu-panel, .site-header.menu-is-open, [data-cursor-theme="dark"]',
-          ),
-        ),
-      );
+      const themedSurface = element?.closest("[data-cursor-theme]");
+      const explicitTheme = themedSurface?.getAttribute("data-cursor-theme");
+      const isOnDark = explicitTheme
+        ? explicitTheme === "dark"
+        : Boolean(element?.closest(".menu-panel, .site-header.menu-is-open"));
+
+      cursor.classList.toggle("is-on-dark", isOnDark);
     };
 
     const handleLeave = () => {
