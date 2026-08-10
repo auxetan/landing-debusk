@@ -61,6 +61,7 @@ export function SiteHeader() {
           className="wordmark"
           href="#top"
           aria-label="AixBusLive, accueil"
+          data-cursor-kind="home"
           onClick={(event) => navigateTo(event, "#top")}
         >
           <span className="brand-logo-frame" aria-hidden="true">

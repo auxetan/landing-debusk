@@ -42,6 +42,8 @@ button {
 }
 
 .custom-cursor {
+  --cursor-color: var(--ink);
+  --cursor-contrast: var(--paper);
   position: fixed;
   top: 0;
   left: 0;
@@ -55,71 +57,100 @@ button {
   will-change: transform;
 }
 
+.custom-cursor.is-on-dark {
+  --cursor-color: var(--paper);
+  --cursor-contrast: var(--ink);
+}
+
 .custom-cursor.is-visible {
   opacity: 1;
 }
 
-.cursor-glyph {
+.cursor-icon {
   position: absolute;
   top: 0;
   left: 0;
-  width: 24px;
-  height: 24px;
-  transform: translate(-50%, -50%);
-  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  display: block;
+  color: var(--cursor-color);
+  filter:
+    drop-shadow(0 0 1px var(--cursor-contrast))
+    drop-shadow(0 1px 1px rgba(17, 17, 19, 0.22));
+  transform-origin: 2px 2px;
+  transition: transform 100ms ease;
 }
 
-.cursor-axis,
-.cursor-accent {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}
-
-.cursor-axis {
-  background: var(--ink);
-  transition:
-    width 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    height 220ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.custom-cursor.is-on-dark .cursor-axis {
-  background: var(--paper);
-}
-
-.cursor-axis-horizontal {
-  width: 16px;
-  height: 1px;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-axis-vertical {
-  width: 1px;
-  height: 16px;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-accent {
-  width: 3px;
-  height: 3px;
-  background: var(--signal);
-  transform: translate(-50%, -50%);
-}
-
-.custom-cursor.is-hovering .cursor-glyph {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.custom-cursor.is-hovering .cursor-axis-horizontal {
+.cursor-arrow-wrap {
+  position: relative;
+  display: block;
   width: 22px;
+  height: 24px;
 }
 
-.custom-cursor.is-hovering .cursor-axis-vertical {
-  height: 22px;
+.cursor-main-arrow {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 19px;
+  height: 19px;
 }
 
-.custom-cursor.is-pressed .cursor-glyph {
-  transform: translate(-50%, -50%) rotate(45deg) scale(0.68);
+.cursor-badge {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  display: grid;
+  width: 10px;
+  height: 10px;
+  place-items: center;
+  border: 1px solid var(--cursor-contrast);
+  border-radius: 2px;
+  background: var(--cursor-color);
+  color: var(--cursor-contrast);
+  filter: none;
+}
+
+.cursor-badge svg {
+  width: 6px;
+  height: 6px;
+}
+
+.cursor-hand {
+  position: absolute;
+  top: -3px;
+  left: -4px;
+  width: 21px;
+  height: 21px;
+}
+
+.cursor-ibeam {
+  position: absolute;
+  top: -10px;
+  left: -1px;
+  width: 2px;
+  height: 20px;
+  background: var(--cursor-color);
+}
+
+.cursor-ibeam::before,
+.cursor-ibeam::after {
+  position: absolute;
+  left: -3px;
+  width: 8px;
+  height: 2px;
+  background: var(--cursor-color);
+  content: "";
+}
+
+.cursor-ibeam::before {
+  top: 0;
+}
+
+.cursor-ibeam::after {
+  bottom: 0;
+}
+
+.custom-cursor.is-pressed .cursor-icon {
+  transform: scale(0.84);
 }
 
 @media (hover: hover) and (pointer: fine) {
