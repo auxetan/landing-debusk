@@ -131,7 +131,9 @@ export function SiteHeader() {
               style={{ "--menu-delay": `${index * 70}ms` } as CSSProperties}
             >
               <span className="menu-index">0{index + 1}</span>
-              <span>{item.label}</span>
+              <span className={item.external ? "menu-contact-label" : undefined}>
+                {item.label}
+              </span>
               <span className="menu-arrow" aria-hidden="true">
                 {item.external ? "↗" : "↘"}
               </span>
