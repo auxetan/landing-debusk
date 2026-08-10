@@ -10,7 +10,7 @@ import {
 
 const EMAILJS_PUBLIC_KEY = "mEs-8Cr-fd6idbZLs";
 const EMAILJS_SERVICE_ID = "service_7znwy0i";
-const EMAILJS_TEMPLATE_ID = "template_telxgeo";
+const EMAILJS_TEMPLATE_ID = "template_qp34ygq";
 const CONTACT_TYPES = ["Suggestion", "Bug", "Fonctionnalité", "Autre"] as const;
 
 let lastContactSend = 0;
@@ -125,7 +125,7 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
           template_id: EMAILJS_TEMPLATE_ID,
           user_id: EMAILJS_PUBLIC_KEY,
           template_params: {
-            subject: `[AixBusLive — Site] ${contactType}`,
+            subject: contactType,
             message:
               cleanMessage + (cleanEmail ? `\n\n— Email : ${cleanEmail}` : ""),
             from_name: cleanEmail || "Visiteur AixBusLive",
