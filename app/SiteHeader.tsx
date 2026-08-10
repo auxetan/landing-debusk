@@ -13,6 +13,11 @@ const navigation = [
   { label: "Comment ça marche ?", href: "#comment-ca-marche" },
   { label: "La communauté", href: "#communaute" },
   { label: "Télécharger", href: "#telecharger" },
+  {
+    label: "Nous contacter",
+    href: "https://aix-en-bus-live.vercel.app/#contact",
+    external: true,
+  },
 ];
 
 export function SiteHeader() {
@@ -116,12 +121,20 @@ export function SiteHeader() {
               key={item.href}
               ref={index === 0 ? firstLinkRef : undefined}
               tabIndex={isOpen ? 0 : -1}
-              onClick={(event) => navigateTo(event, item.href)}
+              onClick={
+                item.external
+                  ? () => setIsOpen(false)
+                  : (event) => navigateTo(event, item.href)
+              }
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noreferrer" : undefined}
               style={{ "--menu-delay": `${index * 70}ms` } as CSSProperties}
             >
               <span className="menu-index">0{index + 1}</span>
               <span>{item.label}</span>
-              <span className="menu-arrow" aria-hidden="true">↘</span>
+              <span className="menu-arrow" aria-hidden="true">
+                {item.external ? "↗" : "↘"}
+              </span>
             </a>
           ))}
         </div>
