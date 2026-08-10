@@ -2,13 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-type Point = { x: number; y: number };
-
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const coreRef = useRef<HTMLSpanElement>(null);
-  const trailRef = useRef<HTMLSpanElement>(null);
-  const labelRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -17,78 +12,35 @@ export function CustomCursor() {
     if (!finePointer.matches || reducedMotion.matches) return;
 
     const cursor = cursorRef.current;
-    const core = coreRef.current;
-    const trail = trailRef.current;
-    const label = labelRef.current;
-
-    if (!cursor || !core || !trail || !label) return;
-
-    const pointer: Point = { x: -100, y: -100 };
-    const follower: Point = { x: -100, y: -100 };
-    let frame = 0;
-    let clickTimer = 0;
-    let activeTarget: Element | null = null;
+    if (!cursor) return;
 
     document.documentElement.classList.add("custom-cursor-enabled");
 
-    const updateTarget = (target: EventTarget | null) => {
-      const element = target instanceof Element ? target : null;
-      const interactive = element?.closest("a, button, [data-cursor]") ?? null;
-
-      if (interactive === activeTarget) return;
-      activeTarget = interactive;
-
-      if (!interactive) {
-        cursor.classList.remove("is-hovering");
-        label.textContent = "";
-        return;
-      }
-
-      const customLabel = interactive.getAttribute("data-cursor-label");
-      label.textContent = customLabel || "GO";
-      cursor.classList.add("is-hovering");
-    };
-
-    const render = () => {
-      follower.x += (pointer.x - follower.x) * 0.17;
-      follower.y += (pointer.y - follower.y) * 0.17;
-
-      core.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0)`;
-      trail.style.transform = `translate3d(${follower.x}px, ${follower.y}px, 0)`;
-      frame = window.requestAnimationFrame(render);
-    };
-
     const handleMove = (event: PointerEvent) => {
-      pointer.x = event.clientX;
-      pointer.y = event.clientY;
+      cursor.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
       cursor.classList.add("is-visible");
-      updateTarget(event.target);
-    };
 
-    const handleLeave = () => cursor.classList.remove("is-visible");
-
-    const handleDown = () => {
-      window.clearTimeout(clickTimer);
-      cursor.classList.remove("is-clicking");
-      void cursor.offsetWidth;
-      cursor.classList.add("is-pressed", "is-clicking");
-      clickTimer = window.setTimeout(
-        () => cursor.classList.remove("is-clicking"),
-        360,
+      const element = event.target instanceof Element ? event.target : null;
+      const isInteractive = Boolean(
+        element?.closest("a, button, [data-cursor]"),
+      );
+      cursor.classList.toggle("is-hovering", isInteractive);
+      cursor.classList.toggle(
+        "is-on-dark",
+        Boolean(element?.closest(".menu-panel")),
       );
     };
 
+    const handleLeave = () => cursor.classList.remove("is-visible");
+    const handleDown = () => cursor.classList.add("is-pressed");
     const handleUp = () => cursor.classList.remove("is-pressed");
 
-    frame = window.requestAnimationFrame(render);
     document.addEventListener("pointermove", handleMove, { passive: true });
     document.addEventListener("pointerdown", handleDown, { passive: true });
     document.addEventListener("pointerup", handleUp, { passive: true });
     document.documentElement.addEventListener("mouseleave", handleLeave);
 
     return () => {
-      window.cancelAnimationFrame(frame);
-      window.clearTimeout(clickTimer);
       document.documentElement.classList.remove("custom-cursor-enabled");
       document.removeEventListener("pointermove", handleMove);
       document.removeEventListener("pointerdown", handleDown);
@@ -99,13 +51,10 @@ export function CustomCursor() {
 
   return (
     <div className="custom-cursor" ref={cursorRef} aria-hidden="true">
-      <span className="cursor-trail-anchor" ref={trailRef}>
-        <span className="cursor-trail-visual">
-          <span className="cursor-label" ref={labelRef} />
-        </span>
-      </span>
-      <span className="cursor-core-anchor" ref={coreRef}>
-        <span className="cursor-core-visual" />
+      <span className="cursor-glyph">
+        <span className="cursor-axis cursor-axis-horizontal" />
+        <span className="cursor-axis cursor-axis-vertical" />
+        <span className="cursor-accent" />
       </span>
     </div>
   );

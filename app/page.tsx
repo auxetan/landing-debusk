@@ -52,7 +52,6 @@ function StoreButtons({ compact = false }: { compact?: boolean }) {
             target="_blank"
             rel="noreferrer"
             aria-label={`${store.eyebrow} ${store.label}`}
-            data-cursor-label="OUVRIR"
           >
             <span className="store-icon" aria-hidden="true">
               <Icon />
