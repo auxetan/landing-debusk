@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import {
   FaArrowPointer,
   FaEnvelope,
+  FaHandPointer,
   FaHouse,
   FaLink,
-  FaRegHandPointer,
 } from "react-icons/fa6";
 
 type CursorKind = "default" | "home" | "link" | "external" | "mail" | "text";
@@ -43,8 +43,9 @@ export function CustomCursor() {
   useEffect(() => {
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const forcedColors = window.matchMedia("(forced-colors: active)");
 
-    if (!finePointer.matches || reducedMotion.matches) return;
+    if (!finePointer.matches || reducedMotion.matches || forcedColors.matches) return;
 
     const cursor = cursorRef.current;
     if (!cursor) return;
@@ -83,25 +84,35 @@ export function CustomCursor() {
 
       cursor.classList.toggle(
         "is-on-dark",
-        Boolean(element?.closest(".menu-panel")),
+        Boolean(
+          element?.closest(
+            '.menu-panel, .site-header.menu-is-open, [data-cursor-theme="dark"]',
+          ),
+        ),
       );
     };
 
-    const handleLeave = () => cursor.classList.remove("is-visible");
+    const handleLeave = () => {
+      cursor.classList.remove("is-visible", "is-pressed");
+    };
     const handleDown = () => cursor.classList.add("is-pressed");
     const handleUp = () => cursor.classList.remove("is-pressed");
 
     document.addEventListener("pointermove", handleMove, { passive: true });
     document.addEventListener("pointerdown", handleDown, { passive: true });
     document.addEventListener("pointerup", handleUp, { passive: true });
+    document.addEventListener("pointercancel", handleUp, { passive: true });
     document.documentElement.addEventListener("mouseleave", handleLeave);
+    window.addEventListener("blur", handleLeave);
 
     return () => {
       document.documentElement.classList.remove("custom-cursor-enabled");
       document.removeEventListener("pointermove", handleMove);
       document.removeEventListener("pointerdown", handleDown);
       document.removeEventListener("pointerup", handleUp);
+      document.removeEventListener("pointercancel", handleUp);
       document.documentElement.removeEventListener("mouseleave", handleLeave);
+      window.removeEventListener("blur", handleLeave);
     };
   }, []);
 
@@ -113,7 +124,7 @@ export function CustomCursor() {
     >
       <span className="cursor-icon">
         {kind === "link" ? (
-          <FaRegHandPointer className="cursor-hand" />
+          <FaHandPointer className="cursor-hand" />
         ) : kind === "text" ? (
           <span className="cursor-ibeam" />
         ) : (

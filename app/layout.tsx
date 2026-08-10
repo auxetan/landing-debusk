@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import { CustomCursor } from "./CustomCursor";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -61,7 +62,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body>{children}</body>
+      <body>
+        {children}
+        <CustomCursor />
+      </body>
     </html>
   );
 }

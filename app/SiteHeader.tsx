@@ -20,6 +20,12 @@ export function SiteHeader() {
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
+    document.documentElement.classList.toggle("menu-open", isOpen);
+
+    return () => document.documentElement.classList.remove("menu-open");
+  }, [isOpen]);
+
+  useEffect(() => {
     if (!isOpen) return;
 
     const previousOverflow = document.body.style.overflow;
