@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol =
     requestHeaders.get("x-forwarded-proto") ??
     (host?.startsWith("localhost") ? "http" : "https");
-  const socialImage = host ? `${protocol}://${host}/og.png` : undefined;
+  const socialImage = host ? `${protocol}://${host}/og-v2.png` : undefined;
 
   const title = "AixBusLive — Partez au bon moment !";
   const description =
@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
         ? [
             {
               url: socialImage,
-              width: 1729,
+              width: 1731,
               height: 909,
               alt: "AixBusLive — Partez au bon moment !",
             },

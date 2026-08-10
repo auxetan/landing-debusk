@@ -1,4 +1,5 @@
 import { FaApple, FaGooglePlay } from "react-icons/fa6";
+import { JourneyRoute } from "./JourneyRoute";
 import { SiteHeader } from "./SiteHeader";
 
 const storeLinks = [
@@ -74,6 +75,7 @@ export default function Home() {
   return (
     <main className="landing">
       <SiteHeader />
+      <JourneyRoute />
 
       <section className="hero" id="top" aria-labelledby="hero-title">
         <div className="hero-copy">
@@ -86,21 +88,6 @@ export default function Home() {
           <StoreButtons />
         </div>
 
-        <div className="route-art" aria-hidden="true">
-          <div className="route-leg route-leg-left" />
-          <div className="route-leg route-leg-right" />
-          <div className="route-bridge">
-            <span className="route-stop route-stop-one" />
-            <span className="route-stop route-stop-two" />
-            <span className="route-stop route-stop-three" />
-            <span className="moving-bus">
-              <span />
-              <span />
-            </span>
-          </div>
-          <div className="route-terminal route-terminal-left" />
-          <div className="route-terminal route-terminal-right" />
-        </div>
       </section>
 
       <section
@@ -132,13 +119,6 @@ export default function Home() {
         id="communaute"
         aria-labelledby="community-title"
       >
-        <div className="community-orbit" aria-hidden="true">
-          <span className="orbit-stop orbit-stop-one" />
-          <span className="orbit-stop orbit-stop-two" />
-          <span className="orbit-stop orbit-stop-three" />
-          <span className="orbit-stop orbit-stop-four" />
-        </div>
-
         <div className="community-copy">
           <p className="section-eyebrow">La communauté</p>
           <h2 id="community-title">
@@ -159,7 +139,15 @@ export default function Home() {
         aria-labelledby="download-title"
       >
         <div className="download-copy">
-          <img src="/icon-192.png" alt="" width="96" height="96" />
+          <span className="download-logo-frame" aria-hidden="true">
+            <img
+              className="download-logo"
+              src="/icon-192.png"
+              alt=""
+              width="96"
+              height="96"
+            />
+          </span>
           <p className="section-eyebrow">AixBusLive</p>
           <h2 id="download-title">
             Aix avance.
