@@ -61,18 +61,10 @@ export function SiteHeader() {
           className="wordmark"
           href="#top"
           aria-label="AixBusLive, accueil"
+          data-cursor-label="TOP"
           onClick={(event) => navigateTo(event, "#top")}
         >
-          AixBusLive
-        </a>
-
-        <div className="header-actions">
-          <a
-            className="brand-logo-link"
-            href="#top"
-            aria-label="Revenir à l’accueil"
-            onClick={(event) => navigateTo(event, "#top")}
-          >
+          <span className="brand-logo-frame" aria-hidden="true">
             <img
               className="brand-logo"
               src="/icon-192.png"
@@ -80,14 +72,18 @@ export function SiteHeader() {
               width="48"
               height="48"
             />
-          </a>
+          </span>
+          <span>AixBusLive</span>
+        </a>
 
+        <div className="header-actions">
           <button
             className={`menu-toggle ${isOpen ? "is-open" : ""}`}
             type="button"
             aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={isOpen}
             aria-controls="site-menu"
+            data-cursor-label={isOpen ? "FERMER" : "MENU"}
             onClick={() => setIsOpen((current) => !current)}
           >
             <span />
@@ -115,6 +111,7 @@ export function SiteHeader() {
               key={item.href}
               ref={index === 0 ? firstLinkRef : undefined}
               tabIndex={isOpen ? 0 : -1}
+              data-cursor-label="ALLER"
               onClick={(event) => navigateTo(event, item.href)}
               style={{ "--menu-delay": `${index * 70}ms` } as CSSProperties}
             >

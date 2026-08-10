@@ -1,4 +1,5 @@
 import { FaApple, FaGooglePlay } from "react-icons/fa6";
+import { CustomCursor } from "./CustomCursor";
 import { SiteHeader } from "./SiteHeader";
 
 const storeLinks = [
@@ -51,6 +52,7 @@ function StoreButtons({ compact = false }: { compact?: boolean }) {
             target="_blank"
             rel="noreferrer"
             aria-label={`${store.eyebrow} ${store.label}`}
+            data-cursor-label="OUVRIR"
           >
             <span className="store-icon" aria-hidden="true">
               <Icon />
@@ -72,6 +74,7 @@ function StoreButtons({ compact = false }: { compact?: boolean }) {
 export default function Home() {
   return (
     <main className="landing">
+      <CustomCursor />
       <SiteHeader />
 
       <section className="hero" id="top" aria-labelledby="hero-title">
