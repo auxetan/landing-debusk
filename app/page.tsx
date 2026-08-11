@@ -140,15 +140,14 @@ export default function Home() {
         </div>
 
         <div className="community-copy">
-          <p className="section-eyebrow">La communauté</p>
+          <p className="section-eyebrow">Le suivi communautaire</p>
           <h2 id="community-title">
-            Chaque trajet
-            <span>aide le suivant.</span>
+            Un passager à bord.
+            <span>Un bus visible.</span>
           </h2>
           <p className="community-description">
-            Un bus en avance, un arrêt chargé, une information terrain :
-            AixBusLive transforme les contributions de chacun en temps utile
-            pour tous.
+            Quand un passager active le suivi, sa position actualise le bus sur
+            la carte. À l’arrêt, les autres voyageurs le voient approcher.
           </p>
         </div>
       </section>
