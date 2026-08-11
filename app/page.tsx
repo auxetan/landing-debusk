@@ -19,18 +19,18 @@ const storeLinks = [
 const steps = [
   {
     number: "01",
-    title: "Regardez.",
-    copy: "La position de votre bus et son arrivée, actualisées en direct.",
+    title: "Repérez votre départ.",
+    copy: "Les prochains passages autour de vous s’affichent par arrêt et par ligne.",
   },
   {
     number: "02",
-    title: "Signalez.",
-    copy: "Une info utile sur la ligne ? Partagez-la à la communauté en un geste.",
+    title: "Suivez votre bus.",
+    copy: "Position, prochain arrêt et perturbations : vous savez ce qui arrive avant de partir.",
   },
   {
     number: "03",
-    title: "Partez.",
-    copy: "Les contributions de chacun rendent le prochain trajet plus prévisible.",
+    title: "Passez le relais.",
+    copy: "À bord, activez le suivi : votre trajet met la carte à jour et aide les voyageurs après vous.",
   },
 ];
 
@@ -111,8 +111,8 @@ export default function Home() {
         <div className="section-heading">
           <p className="section-eyebrow">Comment ça marche ?</p>
           <h2 id="how-title">
-            Un coup d’œil.
-            <span>Un geste. Vous partez.</span>
+            Votre bus arrive.
+            <span>Vous le voyez venir.</span>
           </h2>
         </div>
 

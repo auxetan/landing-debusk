@@ -33,6 +33,12 @@ test("server-renders the finished AixBusLive landing page", async () => {
   assert.match(html, /Partez au/);
   assert.match(html, /Nous contacter/);
   assert.match(html, /href="#contact"/);
+  assert.match(html, /Votre bus arrive\./);
+  assert.match(html, /Vous le voyez venir\./);
+  assert.match(html, /Repérez votre départ\./);
+  assert.match(html, /Suivez votre bus\./);
+  assert.match(html, /Passez le relais\./);
+  assert.doesNotMatch(html, /Un coup d’œil|Signalez\./);
   assert.doesNotMatch(html, /codex-preview|Building your site|loading skeleton/i);
 });
 
