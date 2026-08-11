@@ -26,6 +26,7 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
   const successButtonRef = useRef<HTMLButtonElement>(null);
   const [contactType, setContactType] =
     useState<(typeof CONTACT_TYPES)[number]>("Suggestion");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState("");
@@ -69,8 +70,6 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
       }
     };
 
-    setError(null);
-    setSent(false);
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", closeOnEscape);
 
@@ -91,6 +90,7 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
     event.preventDefault();
 
     const cleanMessage = message.trim();
+    const cleanName = name.trim();
     const cleanEmail = email.trim();
 
     if (website.trim()) {
@@ -117,6 +117,14 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
     setError(null);
 
     try {
+      const senderName = cleanName || cleanEmail || "Visiteur AixBusLive";
+      const subject = `[Site AixBusLive] ${contactType}`;
+      const sentAt = new Intl.DateTimeFormat("fr-FR", {
+        dateStyle: "full",
+        timeStyle: "short",
+        timeZone: "Europe/Paris",
+      }).format(new Date());
+
       const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -125,21 +133,35 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
           template_id: EMAILJS_TEMPLATE_ID,
           user_id: EMAILJS_PUBLIC_KEY,
           template_params: {
-            subject: contactType,
-            message:
-              cleanMessage + (cleanEmail ? `\n\n— Email : ${cleanEmail}` : ""),
-            from_name: cleanEmail || "Visiteur AixBusLive",
+            // Contrat du template personnalisé du site.
+            subject: subject,
+            title: subject,
+            category: contactType,
+            contact_type: contactType,
+            name: senderName,
+            from_name: senderName,
             email: cleanEmail,
+            reply_to: cleanEmail,
+            message: cleanMessage,
+            time: sentAt,
+            app_name: "AixBusLive",
+            source: "Site AixBusLive",
           },
         }),
       });
 
-      if (!response.ok) throw new Error("EmailJS request failed");
+      if (!response.ok) {
+        const providerMessage = (await response.text()).trim().slice(0, 300);
+        throw new Error(providerMessage || `EmailJS request failed (${response.status})`);
+      }
 
       lastContactSend = Date.now();
+      setName("");
+      setEmail("");
       setMessage("");
       setSent(true);
-    } catch {
+    } catch (sendError) {
+      console.error("[AixBusLive contact]", sendError);
       setError("L’envoi a échoué. Réessayez dans un instant.");
     } finally {
       setSending(false);
@@ -218,6 +240,21 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
                   </select>
                 </label>
 
+                <label className="contact-field" htmlFor="contact-name">
+                  <span>Nom <small>optionnel</small></span>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    autoComplete="name"
+                    maxLength={80}
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    placeholder="Votre nom"
+                  />
+                </label>
+              </div>
+
+              <div className="contact-form-row contact-form-row-email">
                 <label className="contact-field" htmlFor="contact-email">
                   <span>E-mail <small>optionnel</small></span>
                   <input

@@ -179,7 +179,9 @@ export function SiteHeader() {
         <p className="menu-signature">Aix-en-Provence · Ensemble, en direct.</p>
       </nav>
 
-      <ContactDialog isOpen={isContactOpen} onClose={closeContact} />
+      {isContactOpen && (
+        <ContactDialog isOpen onClose={closeContact} />
+      )}
     </header>
   );
 }

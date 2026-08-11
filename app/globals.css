@@ -571,6 +571,10 @@ html.menu-open .custom-cursor {
   gap: 14px;
 }
 
+.contact-form-row-email {
+  grid-template-columns: 1fr;
+}
+
 .contact-field {
   display: grid;
   gap: 8px;
