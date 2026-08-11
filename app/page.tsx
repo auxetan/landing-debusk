@@ -142,8 +142,8 @@ export default function Home() {
         <div className="community-copy">
           <p className="section-eyebrow">Le suivi communautaire</p>
           <h2 id="community-title">
-            Un passager à bord.
-            <span>Un bus visible.</span>
+            Chaque contribution
+            <span>aide le suivant.</span>
           </h2>
           <p className="community-description">
             Quand un passager active le suivi, sa position actualise le bus sur
