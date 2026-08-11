@@ -1,4 +1,6 @@
 import { FaApple, FaGooglePlay } from "react-icons/fa6";
+import Image from "next/image";
+import { AppShowcase } from "./AppShowcase";
 import { SiteHeader } from "./SiteHeader";
 
 const storeLinks = [
@@ -16,21 +18,26 @@ const storeLinks = [
   },
 ];
 
-const steps = [
+const faqs = [
   {
-    number: "01",
-    title: "Repérez votre départ.",
-    copy: "Les prochains passages autour de vous s’affichent par arrêt et par ligne.",
+    question: "Le suivi est-il anonyme ?",
+    answer:
+      "Oui. Aucun nom n’apparaît sur la carte : seule la position utile du bus est partagée.",
   },
   {
-    number: "02",
-    title: "Suivez votre bus.",
-    copy: "Position, prochain arrêt et perturbations : vous savez ce qui arrive avant de partir.",
+    question: "Quand le partage s’arrête-t-il ?",
+    answer:
+      "Dès que vous touchez « Je descends » ou que vous quittez le mode conduite.",
   },
   {
-    number: "03",
-    title: "Passez le relais.",
-    copy: "À bord, activez le suivi : votre trajet met la carte à jour et aide les voyageurs après vous.",
+    question: "D’où viennent les informations ?",
+    answer:
+      "Des horaires et perturbations publiés par Aix en Bus, complétés par les voyageurs à bord.",
+  },
+  {
+    question: "Puis-je simplement consulter ?",
+    answer:
+      "Oui. Le partage reste volontaire : vous pouvez voir les départs sans activer le suivi.",
   },
 ];
 
@@ -116,15 +123,7 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="steps-list">
-          {steps.map((step) => (
-            <article className="step" key={step.number}>
-              <span className="step-number">{step.number}</span>
-              <h3>{step.title}</h3>
-              <p>{step.copy}</p>
-            </article>
-          ))}
-        </div>
+        <AppShowcase />
       </section>
 
       <section
@@ -149,6 +148,38 @@ export default function Home() {
             Quand un passager active le suivi, sa position actualise le bus sur
             la carte. À l’arrêt, les autres voyageurs le voient approcher.
           </p>
+          <p className="community-privacy">
+            Volontaire · Anonyme sur la carte · Limité au trajet
+          </p>
+        </div>
+      </section>
+
+      <section
+        className="faq-section content-section"
+        id="questions"
+        aria-labelledby="faq-title"
+      >
+        <div className="faq-heading">
+          <p className="section-eyebrow">L’essentiel</p>
+          <h2 id="faq-title">
+            Vos questions.
+            <span>Nos réponses.</span>
+          </h2>
+        </div>
+
+        <div className="faq-list">
+          {faqs.map((faq, index) => (
+            <details key={faq.question}>
+              <summary>
+                <span className="faq-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{faq.question}</span>
+                <span className="faq-toggle" aria-hidden="true">+</span>
+              </summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))}
         </div>
       </section>
 
@@ -159,7 +190,7 @@ export default function Home() {
       >
         <div className="download-copy">
           <span className="download-logo-frame" aria-hidden="true">
-            <img
+            <Image
               className="download-logo"
               src="/icon-192.png"
               alt=""
@@ -175,9 +206,17 @@ export default function Home() {
           <StoreButtons compact />
         </div>
 
-        <footer>
-          <span>AixBusLive</span>
-          <span>Fait pour Aix-en-Provence.</span>
+        <footer className="site-footer">
+          <div className="footer-brand">
+            <span>AixBusLive</span>
+            <span>Projet indépendant fait pour Aix-en-Provence.</span>
+          </div>
+          <nav aria-label="Informations">
+            <a href="/informations#confidentialite">Confidentialité</a>
+            <a href="/informations#mentions">Mentions</a>
+            <a href="/informations#sources">Sources</a>
+            <a href="#contact">Nous contacter</a>
+          </nav>
         </footer>
       </section>
     </main>

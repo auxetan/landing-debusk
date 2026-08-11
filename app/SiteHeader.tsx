@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   useCallback,
   useEffect,
@@ -20,6 +21,7 @@ const navigation: NavigationItem[] = [
   { label: "Accueil", href: "#top" },
   { label: "Comment ça marche ?", href: "#comment-ca-marche" },
   { label: "La communauté", href: "#communaute" },
+  { label: "Questions fréquentes", href: "#questions" },
   { label: "Télécharger", href: "#telecharger" },
   {
     label: "Nous contacter",
@@ -49,6 +51,27 @@ export function SiteHeader() {
     },
     [],
   );
+
+  useEffect(() => {
+    let frame: number | null = null;
+
+    const openContactFromHash = () => {
+      if (window.location.hash !== "#contact") return;
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        setIsOpen(false);
+        setIsContactOpen(true);
+      });
+    };
+
+    openContactFromHash();
+    window.addEventListener("hashchange", openContactFromHash);
+
+    return () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      window.removeEventListener("hashchange", openContactFromHash);
+    };
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -88,6 +111,7 @@ export function SiteHeader() {
   const openContact = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     setIsOpen(false);
+    window.history.replaceState(null, "", "#contact");
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     contactTimerRef.current = window.setTimeout(
@@ -98,6 +122,13 @@ export function SiteHeader() {
 
   const closeContact = useCallback(() => {
     setIsContactOpen(false);
+    if (window.location.hash === "#contact") {
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search,
+      );
+    }
     window.requestAnimationFrame(() => menuButtonRef.current?.focus());
   }, []);
 
@@ -112,7 +143,7 @@ export function SiteHeader() {
           onClick={(event) => navigateTo(event, "#top")}
         >
           <span className="brand-logo-frame" aria-hidden="true">
-            <img
+            <Image
               className="brand-logo"
               src="/icon-192.png"
               alt=""
