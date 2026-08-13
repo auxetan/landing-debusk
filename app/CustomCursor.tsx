@@ -11,7 +11,9 @@ import {
 
 type CursorKind = "default" | "home" | "link" | "external" | "mail" | "text";
 
-const isCursorKind = (value: string | null): value is CursorKind =>
+const isCursorKind = (
+  value: string | null | undefined,
+): value is CursorKind =>
   value === "default" ||
   value === "home" ||
   value === "link" ||
@@ -63,7 +65,7 @@ export function CustomCursor() {
 
       let nextKind: CursorKind = "default";
 
-      if (isCursorKind(explicit ?? null)) {
+      if (isCursorKind(explicit)) {
         nextKind = explicit;
       } else if (element?.closest('a[href^="mailto:"]')) {
         nextKind = "mail";
