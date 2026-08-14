@@ -107,11 +107,13 @@ test("keeps the hamburger contact form wired to the dedicated template", async (
     "name",
     "email",
     "reply_to",
+    "to_email",
     "message",
     "time",
   ]) {
     assert.match(dialog, new RegExp(`\\b${parameter}:`));
   }
+  assert.match(dialog, /to_email:\s*CONTACT_EMAIL/);
   assert.match(dialog, /Message envoyé\./);
   assert.match(dialog, /Patientez 30 secondes/);
 });

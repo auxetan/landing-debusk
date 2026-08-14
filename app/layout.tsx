@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol =
     requestHeaders.get("x-forwarded-proto") ??
     (host?.startsWith("localhost") ? "http" : "https");
-  const socialImage = host ? `${protocol}://${host}/og.png` : undefined;
+  const socialImage = host ? `${protocol}://${host}/debusk-logo.png` : undefined;
 
   const title = "Débusk — Partez au bon moment !";
   const description =
@@ -34,15 +34,15 @@ export async function generateMetadata(): Promise<Metadata> {
         ? [
             {
               url: socialImage,
-              width: 1729,
-              height: 910,
-              alt: "Débusk — Partez au bon moment !",
+              width: 1024,
+              height: 1024,
+              alt: "Logo Débusk",
             },
           ]
         : undefined,
     },
     twitter: {
-      card: "summary_large_image",
+    card: "summary",
       title,
       description: "Le bus en direct, enrichi par la communauté d’Aix.",
       images: socialImage ? [socialImage] : undefined,

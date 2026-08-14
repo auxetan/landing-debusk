@@ -143,6 +143,7 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
             from_name: senderName,
             email: cleanEmail,
             reply_to: cleanEmail,
+            to_email: CONTACT_EMAIL,
             message: cleanMessage,
             time: sentAt,
             app_name: "Débusk",
