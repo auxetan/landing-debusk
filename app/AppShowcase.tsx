@@ -50,7 +50,8 @@ const slides = [
     width: 770,
     height: 1674,
     title: "À bord, suivez le trajet",
-    copy: "Le mode conduite affiche votre ligne, le parcours et le prochain arrêt.",
+    copy:
+      "Le mode conduite affiche votre ligne, le parcours et le prochain arrêt. Il permet aussi d’activer le suivi afin que les autres voyageurs voient la position réelle du bus.",
     alt: "Mode conduite suivant un bus de la ligne 25 sur la carte",
   },
   {
@@ -174,9 +175,6 @@ export function AppShowcase() {
             </div>
 
             <div className="showcase-copy">
-              <p className="showcase-index">
-                Écran {String(index + 1).padStart(2, "0")}
-              </p>
               <h3>{slide.title}</h3>
               <p>{slide.copy}</p>
             </div>
@@ -186,6 +184,7 @@ export function AppShowcase() {
 
       <div className="showcase-navigation">
         <button
+          className="showcase-arrow"
           type="button"
           onClick={() => scrollToIndex(activeIndex - 1)}
           aria-label="Voir l’écran précédent"
@@ -193,12 +192,23 @@ export function AppShowcase() {
           <span aria-hidden="true">←</span>
         </button>
 
-        <p aria-live="polite" aria-atomic="true">
-          {String(activeIndex + 1).padStart(2, "0")}
-          <span> / {String(slides.length).padStart(2, "0")}</span>
-        </p>
+        <div className="showcase-dots" aria-label="Choisir un écran">
+          {slides.map((slide, index) => (
+            <button
+              type="button"
+              key={slide.image}
+              className={index === activeIndex ? "is-active" : ""}
+              onClick={() => scrollToIndex(index)}
+              aria-label={
+                "Afficher l’écran " + String(index + 1) + " : " + slide.title
+              }
+              aria-current={index === activeIndex ? "true" : undefined}
+            />
+          ))}
+        </div>
 
         <button
+          className="showcase-arrow"
           type="button"
           onClick={() => scrollToIndex(activeIndex + 1)}
           aria-label="Voir l’écran suivant"
@@ -206,23 +216,6 @@ export function AppShowcase() {
           <span aria-hidden="true">→</span>
         </button>
       </div>
-
-      <div className="showcase-dots" aria-label="Choisir un écran">
-        {slides.map((slide, index) => (
-          <button
-            type="button"
-            key={slide.image}
-            className={index === activeIndex ? "is-active" : ""}
-            onClick={() => scrollToIndex(index)}
-            aria-label={
-              "Afficher l’écran " + String(index + 1) + " : " + slide.title
-            }
-            aria-current={index === activeIndex ? "true" : undefined}
-          />
-        ))}
-      </div>
-
-      <p className="showcase-swipe-hint">Glissez pour explorer</p>
     </div>
   );
 }

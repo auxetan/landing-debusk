@@ -149,6 +149,7 @@ export function SiteHeader() {
               alt=""
               width="48"
               height="48"
+              unoptimized
             />
           </span>
           <span>AixBusLive</span>

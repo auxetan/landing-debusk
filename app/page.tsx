@@ -1,6 +1,7 @@
 import { FaApple, FaGooglePlay } from "react-icons/fa6";
 import Image from "next/image";
 import { AppShowcase } from "./AppShowcase";
+import { FaqSection } from "./FaqSection";
 import { SiteHeader } from "./SiteHeader";
 
 const storeLinks = [
@@ -15,29 +16,6 @@ const storeLinks = [
     label: "Google Play",
     href: "https://play.google.com/store/search?q=AixBusLive&c=apps",
     Icon: FaGooglePlay,
-  },
-];
-
-const faqs = [
-  {
-    question: "Le suivi est-il anonyme ?",
-    answer:
-      "Oui. Aucun nom n’apparaît sur la carte : seule la position utile du bus est partagée.",
-  },
-  {
-    question: "Quand le partage s’arrête-t-il ?",
-    answer:
-      "Dès que vous touchez « Je descends » ou que vous quittez le mode conduite.",
-  },
-  {
-    question: "D’où viennent les informations ?",
-    answer:
-      "Des horaires et perturbations publiés par Aix en Bus, complétés par les voyageurs à bord.",
-  },
-  {
-    question: "Puis-je simplement consulter ?",
-    answer:
-      "Oui. Le partage reste volontaire : vous pouvez voir les départs sans activer le suivi.",
   },
 ];
 
@@ -108,6 +86,7 @@ export default function Home() {
           <div className="route-terminal route-terminal-left" />
           <div className="route-terminal route-terminal-right" />
         </div>
+
       </section>
 
       <section
@@ -148,40 +127,14 @@ export default function Home() {
             Quand un passager active le suivi, sa position actualise le bus sur
             la carte. À l’arrêt, les autres voyageurs le voient approcher.
           </p>
-          <p className="community-privacy">
-            Volontaire · Anonyme sur la carte · Limité au trajet
-          </p>
-        </div>
-      </section>
-
-      <section
-        className="faq-section content-section"
-        id="questions"
-        aria-labelledby="faq-title"
-      >
-        <div className="faq-heading">
-          <p className="section-eyebrow">L’essentiel</p>
-          <h2 id="faq-title">
-            Vos questions.
-            <span>Nos réponses.</span>
-          </h2>
         </div>
 
-        <div className="faq-list">
-          {faqs.map((faq, index) => (
-            <details key={faq.question}>
-              <summary>
-                <span className="faq-number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span>{faq.question}</span>
-                <span className="faq-toggle" aria-hidden="true">+</span>
-              </summary>
-              <p>{faq.answer}</p>
-            </details>
-          ))}
-        </div>
+        <p className="community-privacy">
+          Volontaire · 100 % anonyme · Limité au trajet
+        </p>
       </section>
+
+      <FaqSection />
 
       <section
         className="download-section content-section"
@@ -196,6 +149,7 @@ export default function Home() {
               alt=""
               width="96"
               height="96"
+              unoptimized
             />
           </span>
           <p className="section-eyebrow">AixBusLive</p>
@@ -215,7 +169,7 @@ export default function Home() {
             <a href="/informations#confidentialite">Confidentialité</a>
             <a href="/informations#mentions">Mentions</a>
             <a href="/informations#sources">Sources</a>
-            <a href="#contact">Nous contacter</a>
+            <a href="#contact">Contact</a>
           </nav>
         </footer>
       </section>

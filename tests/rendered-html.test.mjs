@@ -41,9 +41,11 @@ test("server-renders the finished AixBusLive landing page", async () => {
   assert.match(html, /Chaque contribution/);
   assert.match(html, /aide le suivant\./);
   assert.match(html, /sa position actualise le bus sur/);
-  assert.match(html, /Volontaire · Anonyme sur la carte · Limité au trajet/);
-  assert.match(html, /Le suivi est-il anonyme/);
+  assert.match(html, /Volontaire · 100 % anonyme · Limité au trajet/);
+  assert.match(html, /Le suivi est-il 100 % anonyme/);
   assert.match(html, /Puis-je simplement consulter/);
+  assert.match(html, /Voir toutes les questions/);
+  assert.match(html, /Le suivi consomme-t-il de la batterie/);
   assert.doesNotMatch(html, /Un coup d’œil|Signalez\./);
   assert.doesNotMatch(
     html,
@@ -78,6 +80,7 @@ test("ships all seven app screens in a swipeable, keyboard-friendly carousel", a
   assert.match(showcase, /aria-roledescription="carrousel"/);
   assert.match(showcase, /ArrowRight/);
   assert.match(showcase, /ArrowLeft/);
+  assert.match(showcase, /position réelle du bus/);
   assert.match(css, /scroll-snap-type:\s*x mandatory/);
   assert.match(css, /touch-action:\s*pan-x pan-y/);
 });
