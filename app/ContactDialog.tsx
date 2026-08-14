@@ -7,6 +7,7 @@ import {
   type FormEvent,
   type MouseEvent,
 } from "react";
+import { CONTACT_EMAIL } from "./contact";
 
 const EMAILJS_PUBLIC_KEY = "mEs-8Cr-fd6idbZLs";
 const EMAILJS_SERVICE_ID = "service_7znwy0i";
@@ -216,8 +217,8 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
         ) : (
           <>
             <p className="contact-description" id="contact-description">
-              Votre message arrive directement au même endroit que depuis
-              l’application.
+              Votre message est envoyé directement à{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
             </p>
 
             <form className="contact-form" onSubmit={submitContact}>

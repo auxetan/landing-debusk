@@ -86,9 +86,10 @@ test("ships all seven app screens in a swipeable, keyboard-friendly carousel", a
 });
 
 test("keeps the hamburger contact form wired to the dedicated template", async () => {
-  const [dialog, header] = await Promise.all([
+  const [dialog, header, contact] = await Promise.all([
     readFile(new URL("../app/ContactDialog.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/SiteHeader.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/contact.ts", import.meta.url), "utf8"),
   ]);
 
   assert.match(header, /label:\s*"Nous contacter"/);
@@ -97,6 +98,8 @@ test("keeps the hamburger contact form wired to the dedicated template", async (
 
   assert.match(dialog, /template_qp34ygq/);
   assert.match(dialog, /service_7znwy0i/);
+  assert.match(dialog, /mailto:\$\{CONTACT_EMAIL\}/);
+  assert.match(contact, /info@debusk\.fr/);
   for (const parameter of [
     "subject",
     "title",
@@ -120,6 +123,8 @@ test("renders the information page and contains no unused starter or login code"
   assert.match(html, /Confidentialité/);
   assert.match(html, /Aucun nom n’apparaît sur la carte/);
   assert.match(html, /Débusk est un projet numérique indépendant/);
+  assert.match(html, /mailto:info@debusk\.fr/);
+  assert.match(html, /info@debusk\.fr/);
   assert.match(html, /Les horaires théoriques et les perturbations officielles/);
 
   await assert.rejects(access(new URL("../app/_sites-preview", import.meta.url)));

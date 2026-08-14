@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CONTACT_EMAIL } from "../contact";
 
 export const metadata: Metadata = {
   title: "Informations — Débusk",
@@ -32,7 +33,8 @@ export default function InformationsPage() {
             <p>
               Le site est public et ne demande aucun compte ChatGPT. Le
               formulaire de contact transmet uniquement les informations que
-              vous choisissez d’écrire.
+              vous choisissez d’écrire à{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
             </p>
             <p>
               Dans l’application, le suivi de trajet reste volontaire. Aucun
@@ -52,8 +54,9 @@ export default function InformationsPage() {
               la Métropole Aix-Marseille-Provence.
             </p>
             <p>
-              Site hébergé avec OpenAI Sites. Pour toute demande, utilisez le{" "}
-              <Link href="/#contact">formulaire de contact</Link>.
+              Pour toute demande, écrivez à{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> ou utilisez
+              le <Link href="/#contact">formulaire de contact</Link>.
             </p>
           </div>
         </section>

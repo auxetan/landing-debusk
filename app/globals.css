@@ -560,6 +560,13 @@ html.menu-open .custom-cursor {
   line-height: 1.55;
 }
 
+.contact-description a {
+  color: var(--ink);
+  text-decoration-color: var(--signal);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
 .contact-form {
   display: grid;
   gap: 18px;
