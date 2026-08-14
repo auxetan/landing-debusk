@@ -23,13 +23,13 @@ async function render(pathname = "/") {
   );
 }
 
-test("server-renders the finished AixBusLive landing page", async () => {
+test("server-renders the finished Débusk landing page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>AixBusLive — Partez au bon moment !<\/title>/i);
+  assert.match(html, /<title>Débusk — Partez au bon moment !<\/title>/i);
   assert.match(html, /Partez au/);
   assert.match(html, /Nous contacter/);
   assert.match(html, /href="#contact"/);
@@ -119,7 +119,7 @@ test("renders the information page and contains no unused starter or login code"
   const html = await response.text();
   assert.match(html, /Confidentialité/);
   assert.match(html, /Aucun nom n’apparaît sur la carte/);
-  assert.match(html, /AixBusLive est un projet numérique indépendant/);
+  assert.match(html, /Débusk est un projet numérique indépendant/);
   assert.match(html, /Les horaires théoriques et les perturbations officielles/);
 
   await assert.rejects(access(new URL("../app/_sites-preview", import.meta.url)));
@@ -136,8 +136,8 @@ test("renders the information page and contains no unused starter or login code"
   ]);
 
   assert.match(page, /<SiteHeader \/>/);
-  assert.match(layout, /AixBusLive — Partez au bon moment !/);
-  assert.match(packageJson, /"name": "aixbuslive-site"/);
+  assert.match(layout, /Débusk — Partez au bon moment !/);
+  assert.match(packageJson, /"name": "debusk-site"/);
   assert.doesNotMatch(packageJson, /starter|drizzle|react-loading-skeleton/);
   assert.doesNotMatch(readme, /vinext-starter|Workspace Auth Headers/);
 });

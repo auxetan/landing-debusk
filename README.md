@@ -1,6 +1,6 @@
-# AixBusLive — site
+# Débusk — site
 
-Site public de présentation d’AixBusLive, construit avec Next.js, React et
+Site public de présentation de Débusk, construit avec Next.js, React et
 vinext pour OpenAI Sites.
 
 ## Contenu

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Informations — AixBusLive",
+  title: "Informations — Débusk",
   description:
-    "Confidentialité, mentions et sources utilisées par AixBusLive.",
+    "Confidentialité, mentions et sources utilisées par Débusk.",
 };
 
 export default function InformationsPage() {
@@ -12,7 +12,7 @@ export default function InformationsPage() {
     <main className="information-page">
       <Link className="information-back" href="/">
         <span aria-hidden="true">←</span>
-        AixBusLive
+        Débusk
       </Link>
 
       <header className="information-header">
@@ -47,7 +47,7 @@ export default function InformationsPage() {
           <div>
             <h2>Mentions</h2>
             <p>
-              AixBusLive est un projet numérique indépendant conçu à
+              Débusk est un projet numérique indépendant conçu à
               Aix-en-Provence. Il n’est ni affilié ni mandaté par Aix en Bus ou
               la Métropole Aix-Marseille-Provence.
             </p>
@@ -77,7 +77,7 @@ export default function InformationsPage() {
       </div>
 
       <footer className="information-footer">
-        <span>AixBusLive</span>
+        <span>Débusk</span>
         <Link href="/">Retour au site</Link>
       </footer>
     </main>

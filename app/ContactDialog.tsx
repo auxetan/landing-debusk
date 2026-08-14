@@ -117,8 +117,8 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
     setError(null);
 
     try {
-      const senderName = cleanName || cleanEmail || "Visiteur AixBusLive";
-      const subject = `[Site AixBusLive] ${contactType}`;
+      const senderName = cleanName || cleanEmail || "Visiteur Débusk";
+      const subject = `[Site Débusk] ${contactType}`;
       const sentAt = new Intl.DateTimeFormat("fr-FR", {
         dateStyle: "full",
         timeStyle: "short",
@@ -144,8 +144,8 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
             reply_to: cleanEmail,
             message: cleanMessage,
             time: sentAt,
-            app_name: "AixBusLive",
-            source: "Site AixBusLive",
+            app_name: "Débusk",
+            source: "Site Débusk",
           },
         }),
       });
@@ -161,7 +161,7 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
       setMessage("");
       setSent(true);
     } catch (sendError) {
-      console.error("[AixBusLive contact]", sendError);
+      console.error("[Débusk contact]", sendError);
       setError("L’envoi a échoué. Réessayez dans un instant.");
     } finally {
       setSending(false);
@@ -208,7 +208,7 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
           <div className="contact-success" role="status" aria-live="polite">
             <span className="contact-success-mark" aria-hidden="true">✓</span>
             <h3>Message envoyé.</h3>
-            <p>Merci — il est bien arrivé à l’équipe AixBusLive.</p>
+            <p>Merci — il est bien arrivé à l’équipe Débusk.</p>
             <button ref={successButtonRef} type="button" onClick={onClose}>
               Fermer
             </button>

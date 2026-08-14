@@ -138,7 +138,7 @@ export function SiteHeader() {
         <a
           className="wordmark"
           href="#top"
-          aria-label="AixBusLive, accueil"
+          aria-label="Débusk, accueil"
           data-cursor-kind="home"
           onClick={(event) => navigateTo(event, "#top")}
         >
@@ -152,7 +152,7 @@ export function SiteHeader() {
               unoptimized
             />
           </span>
-          <span>AixBusLive</span>
+          <span>Débusk</span>
         </a>
 
         <div className="header-actions">

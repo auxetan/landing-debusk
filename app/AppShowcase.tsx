@@ -19,7 +19,7 @@ const slides = [
     height: 1672,
     title: "Les bus autour de vous",
     copy: "Repérez les lignes sur la carte et accédez aux prochains départs.",
-    alt: "Carte AixBusLive affichant les bus autour de l’utilisateur",
+    alt: "Carte Débusk affichant les bus autour de l’utilisateur",
   },
   {
     image: "/app-screens/favoris-choix-bus.png",
@@ -60,7 +60,7 @@ const slides = [
     height: 1666,
     title: "Prévenez la communauté",
     copy: "Signalez rapidement un retard, un bus complet ou un incident sur le réseau.",
-    alt: "Choix d’un signalement communautaire dans AixBusLive",
+    alt: "Choix d’un signalement communautaire dans Débusk",
   },
   {
     image: "/app-screens/progression-communautaire.png",
@@ -150,7 +150,7 @@ export function AppShowcase() {
         tabIndex={0}
         role="region"
         aria-roledescription="carrousel"
-        aria-label="Découvrir les écrans d’AixBusLive"
+        aria-label="Découvrir les écrans de Débusk"
       >
         {slides.map((slide, index) => (
           <article

@@ -8,13 +8,13 @@ const storeLinks = [
   {
     eyebrow: "Télécharger sur",
     label: "l’App Store",
-    href: "https://apps.apple.com/fr/search?term=AixBusLive",
+    href: "https://apps.apple.com/fr/search?term=D%C3%A9busk",
     Icon: FaApple,
   },
   {
     eyebrow: "Disponible sur",
     label: "Google Play",
-    href: "https://play.google.com/store/search?q=AixBusLive&c=apps",
+    href: "https://play.google.com/store/search?q=D%C3%A9busk&c=apps",
     Icon: FaGooglePlay,
   },
 ];
@@ -23,7 +23,7 @@ function StoreButtons({ compact = false }: { compact?: boolean }) {
   return (
     <div
       className={`store-actions ${compact ? "store-actions-compact" : ""}`}
-      aria-label="Télécharger AixBusLive"
+      aria-label="Télécharger Débusk"
     >
       {storeLinks.map((store, index) => {
         const Icon = store.Icon;
@@ -152,7 +152,7 @@ export default function Home() {
               unoptimized
             />
           </span>
-          <p className="section-eyebrow">AixBusLive</p>
+          <p className="section-eyebrow">Débusk</p>
           <h2 id="download-title">
             Aix avance.
             <span>Vous aussi.</span>
@@ -162,7 +162,7 @@ export default function Home() {
 
         <footer className="site-footer">
           <div className="footer-brand">
-            <span>AixBusLive</span>
+            <span>Débusk</span>
             <span>Projet indépendant fait pour Aix-en-Provence.</span>
           </div>
           <nav aria-label="Informations">
