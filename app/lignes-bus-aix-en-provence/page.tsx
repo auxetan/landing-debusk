@@ -99,11 +99,19 @@ export default function BusLinesPage() {
       <section>
         <h2>Liaisons métropolitaines utiles</h2>
         <p>
-          Les données disponibles couvrent également des liaisons comme A2
-          vers l’aéroport et L49, L50 ou L51 entre Aix et Marseille. La
-          tarification et le périmètre d’un abonnement peuvent différer du
-          réseau urbain : vérifiez toujours le titre nécessaire auprès de La
-          Métropole Mobilité.
+          Les données disponibles couvrent les lignes L49, L50 et L51 entre
+          Aix et Marseille. La route A2 vers la gare TGV et l’aéroport figure
+          dans le catalogue, mais le flux vérifié le 16 août 2026 ne contient
+          aucune course A2 exploitable : ses horaires ne sont donc pas encore
+          consultables de façon fiable dans Débusk.
+        </p>
+        <p>
+          La tarification et le périmètre d’un abonnement peuvent différer du
+          réseau urbain. Vérifiez toujours le titre nécessaire auprès de La
+          Métropole Mobilité et consultez notre{" "}
+          <Link href="/bus-aix-aeroport-marseille-provence">guide A2</Link>{" "}
+          pour préparer ce trajet sans confondre service officiel et couverture
+          de l’app.
         </p>
       </section>
 

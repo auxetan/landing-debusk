@@ -1,7 +1,17 @@
 import type { MetadataRoute } from "next";
+import { appScreenImageUrls } from "./app-screen-data";
 import { absoluteUrl, UPDATED_AT } from "./seo";
+import { topicGuides } from "./topic-guide-data";
 
 const lastModified = new Date(UPDATED_AT + "T00:00:00+02:00");
+
+const topicGuideEntries: MetadataRoute.Sitemap = topicGuides.map((guide) => ({
+  url: absoluteUrl("/" + guide.slug),
+  lastModified,
+  changeFrequency: "weekly",
+  priority: 0.75,
+  images: [absoluteUrl(guide.image)],
+}));
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -10,12 +20,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "weekly",
       priority: 1,
+      images: appScreenImageUrls,
     },
     {
       url: absoluteUrl("/guides"),
       lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
+    },
+    {
+      url: absoluteUrl("/application-bus-aix-en-provence"),
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.95,
+      images: appScreenImageUrls,
     },
     {
       url: absoluteUrl("/guide-rentree-bus-aix-en-provence"),
@@ -53,5 +71,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    ...topicGuideEntries,
   ];
 }

@@ -60,8 +60,9 @@ test("server-renders the finished Débusk landing page", async () => {
 });
 
 test("ships all seven app screens in a swipeable, keyboard-friendly carousel", async () => {
-  const [showcase, css] = await Promise.all([
+  const [showcase, screenData, css] = await Promise.all([
     readFile(new URL("../app/AppShowcase.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/app-screen-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
 
@@ -81,11 +82,19 @@ test("ships all seven app screens in a swipeable, keyboard-friendly carousel", a
     ),
   );
 
-  assert.equal((showcase.match(/image: "\/app-screens\//g) ?? []).length, 7);
+  assert.equal((screenData.match(/src: "\/app-screens\//g) ?? []).length, 7);
+  assert.match(showcase, /import Image from "next\/image"/);
+  assert.match(showcase, /<figure/);
+  assert.match(showcase, /<figcaption/);
+  assert.match(showcase, /<Image/);
+  assert.match(showcase, /sizes="\(max-width: 440px\) 44vw/);
+  assert.match(showcase, /appScreenStructuredData/);
+  assert.match(screenData, /"@type": "ImageObject"/);
+  assert.match(screenData, /encodingFormat: "image\/png"/);
   assert.match(showcase, /aria-roledescription="carrousel"/);
   assert.match(showcase, /ArrowRight/);
   assert.match(showcase, /ArrowLeft/);
-  assert.match(showcase, /position réelle du bus/);
+  assert.match(screenData, /suivi volontaire/);
   assert.match(css, /scroll-snap-type:\s*x mandatory/);
   assert.match(css, /touch-action:\s*pan-x pan-y/);
 });
@@ -214,9 +223,10 @@ test("server-renders the search-intent guides with unique metadata", async () =>
 });
 
 test("publishes crawlable robots and sitemap endpoints", async () => {
-  const [robotsResponse, sitemapResponse] = await Promise.all([
+  const [robotsResponse, sitemapResponse, topicGuideSource] = await Promise.all([
     render("/robots.txt"),
     render("/sitemap.xml"),
+    readFile(new URL("../app/topic-guide-data.ts", import.meta.url), "utf8"),
   ]);
 
   assert.equal(robotsResponse.status, 200);
@@ -229,6 +239,7 @@ test("publishes crawlable robots and sitemap endpoints", async () => {
   const sitemap = await sitemapResponse.text();
   for (const pathname of [
     "/guides",
+    "/application-bus-aix-en-provence",
     "/guide-rentree-bus-aix-en-provence",
     "/horaires-bus-aix-en-provence",
     "/itineraire-bus-aix-en-provence",
@@ -238,7 +249,84 @@ test("publishes crawlable robots and sitemap endpoints", async () => {
     assert.ok(sitemap.includes(`https://www.debusk.fr${pathname}`));
   }
 
+  assert.match(
+    sitemap,
+    /xmlns:image="http:\/\/www\.google\.com\/schemas\/sitemap-image\/1\.1"/,
+  );
+  const topicGuideImages = [
+    ...topicGuideSource.matchAll(
+      /slug: "([^"]+)"[\s\S]*?image: "([^"]+)"/g,
+    ),
+  ].map((match) => ({ slug: match[1], image: match[2] }));
+
+  assert.equal(topicGuideImages.length, 20);
+  assert.equal(
+    (sitemap.match(/<image:image>/g) ?? []).length,
+    14 + topicGuideImages.length,
+  );
+  for (const image of [
+    "main-screen.png",
+    "favoris-choix-bus.png",
+    "perturbations-officielles.png",
+    "mode-itineraire.png",
+    "mode-conduite.png",
+    "contribution-communautaire.png",
+    "progression-communautaire.png",
+  ]) {
+    assert.ok(
+      sitemap.includes(
+        `<image:loc>https://www.debusk.fr/app-screens/${image}</image:loc>`,
+      ),
+      image,
+    );
+  }
+
+  for (const { slug, image } of topicGuideImages) {
+    const entry = sitemap.match(
+      new RegExp(
+        `<url>\\s*<loc>https://www\\.debusk\\.fr/${slug}</loc>` +
+          `[\\s\\S]*?</url>`,
+      ),
+    )?.[0];
+    assert.ok(entry, slug);
+    assert.ok(
+      entry.includes(
+        `<image:loc>https://www.debusk.fr${image}</image:loc>`,
+      ),
+      slug,
+    );
+  }
+
   await access(new URL("../public/og.png", import.meta.url));
+});
+
+test("server-renders the new transport clusters and image-rich app page", async () => {
+  const pages = [
+    ["/application-bus-aix-en-provence", /Débusk, l’application pour préparer/, /L’application Débusk en images/],
+    ["/transport-scolaire-aix-en-provence", /Transport scolaire à Aix-en-Provence/, /Séries scolaires intégrées/],
+    ["/bus-aix-marseille", /Bus Aix–Marseille/, /L49, L50 et L51/],
+    ["/ligne-50-aix-marseille-saint-charles", /Ligne L50 Aix–Marseille Saint-Charles/, /302 mardi/],
+    ["/bus-aix-aeroport-marseille-provence", /Bus Aix–Aéroport Marseille Provence/, /aucun horaire A2 exploitable/],
+    ["/bus-a-la-demande-pays-aix", /Bus à la demande à Aix et au Pays d’Aix/, /Ni réservation ni horaires TAD/],
+    ["/keolis-aix-en-bus-metropole-mobilite", /Keolis, Aix en Bus et La Métropole Mobilité/, /application non officielle/],
+    ["/bus-venelles-aix-en-provence", /Bus Venelles–Aix-en-Provence/, /8377 et 8379/],
+  ];
+
+  for (const [pathname, heading, proof] of pages) {
+    const response = await render(pathname);
+    assert.equal(response.status, 200, pathname);
+    const html = await response.text();
+    assert.match(html, heading, pathname);
+    assert.match(html, proof, pathname);
+    assert.ok(
+      html.includes(
+        `<link rel="canonical" href="https://www.debusk.fr${pathname}"/>`,
+      ),
+      pathname,
+    );
+    assert.match(html, /<img[^>]+app-screens/i, pathname);
+    assert.match(html, /"@type":"ImageObject"/, pathname);
+  }
 });
 
 test("emits valid JSON-LD on the landing page and editorial pages", async () => {
@@ -258,6 +346,25 @@ test("emits valid JSON-LD on the landing page and editorial pages", async () => 
     assert.ok(scripts.length > 0, pathname);
     for (const script of scripts) {
       assert.doesNotThrow(() => JSON.parse(script[1]), pathname);
+    }
+
+    if (pathname === "/") {
+      const structuredData = scripts.map((script) => JSON.parse(script[1]));
+      const imageObjects = structuredData.flatMap((entry) =>
+        Array.isArray(entry?.["@graph"])
+          ? entry["@graph"].filter(
+              (item) => item?.["@type"] === "ImageObject",
+            )
+          : [],
+      );
+      assert.equal(imageObjects.length, 7);
+      for (const image of imageObjects) {
+        assert.match(image.contentUrl, /^https:\/\/www\.debusk\.fr\/app-screens\//);
+        assert.equal(image.encodingFormat, "image/png");
+        assert.equal(typeof image.width, "number");
+        assert.equal(typeof image.height, "number");
+        assert.ok(image.caption);
+      }
     }
   }
 });

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AppShowcase } from "./AppShowcase";
 import { FaqSection } from "./FaqSection";
 import { faqs } from "./faq-data";
-import { guideLinks } from "./guide-data";
+import { featuredGuideLinks } from "./guide-data";
 import { absoluteUrl } from "./seo";
 import { SiteHeader } from "./SiteHeader";
 import { StoreButtons } from "./StoreButtons";
@@ -111,6 +111,10 @@ export default function Home() {
         </div>
 
         <AppShowcase />
+        <Link className="showcase-detail-link" href="/application-bus-aix-en-provence">
+          Découvrir tous les écrans et le périmètre de Débusk
+          <span aria-hidden="true">↗</span>
+        </Link>
       </section>
 
       <section
@@ -159,7 +163,7 @@ export default function Home() {
           </p>
         </div>
         <div className="home-guide-grid">
-          {guideLinks.map((guide, index) => (
+          {featuredGuideLinks.map((guide, index) => (
             <Link className="home-guide-card" href={guide.href} key={guide.href}>
               <span className="home-guide-number">
                 {String(index + 1).padStart(2, "0")}
@@ -207,10 +211,10 @@ export default function Home() {
             <span>Projet indépendant fait pour Aix-en-Provence.</span>
           </div>
           <nav aria-label="Informations">
-            <a href="/guides">Guides bus</a>
-            <a href="/informations#confidentialite">Confidentialité</a>
-            <a href="/informations#mentions">Mentions</a>
-            <a href="/informations#sources">Sources</a>
+            <Link href="/guides">Guides bus</Link>
+            <Link href="/informations#confidentialite">Confidentialité</Link>
+            <Link href="/informations#mentions">Mentions</Link>
+            <Link href="/informations#sources">Sources</Link>
             <a href="#contact">Contact</a>
           </nav>
         </footer>

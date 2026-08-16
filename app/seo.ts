@@ -9,6 +9,10 @@ type PageMetadata = {
   description: string;
   path: string;
   type?: "website" | "article";
+  image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 };
 
 export function createPageMetadata({
@@ -16,6 +20,10 @@ export function createPageMetadata({
   description,
   path,
   type = "article",
+  image = "/og.png",
+  imageAlt = "Débusk, l’application bus d’Aix-en-Provence",
+  imageWidth = 1734,
+  imageHeight = 907,
 }: PageMetadata): Metadata {
   const canonical = new URL(path, SITE_URL).toString();
 
@@ -43,10 +51,10 @@ export function createPageMetadata({
       type,
       images: [
         {
-          url: "/og.png",
-          width: 1734,
-          height: 907,
-          alt: "Débusk, l’application bus d’Aix-en-Provence",
+          url: image,
+          width: imageWidth,
+          height: imageHeight,
+          alt: imageAlt,
         },
       ],
     },
@@ -54,7 +62,7 @@ export function createPageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/og.png"],
+      images: [image],
     },
   };
 }

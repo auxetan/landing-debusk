@@ -1,9 +1,6 @@
 "use client";
 
-/* Screenshots are intentionally rendered as raw images inside the CSS phone
-   frame so their exact pixels and proportions stay untouched. */
-/* eslint-disable @next/next/no-img-element */
-
+import Image from "next/image";
 import {
   useCallback,
   useEffect,
@@ -11,66 +8,8 @@ import {
   useState,
   type KeyboardEvent,
 } from "react";
-
-const slides = [
-  {
-    image: "/app-screens/main-screen.png",
-    width: 778,
-    height: 1672,
-    title: "Les bus autour de vous",
-    copy: "Repérez les lignes sur la carte et accédez aux prochains départs.",
-    alt: "Carte Débusk affichant les bus autour de l’utilisateur",
-  },
-  {
-    image: "/app-screens/favoris-choix-bus.png",
-    width: 772,
-    height: 1676,
-    title: "Vos départs en un coup d’œil",
-    copy: "Retrouvez vos arrêts favoris, vos lignes et les prochains bus à proximité.",
-    alt: "Liste des arrêts favoris, des lignes et des prochains départs",
-  },
-  {
-    image: "/app-screens/perturbations-officielles.png",
-    width: 768,
-    height: 1676,
-    title: "Les infos officielles",
-    copy: "Consultez les perturbations publiées par Aix en Bus, ligne par ligne.",
-    alt: "Liste des perturbations officielles du réseau Aix en Bus",
-  },
-  {
-    image: "/app-screens/mode-itineraire.png",
-    width: 774,
-    height: 1666,
-    title: "Votre trajet, étape par étape",
-    copy: "Visualisez le tracé, la durée et chaque étape avant de démarrer.",
-    alt: "Itinéraire détaillé entre le Stade Carcassonne et la Rotonde",
-  },
-  {
-    image: "/app-screens/mode-conduite.png",
-    width: 770,
-    height: 1674,
-    title: "À bord, suivez le trajet",
-    copy:
-      "Le mode conduite affiche votre ligne, le parcours et le prochain arrêt. Il permet aussi d’activer le suivi afin que les autres voyageurs voient la position réelle du bus.",
-    alt: "Mode conduite suivant un bus de la ligne 25 sur la carte",
-  },
-  {
-    image: "/app-screens/contribution-communautaire.png",
-    width: 776,
-    height: 1666,
-    title: "Prévenez la communauté",
-    copy: "Signalez rapidement un retard, un bus complet ou un incident sur le réseau.",
-    alt: "Choix d’un signalement communautaire dans Débusk",
-  },
-  {
-    image: "/app-screens/progression-communautaire.png",
-    width: 772,
-    height: 1674,
-    title: "Vos contributions comptent",
-    copy: "Suivez vos points, vos validations et votre progression dans la communauté.",
-    alt: "Écran de progression des contributions communautaires",
-  },
-] as const;
+import { appScreens, appScreenStructuredData } from "./app-screen-data";
+import { StructuredData } from "./StructuredData";
 
 export function AppShowcase() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -81,7 +20,8 @@ export function AppShowcase() {
     const track = trackRef.current;
     if (!track) return;
 
-    const nextIndex = (requestedIndex + slides.length) % slides.length;
+    const nextIndex =
+      (requestedIndex + appScreens.length) % appScreens.length;
     const target = track.children.item(nextIndex) as HTMLElement | null;
     if (!target) return;
 
@@ -142,6 +82,7 @@ export function AppShowcase() {
 
   return (
     <div className="app-showcase">
+      <StructuredData data={appScreenStructuredData} />
       <div
         className="showcase-track"
         ref={trackRef}
@@ -150,35 +91,43 @@ export function AppShowcase() {
         tabIndex={0}
         role="region"
         aria-roledescription="carrousel"
-        aria-label="Découvrir les écrans de Débusk"
+        aria-label="Galerie des écrans de l’application Débusk"
       >
-        {slides.map((slide, index) => (
-          <article
+        {appScreens.map((screen, index) => (
+          <figure
             className="showcase-slide"
-            key={slide.image}
+            key={screen.src}
+            role="group"
+            aria-roledescription="diapositive"
+            style={{ margin: 0 }}
             aria-label={
-              String(index + 1) + " sur " + String(slides.length) + " : " + slide.title
+              String(index + 1) +
+              " sur " +
+              String(appScreens.length) +
+              " : " +
+              screen.title
             }
           >
             <div className="showcase-phone-column">
               <div className="iphone-frame">
                 <span className="iphone-island" aria-hidden="true" />
-                <img
-                  src={slide.image}
-                  width={slide.width}
-                  height={slide.height}
-                  alt={slide.alt}
+                <Image
+                  src={screen.src}
+                  width={screen.width}
+                  height={screen.height}
+                  alt={screen.alt}
+                  sizes="(max-width: 440px) 44vw, (max-width: 680px) 194px, (max-width: 1416px) 24vw, 340px"
                   loading="lazy"
                   draggable={false}
                 />
               </div>
             </div>
 
-            <div className="showcase-copy">
-              <h3>{slide.title}</h3>
-              <p>{slide.copy}</p>
-            </div>
-          </article>
+            <figcaption className="showcase-copy">
+              <h3>{screen.title}</h3>
+              <p>{screen.caption}</p>
+            </figcaption>
+          </figure>
         ))}
       </div>
 
@@ -193,14 +142,14 @@ export function AppShowcase() {
         </button>
 
         <div className="showcase-dots" aria-label="Choisir un écran">
-          {slides.map((slide, index) => (
+          {appScreens.map((screen, index) => (
             <button
               type="button"
-              key={slide.image}
+              key={screen.src}
               className={index === activeIndex ? "is-active" : ""}
               onClick={() => scrollToIndex(index)}
               aria-label={
-                "Afficher l’écran " + String(index + 1) + " : " + slide.title
+                "Afficher l’écran " + String(index + 1) + " : " + screen.title
               }
               aria-current={index === activeIndex ? "true" : undefined}
             />

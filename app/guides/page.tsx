@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { guideLinks } from "../guide-data";
+import { guideGroups, guideLinks } from "../guide-data";
 import { absoluteUrl, createPageMetadata } from "../seo";
 import { StructuredData } from "../StructuredData";
 
@@ -30,6 +30,11 @@ export default function GuidesPage() {
             name: "Débusk",
             url: absoluteUrl("/"),
           },
+          hasPart: guideLinks.map((guide) => ({
+            "@type": "Article",
+            name: guide.title,
+            url: absoluteUrl(guide.href),
+          })),
         }}
       />
 
@@ -55,21 +60,36 @@ export default function GuidesPage() {
         </p>
       </header>
 
-      <section className="guide-index-list" aria-label="Guides Débusk">
-        {guideLinks.map((guide, index) => (
-          <Link className="guide-index-card" href={guide.href} key={guide.href}>
-            <span className="guide-index-number">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <div>
-              <p>{guide.label}</p>
-              <h2>{guide.title}</h2>
-              <span>{guide.description}</span>
-            </div>
-            <strong aria-hidden="true">↗</strong>
-          </Link>
+      <div className="guide-index-groups">
+        {guideGroups.map((group, groupIndex) => (
+          <section
+            className="guide-index-list"
+            aria-labelledby={`guide-group-${groupIndex}`}
+            key={group.title}
+          >
+            <header className="guide-group-heading">
+              <p className="guide-eyebrow">
+                {String(groupIndex + 1).padStart(2, "0")}
+              </p>
+              <h2 id={`guide-group-${groupIndex}`}>{group.title}</h2>
+              <p>{group.description}</p>
+            </header>
+            {group.links.map((guide, index) => (
+              <Link className="guide-index-card" href={guide.href} key={guide.href}>
+                <span className="guide-index-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <p>{guide.label}</p>
+                  <h3>{guide.title}</h3>
+                  <span>{guide.description}</span>
+                </div>
+                <strong aria-hidden="true">↗</strong>
+              </Link>
+            ))}
+          </section>
         ))}
-      </section>
+      </div>
 
       <footer className="guide-footer">
         <span>Débusk · Projet indépendant conçu à Aix-en-Provence</span>

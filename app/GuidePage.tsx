@@ -11,6 +11,12 @@ type GuidePageProps = {
   eyebrow: string;
   title: string;
   intro: string;
+  image?: {
+    url: string;
+    width: number;
+    height: number;
+    alt: string;
+  };
   children: ReactNode;
 };
 
@@ -21,6 +27,7 @@ export function GuidePage({
   eyebrow,
   title,
   intro,
+  image,
   children,
 }: GuidePageProps) {
   const currentUrl = absoluteUrl(path);
@@ -36,6 +43,17 @@ export function GuidePage({
       dateModified: UPDATED_AT,
       inLanguage: "fr-FR",
       mainEntityOfPage: currentUrl,
+      ...(image
+        ? {
+            image: {
+              "@type": "ImageObject",
+              url: absoluteUrl(image.url),
+              width: image.width,
+              height: image.height,
+              caption: image.alt,
+            },
+          }
+        : {}),
       author: {
         "@type": "Organization",
         name: "Débusk",
@@ -154,4 +172,3 @@ export function GuidePage({
     </main>
   );
 }
-
