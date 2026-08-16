@@ -1,91 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { faqs } from "./faq-data";
 
 const initialQuestionCount = 4;
-
-const faqs = [
-  {
-    question: "Le suivi est-il 100 % anonyme ?",
-    answer:
-      "Oui. Aucun nom ni profil n’est affiché ou consulté pour suivre un trajet. Seule la position temporaire utile au bus apparaît sur la carte.",
-  },
-  {
-    question: "Quand le partage s’arrête-t-il ?",
-    answer:
-      "Dès que vous touchez « Je descends » ou quittez le mode conduite. Votre position ne sert alors plus au suivi du bus.",
-  },
-  {
-    question: "D’où viennent les informations ?",
-    answer:
-      "Les horaires et perturbations viennent d’Aix en Bus. Les positions en direct et les signalements sont ajoutés volontairement par les voyageurs.",
-  },
-  {
-    question: "Puis-je simplement consulter ?",
-    answer:
-      "Oui. Vous pouvez voir les départs, les trajets et les perturbations sans jamais activer le suivi.",
-  },
-  {
-    question: "Comment activer le suivi ?",
-    answer:
-      "À bord, sélectionnez votre ligne puis lancez le mode conduite. Vous pouvez interrompre le partage à tout moment.",
-  },
-  {
-    question: "À quoi sert ma position ?",
-    answer:
-      "Elle actualise la position du bus afin que les voyageurs aux prochains arrêts puissent le voir approcher.",
-  },
-  {
-    question: "Une seule contribution suffit-elle ?",
-    answer:
-      "Oui. Une personne peut déjà rendre un bus visible. Plusieurs contributions améliorent la continuité de l’information.",
-  },
-  {
-    question: "Dois-je participer pendant tout le trajet ?",
-    answer:
-      "Non. Quelques arrêts peuvent déjà aider, et vous pouvez arrêter le suivi dès que vous le souhaitez.",
-  },
-  {
-    question: "Que voient les autres voyageurs ?",
-    answer:
-      "Ils voient le bus, sa ligne et sa progression sur la carte, jamais l’identité de la personne qui partage.",
-  },
-  {
-    question: "Que puis-je signaler ?",
-    answer:
-      "Un retard, un bus complet, un incident ou une information utile rencontrée sur le réseau.",
-  },
-  {
-    question: "Les signalements sont-ils officiels ?",
-    answer:
-      "Non. Ils sont présentés comme communautaires et restent séparés des perturbations officielles d’Aix en Bus.",
-  },
-  {
-    question: "Et si une information semble incorrecte ?",
-    answer:
-      "Les contributions restent indicatives. En cas de doute, consultez également les canaux officiels du réseau.",
-  },
-  {
-    question: "Si personne ne partage sa position ?",
-    answer:
-      "Les horaires et perturbations officielles restent disponibles, mais la position en direct du bus peut manquer.",
-  },
-  {
-    question: "Le suivi consomme-t-il de la batterie ?",
-    answer:
-      "Comme toute fonction utilisant la localisation, il consomme un peu plus pendant le trajet. L’arrêter à la descente limite cet impact.",
-  },
-  {
-    question: "Faut-il une connexion internet ?",
-    answer:
-      "Le direct nécessite une connexion et l’accès à la localisation. Sans réseau, les mises à jour peuvent être retardées.",
-  },
-  {
-    question: "À quoi servent les points et validations ?",
-    answer:
-      "Ils montrent votre progression et valorisent vos contributions, sans conditionner l’accès aux informations de l’application.",
-  },
-] as const;
 
 export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);

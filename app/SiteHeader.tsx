@@ -15,12 +15,14 @@ type NavigationItem = {
   label: string;
   href: string;
   contact?: boolean;
+  page?: boolean;
 };
 
 const navigation: NavigationItem[] = [
   { label: "Accueil", href: "#top" },
   { label: "Comment ça marche ?", href: "#comment-ca-marche" },
   { label: "La communauté", href: "#communaute" },
+  { label: "Guides bus & rentrée", href: "/guides", page: true },
   { label: "Questions fréquentes", href: "#questions" },
   { label: "Télécharger", href: "#telecharger" },
   {
@@ -193,6 +195,8 @@ export function SiteHeader() {
               onClick={
                 item.contact
                   ? openContact
+                  : item.page
+                    ? () => setIsOpen(false)
                   : (event) => navigateTo(event, item.href)
               }
               style={{ "--menu-delay": `${index * 70}ms` } as CSSProperties}

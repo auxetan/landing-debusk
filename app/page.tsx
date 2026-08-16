@@ -1,74 +1,82 @@
-import { FaApple, FaGooglePlay } from "react-icons/fa6";
 import Image from "next/image";
+import Link from "next/link";
 import { AppShowcase } from "./AppShowcase";
 import { FaqSection } from "./FaqSection";
+import { faqs } from "./faq-data";
+import { guideLinks } from "./guide-data";
+import { absoluteUrl } from "./seo";
 import { SiteHeader } from "./SiteHeader";
+import { StoreButtons } from "./StoreButtons";
+import { StructuredData } from "./StructuredData";
 
-const storeLinks = [
+const homeStructuredData = [
   {
-    eyebrow: "Télécharger sur",
-    label: "l’App Store",
-    href: "https://apps.apple.com/fr/search?term=D%C3%A9busk",
-    Icon: FaApple,
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    name: "Débusk",
+    url: absoluteUrl("/"),
+    description:
+      "Application de bus à Aix-en-Provence pour consulter les horaires, itinéraires, lignes, perturbations et le suivi communautaire.",
+    applicationCategory: "TravelApplication",
+    operatingSystem: "iOS, Android",
+    inLanguage: "fr-FR",
+    isAccessibleForFree: true,
+    offers: {
+      "@type": "Offer",
+      price: 0,
+      priceCurrency: "EUR",
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Aix-en-Provence et Pays d’Aix",
+    },
+    featureList: [
+      "Horaires et prochains départs",
+      "Calcul d’itinéraires",
+      "Lignes et arrêts favoris",
+      "Perturbations officielles",
+      "Suivi communautaire volontaire des bus",
+    ],
   },
   {
-    eyebrow: "Disponible sur",
-    label: "Google Play",
-    href: "https://play.google.com/store/search?q=D%C3%A9busk&c=apps",
-    Icon: FaGooglePlay,
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
   },
 ];
-
-function StoreButtons({ compact = false }: { compact?: boolean }) {
-  return (
-    <div
-      className={`store-actions ${compact ? "store-actions-compact" : ""}`}
-      aria-label="Télécharger Débusk"
-    >
-      {storeLinks.map((store, index) => {
-        const Icon = store.Icon;
-
-        return (
-          <a
-            className={`store-button ${index === 0 ? "store-button-primary" : ""}`}
-            href={store.href}
-            key={store.label}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`${store.eyebrow} ${store.label}`}
-            data-cursor-theme={index === 0 ? "dark" : undefined}
-          >
-            <span className="store-icon" aria-hidden="true">
-              <Icon />
-            </span>
-            <span className="store-copy">
-              <span className="store-eyebrow">{store.eyebrow}</span>
-              <span className="store-name">{store.label}</span>
-            </span>
-            <span className="store-arrow" aria-hidden="true">
-              ↗
-            </span>
-          </a>
-        );
-      })}
-    </div>
-  );
-}
 
 export default function Home() {
   return (
     <main className="landing">
+      <StructuredData data={homeStructuredData} />
       <SiteHeader />
 
       <section className="hero" id="top" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="kicker">Le réseau, c’est vous.</p>
+          <p className="kicker">
+            Horaires et itinéraires de bus à Aix-en-Provence
+          </p>
           <h1 id="hero-title">
-            <span className="headline-first">Partez au</span>
-            <span className="headline-accent">bon moment&nbsp;!</span>
+            <span className="headline-first">Le bus à Aix.</span>
+            <span className="headline-accent">Au bon moment&nbsp;!</span>
           </h1>
+          <p className="hero-description">
+            Retrouvez les prochains départs, calculez votre trajet, consultez
+            les lignes et les perturbations. Lorsqu’un voyageur contribue, voyez
+            aussi le bus progresser sur la carte.
+          </p>
 
           <StoreButtons />
+          <p className="hero-proof">
+            Gratuit · indépendant · consultation sans compte
+          </p>
         </div>
 
         <div className="route-art" aria-hidden="true">
@@ -130,8 +138,41 @@ export default function Home() {
         </div>
 
         <p className="community-privacy">
-          Volontaire · 100 % anonyme · Limité au trajet
+          Volontaire · identité non affichée · limité au trajet
         </p>
+      </section>
+
+      <section
+        className="guides-section content-section"
+        id="guides"
+        aria-labelledby="guides-title"
+      >
+        <div className="guides-heading">
+          <p className="section-eyebrow">Préparer son trajet</p>
+          <h2 id="guides-title">
+            Toutes les réponses.
+            <span>Avant de partir.</span>
+          </h2>
+          <p>
+            Horaires, itinéraires, lignes et abonnement scolaire : des guides
+            vérifiés pour les voyageurs et les familles d’Aix-en-Provence.
+          </p>
+        </div>
+        <div className="home-guide-grid">
+          {guideLinks.map((guide, index) => (
+            <Link className="home-guide-card" href={guide.href} key={guide.href}>
+              <span className="home-guide-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <p>{guide.label}</p>
+              <h3>{guide.title}</h3>
+              <strong aria-hidden="true">→</strong>
+            </Link>
+          ))}
+        </div>
+        <Link className="guides-all-link" href="/guides">
+          Voir tous les guides <span aria-hidden="true">↗</span>
+        </Link>
       </section>
 
       <FaqSection />
@@ -166,6 +207,7 @@ export default function Home() {
             <span>Projet indépendant fait pour Aix-en-Provence.</span>
           </div>
           <nav aria-label="Informations">
+            <a href="/guides">Guides bus</a>
             <a href="/informations#confidentialite">Confidentialité</a>
             <a href="/informations#mentions">Mentions</a>
             <a href="/informations#sources">Sources</a>

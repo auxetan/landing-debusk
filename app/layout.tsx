@@ -1,59 +1,102 @@
 import type { Metadata, Viewport } from "next";
-import { headers } from "next/headers";
 import { CustomCursor } from "./CustomCursor";
+import { SITE_NAME, SITE_URL } from "./seo";
+import { StructuredData } from "./StructuredData";
 import "./globals.css";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host =
-    requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host");
-  const protocol =
-    requestHeaders.get("x-forwarded-proto") ??
-    (host?.startsWith("localhost") ? "http" : "https");
-  const socialImage = host ? `${protocol}://${host}/debusk-logo.png` : undefined;
+const title = "Débusk : horaires et itinéraires de bus à Aix-en-Provence";
+const description =
+  "Débusk réunit horaires, itinéraires, lignes, perturbations et suivi communautaire des bus à Aix-en-Provence. Téléchargez l’application.";
 
-  const title = "Débusk — Partez au bon moment !";
-  const description =
-    "Le bus en direct, enrichi par la communauté d’Aix-en-Provence.";
-
-  return {
-    title: "Débusk — Partez au bon moment !",
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title,
+  description,
+  applicationName: SITE_NAME,
+  authors: [{ name: "Débusk", url: SITE_URL }],
+  creator: "Débusk",
+  publisher: "Débusk",
+  category: "transport",
+  alternates: {
+    canonical: "/",
+  },
+  icons: {
+    icon: [
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: [{ url: "/icon-192.png", sizes: "192x192" }],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    title,
     description,
-    applicationName: "Débusk",
-    icons: {
-      icon: "/icon-192.png",
-      apple: "/icon-192.png",
-    },
-    openGraph: {
-      title,
-      description:
-        "Le réseau, c’est vous. Suivez et enrichissez les informations de bus en direct.",
-      locale: "fr_FR",
-      type: "website",
-      images: socialImage
-        ? [
-            {
-              url: socialImage,
-              width: 1024,
-              height: 1024,
-              alt: "Logo Débusk",
-            },
-          ]
-        : undefined,
-    },
-    twitter: {
-    card: "summary",
-      title,
-      description: "Le bus en direct, enrichi par la communauté d’Aix.",
-      images: socialImage ? [socialImage] : undefined,
-    },
-  };
-}
+    url: "/",
+    siteName: SITE_NAME,
+    locale: "fr_FR",
+    type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1734,
+        height: 907,
+        alt: "Débusk, l’application bus d’Aix-en-Provence",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/og.png"],
+  },
+};
 
 export const viewport: Viewport = {
   themeColor: "#f1eee6",
   colorScheme: "light",
 };
+
+const websiteStructuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": SITE_URL + "/#website",
+    url: SITE_URL,
+    name: SITE_NAME,
+    alternateName: "Débusk — bus à Aix-en-Provence",
+    description,
+    inLanguage: "fr-FR",
+    publisher: { "@id": SITE_URL + "/#organization" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": SITE_URL + "/#organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: SITE_URL + "/icon-192.png",
+      width: 192,
+      height: 192,
+    },
+    email: "info@debusk.fr",
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Aix-en-Provence et Pays d’Aix",
+    },
+  },
+];
 
 export default function RootLayout({
   children,
@@ -63,6 +106,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body>
+        <StructuredData data={websiteStructuredData} />
         {children}
         <CustomCursor />
       </body>

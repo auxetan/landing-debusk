@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CONTACT_EMAIL } from "../contact";
+import { createPageMetadata } from "../seo";
 
-export const metadata: Metadata = {
-  title: "Informations — Débusk",
+export const metadata: Metadata = createPageMetadata({
+  title: "Confidentialité, sources et mentions de Débusk",
   description:
-    "Confidentialité, mentions et sources utilisées par Débusk.",
-};
+    "Découvrez les règles de confidentialité, les sources des horaires et le statut indépendant de l’application de bus Débusk à Aix-en-Provence.",
+  path: "/informations",
+  type: "website",
+});
 
 export default function InformationsPage() {
   return (
@@ -20,8 +23,9 @@ export default function InformationsPage() {
         <p className="section-eyebrow">En toute transparence</p>
         <h1>Informations</h1>
         <p>
-          Les réponses simples sur les données, la confidentialité et le statut
-          du projet.
+          Les réponses claires sur le projet, les données transport, la
+          confidentialité et la manière dont Débusk présente un bus sur la
+          carte.
         </p>
       </header>
 
@@ -31,7 +35,7 @@ export default function InformationsPage() {
           <div>
             <h2>Confidentialité</h2>
             <p>
-              Le site est public et ne demande aucun compte ChatGPT. Le
+              Le site est public et la consultation ne demande aucun compte. Le
               formulaire de contact transmet uniquement les informations que
               vous choisissez d’écrire à{" "}
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
@@ -66,14 +70,50 @@ export default function InformationsPage() {
           <div>
             <h2>Sources</h2>
             <p>
-              Les horaires théoriques et les perturbations officielles
-              proviennent des informations publiées par Aix en Bus. Les
-              positions en direct sont enrichies par les contributions
-              volontaires des voyageurs à bord.
+              Les horaires théoriques reposent sur les données de transport
+              publiées pour le réseau d’Aix. Les perturbations officielles
+              proviennent des canaux du réseau. Les positions communautaires et
+              les signalements sont ajoutés volontairement par les voyageurs à
+              bord.
             </p>
             <p>
               Les informations affichées restent indicatives. En cas de doute,
-              consultez également les canaux officiels du réseau.
+              consultez également les{" "}
+              <a
+                href="https://www.lametropolemobilite.fr/plans-et-horaires/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                plans et horaires de La Métropole Mobilité
+              </a>{" "}
+              ou le{" "}
+              <a
+                href="https://www.aixenbus.fr/fr/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                site Aix en Bus
+              </a>
+              .
+            </p>
+          </div>
+        </section>
+
+        <section id="methodologie">
+          <p className="information-number">04</p>
+          <div>
+            <h2>Méthodologie</h2>
+            <p>
+              Un horaire décrit le service prévu. Une perturbation officielle
+              signale une modification connue. Une position communautaire
+              n’apparaît que lorsqu’un voyageur présent dans le bus active le
+              suivi pendant son trajet : elle ne constitue donc pas un suivi
+              permanent de tous les véhicules.
+            </p>
+            <p>
+              Débusk distingue ces trois niveaux pour ne pas présenter une
+              estimation comme une position réelle. Cette page a été vérifiée
+              le <time dateTime="2026-08-16">16 août 2026</time>.
             </p>
           </div>
         </section>
@@ -81,7 +121,10 @@ export default function InformationsPage() {
 
       <footer className="information-footer">
         <span>Débusk</span>
-        <Link href="/">Retour au site</Link>
+        <div>
+          <Link href="/guides">Guides bus</Link>
+          <Link href="/">Retour au site</Link>
+        </div>
       </footer>
     </main>
   );
