@@ -57,7 +57,6 @@ export default function BusSchedulesPage() {
       </section>
 
       <aside className="guide-callout">
-        <p className="guide-callout-label">À bien distinguer</p>
         <h2>Horaire théorique et bus partagé en direct.</h2>
         <p>
           L’horaire vient des données du réseau. La position sur la carte

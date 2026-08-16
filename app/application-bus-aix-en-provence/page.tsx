@@ -72,7 +72,6 @@ export default function BusAppPage() {
       />
 
       <aside className="guide-callout guide-callout-signal guide-callout-first">
-        <p className="guide-callout-label">Une app indépendante</p>
         <h2>Débusk complète les informations officielles.</h2>
         <p>
           L’app ne vend pas de titres et ne représente aucun exploitant. Elle
@@ -85,7 +84,6 @@ export default function BusAppPage() {
         <h2>Tout ce que l’application permet de faire</h2>
         <div className="guide-feature-grid guide-feature-grid-three">
           <article>
-            <span className="guide-feature-number">01</span>
             <h3>Voir les départs</h3>
             <p>
               Recherchez un arrêt, contrôlez le sens et gardez vos lignes
@@ -93,7 +91,6 @@ export default function BusAppPage() {
             </p>
           </article>
           <article>
-            <span className="guide-feature-number">02</span>
             <h3>Préparer l’itinéraire</h3>
             <p>
               Comparez les étapes, la durée et les correspondances avant de
@@ -101,7 +98,6 @@ export default function BusAppPage() {
             </p>
           </article>
           <article>
-            <span className="guide-feature-number">03</span>
             <h3>Anticiper le réseau</h3>
             <p>
               Consultez les perturbations et distinguez-les des contributions
@@ -114,10 +110,8 @@ export default function BusAppPage() {
       <section>
         <h2>L’application Débusk en images</h2>
         <p>
-          Ces sept captures sont de vrais écrans de l’application. Chaque image
-          décrit une fonction précise ; elles sont publiées avec un texte
-          alternatif et une légende visibles pour rester utiles aux voyageurs
-          comme aux moteurs de recherche.
+          Sept captures réelles montrent la carte, les départs, les favoris,
+          les perturbations, les itinéraires et le suivi communautaire.
         </p>
         <div className="app-screen-gallery">
           {appScreens.map((screen, index) => (

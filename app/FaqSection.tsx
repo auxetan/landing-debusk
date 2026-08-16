@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { faqs } from "./faq-data";
 
-const initialQuestionCount = 4;
+const initialQuestionCount = 3;
 
 export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -40,9 +40,6 @@ export function FaqSection() {
             aria-controls={answerId}
             onClick={() => setOpenIndex(isOpen ? null : index)}
           >
-            <span className="faq-number">
-              {String(index + 1).padStart(2, "0")}
-            </span>
             <span className="faq-question-text">{faq.question}</span>
             <span className="faq-toggle" aria-hidden="true">↓</span>
           </button>
@@ -70,7 +67,6 @@ export function FaqSection() {
       aria-labelledby="faq-title"
     >
       <div className="faq-heading">
-        <p className="section-eyebrow">L’essentiel</p>
         <h2 id="faq-title">
           Vos questions.
           <span>Nos réponses.</span>

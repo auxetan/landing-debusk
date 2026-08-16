@@ -4,7 +4,7 @@ export const featuredGuideLinks = [
   {
     href: "/guide-rentree-bus-aix-en-provence",
     label: "Rentrée 2026–2027",
-    title: "Préparer les trajets de votre enfant",
+    title: "Préparer les trajets de rentrée de votre enfant",
     description:
       "La checklist familiale : abonnement, ligne, arrêt, horaires et premier trajet.",
   },

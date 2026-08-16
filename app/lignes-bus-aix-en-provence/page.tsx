@@ -83,7 +83,6 @@ export default function BusLinesPage() {
       </section>
 
       <aside className="guide-callout guide-callout-signal">
-        <p className="guide-callout-label">Rentrée scolaire</p>
         <h2>Débusk intègre aussi les dessertes spéciales scolaires.</h2>
         <p>
           Les familles peuvent rechercher les services des secteurs Les

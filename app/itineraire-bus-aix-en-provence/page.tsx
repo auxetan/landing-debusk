@@ -51,7 +51,6 @@ export default function BusRoutePlannerPage() {
       </section>
 
       <aside className="guide-callout guide-callout-green">
-        <p className="guide-callout-label">Conseil parents</p>
         <h2>Recherchez le trajet à l’heure du départ scolaire.</h2>
         <p>
           Un itinéraire calculé le dimanche après-midi ne reflète pas forcément

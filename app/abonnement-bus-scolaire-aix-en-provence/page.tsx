@@ -21,7 +21,6 @@ export default function SchoolBusPassPage() {
       intro="Les inscriptions sont ouvertes depuis le 1er juillet 2026. Voici les conditions, les documents à préparer et les vérifications utiles avant la rentrée."
     >
       <aside className="guide-callout guide-callout-signal guide-callout-first">
-        <p className="guide-callout-label">Important</p>
         <h2>La souscription ne se fait pas dans Débusk.</h2>
         <p>
           Débusk vous aide à consulter les lignes, horaires et itinéraires. La

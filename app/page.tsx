@@ -10,6 +10,12 @@ import { SiteHeader } from "./SiteHeader";
 import { StoreButtons } from "./StoreButtons";
 import { StructuredData } from "./StructuredData";
 
+const homeGuideLinks = [
+  featuredGuideLinks[0],
+  featuredGuideLinks[1],
+  featuredGuideLinks[4],
+] as const;
+
 const homeStructuredData = [
   {
     "@context": "https://schema.org",
@@ -63,23 +69,17 @@ export default function Home() {
 
       <section className="hero" id="top" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="kicker">
-            Horaires et itinéraires de bus à Aix-en-Provence
-          </p>
           <h1 id="hero-title">
             <span className="headline-first">Le bus à Aix.</span>
             <span className="headline-accent">Au bon moment&nbsp;!</span>
           </h1>
           <p className="hero-description">
-            Retrouvez les prochains départs, calculez votre trajet, consultez
-            les lignes et les perturbations. Lorsqu’un voyageur contribue, voyez
-            aussi le bus progresser sur la carte.
+            À Aix-en-Provence, consultez les horaires et prochains départs,
+            calculez votre trajet et retrouvez les perturbations. Lorsqu’un
+            voyageur contribue, voyez aussi le bus progresser sur la carte.
           </p>
 
           <StoreButtons />
-          <p className="hero-proof">
-            Gratuit · indépendant · consultation sans compte
-          </p>
         </div>
 
         <div className="route-art" aria-hidden="true">
@@ -106,7 +106,6 @@ export default function Home() {
         aria-labelledby="how-title"
       >
         <div className="section-heading">
-          <p className="section-eyebrow">Comment ça marche ?</p>
           <h2 id="how-title">
             Votre bus arrive.
             <span>Vous le voyez venir.</span>
@@ -115,7 +114,7 @@ export default function Home() {
 
         <AppShowcase />
         <Link className="showcase-detail-link" href="/application-bus-aix-en-provence">
-          Découvrir tous les écrans et le périmètre de Débusk
+          Découvrir l’app
           <span aria-hidden="true">↗</span>
         </Link>
       </section>
@@ -133,20 +132,17 @@ export default function Home() {
         </div>
 
         <div className="community-copy">
-          <p className="section-eyebrow">Le suivi communautaire</p>
           <h2 id="community-title">
             Chaque contribution
             <span>aide le suivant.</span>
           </h2>
           <p className="community-description">
             Quand un passager active le suivi, sa position actualise le bus sur
-            la carte. À l’arrêt, les autres voyageurs le voient approcher.
+            la carte. À l’arrêt, les autres voyageurs le voient approcher. Le
+            partage reste volontaire, sans identité affichée, et s’arrête avec
+            le trajet.
           </p>
         </div>
-
-        <p className="community-privacy">
-          Volontaire · identité non affichée · limité au trajet
-        </p>
       </section>
 
       <section
@@ -155,7 +151,6 @@ export default function Home() {
         aria-labelledby="guides-title"
       >
         <div className="guides-heading">
-          <p className="section-eyebrow">Préparer son trajet</p>
           <h2 id="guides-title">
             Toutes les réponses.
             <span>Avant de partir.</span>
@@ -166,12 +161,8 @@ export default function Home() {
           </p>
         </div>
         <div className="home-guide-grid">
-          {featuredGuideLinks.map((guide, index) => (
+          {homeGuideLinks.map((guide) => (
             <Link className="home-guide-card" href={guide.href} key={guide.href}>
-              <span className="home-guide-number">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <p>{guide.label}</p>
               <h3>{guide.title}</h3>
               <strong aria-hidden="true">→</strong>
             </Link>
@@ -200,7 +191,6 @@ export default function Home() {
               unoptimized
             />
           </span>
-          <p className="section-eyebrow">Débusk</p>
           <h2 id="download-title">
             Aix avance.
             <span>Vous aussi.</span>
@@ -211,7 +201,7 @@ export default function Home() {
         <footer className="site-footer">
           <div className="footer-brand">
             <span>Débusk</span>
-            <span>Projet indépendant fait pour Aix-en-Provence.</span>
+            <span>Application gratuite et indépendante · sans compte.</span>
           </div>
           <nav aria-label="Informations">
             <Link href="/guides">Guides bus</Link>

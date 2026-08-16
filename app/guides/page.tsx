@@ -51,7 +51,6 @@ export default function GuidesPage() {
       </header>
 
       <header className="guide-index-hero">
-        <p className="guide-eyebrow">Se déplacer à Aix-en-Provence</p>
         <h1>Les guides pour prendre le bus sereinement.</h1>
         <p>
           Des réponses claires pour choisir une ligne, vérifier un horaire,
@@ -68,19 +67,12 @@ export default function GuidesPage() {
             key={group.title}
           >
             <header className="guide-group-heading">
-              <p className="guide-eyebrow">
-                {String(groupIndex + 1).padStart(2, "0")}
-              </p>
               <h2 id={`guide-group-${groupIndex}`}>{group.title}</h2>
               <p>{group.description}</p>
             </header>
-            {group.links.map((guide, index) => (
+            {group.links.map((guide) => (
               <Link className="guide-index-card" href={guide.href} key={guide.href}>
-                <span className="guide-index-number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
                 <div>
-                  <p>{guide.label}</p>
                   <h3>{guide.title}</h3>
                   <span>{guide.description}</span>
                 </div>

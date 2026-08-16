@@ -749,19 +749,6 @@ html.menu-open .custom-cursor {
   animation: copy-arrival 850ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.kicker,
-.section-eyebrow {
-  color: var(--muted);
-  font-size: clamp(11px, 0.95vw, 13px);
-  font-weight: 700;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-}
-
-.kicker {
-  margin: 0 0 clamp(18px, 2.5vh, 28px);
-}
-
 h1,
 h2,
 h3,
@@ -993,10 +980,6 @@ h2 span {
   scroll-margin-top: 0;
 }
 
-.section-eyebrow {
-  margin: 0 0 clamp(24px, 4vh, 46px);
-}
-
 .how-section {
   display: block;
   overflow: hidden;
@@ -1217,10 +1200,6 @@ h2 span {
   width: min(100%, 1040px);
 }
 
-.community-copy .section-eyebrow {
-  color: rgba(17, 17, 19, 0.62);
-}
-
 .community-copy h2 {
   font-size: clamp(66px, 9vw, 148px);
 }
@@ -1236,23 +1215,6 @@ h2 span {
   font-weight: 520;
   letter-spacing: -0.027em;
   line-height: 1.35;
-}
-
-.community-privacy {
-  position: absolute;
-  right: clamp(24px, 7vw, 118px);
-  bottom: max(30px, env(safe-area-inset-bottom));
-  left: clamp(24px, 7vw, 118px);
-  z-index: 2;
-  width: auto;
-  margin: 0;
-  padding-top: 16px;
-  border-top: 1px solid rgba(17, 17, 19, 0.22);
-  color: rgba(17, 17, 19, 0.64);
-  font-size: 10px;
-  font-weight: 780;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 .community-orbit {
@@ -1312,10 +1274,6 @@ h2 span {
   width: min(100%, 690px);
 }
 
-.faq-heading .section-eyebrow {
-  color: rgba(251, 250, 246, 0.48);
-}
-
 .faq-list {
   border-top: 1px solid rgba(251, 250, 246, 0.2);
 }
@@ -1336,8 +1294,8 @@ h2 span {
 .faq-question {
   display: grid;
   width: 100%;
-  grid-template-columns: 42px 1fr 36px;
-  gap: 14px;
+  grid-template-columns: 1fr 36px;
+  gap: 18px;
   align-items: center;
   min-height: 92px;
   padding: 0;
@@ -1355,13 +1313,6 @@ h2 span {
   transition:
     color 240ms ease,
     transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.faq-number {
-  color: var(--signal);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
 }
 
 .faq-toggle {
@@ -1429,7 +1380,7 @@ h2 span {
 
 .faq-answer p {
   max-width: 570px;
-  margin: 0 36px 24px 56px;
+  margin: 0 36px 24px 0;
   padding: 16px 18px;
   border: 1px solid rgba(251, 250, 246, 0.14);
   border-radius: 14px;
@@ -1500,10 +1451,6 @@ h2 span {
   object-fit: contain;
 }
 
-.download-copy .section-eyebrow {
-  margin-bottom: 24px;
-}
-
 .download-copy h2 {
   font-size: clamp(68px, 9vw, 144px);
 }
@@ -1525,10 +1472,9 @@ h2 span {
   padding-top: 20px;
   border-top: 1px solid rgba(17, 17, 19, 0.14);
   color: var(--muted);
-  font-size: 11px;
-  font-weight: 650;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 560;
+  letter-spacing: 0;
 }
 
 .footer-brand {
@@ -1644,10 +1590,9 @@ h2 span {
   justify-content: space-between;
   margin-top: 70px;
   color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 560;
+  letter-spacing: 0;
 }
 
 .wordmark:focus-visible,
@@ -1873,11 +1818,6 @@ h2 span {
     width: 100%;
   }
 
-  .kicker {
-    margin-bottom: 18px;
-    font-size: 10px;
-  }
-
   h1 {
     max-width: 96vw;
     font-size: clamp(57px, 17vw, 84px);
@@ -2015,14 +1955,6 @@ h2 span {
     font-size: 19px;
   }
 
-  .community-privacy {
-    right: 22px;
-    bottom: max(26px, env(safe-area-inset-bottom));
-    left: 22px;
-    font-size: 9px;
-    line-height: 1.5;
-  }
-
   .community-orbit {
     right: -72vw;
     width: 150vw;
@@ -2033,14 +1965,14 @@ h2 span {
   }
 
   .faq-question {
-    grid-template-columns: 32px 1fr 34px;
+    grid-template-columns: 1fr 34px;
     min-height: 86px;
     font-size: 18px;
   }
 
   .faq-answer p {
     margin-right: 0;
-    margin-left: 46px;
+    margin-left: 0;
     font-size: 15px;
   }
 
@@ -2065,7 +1997,7 @@ h2 span {
     align-items: flex-start;
     flex-direction: column;
     gap: 20px;
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .footer-brand {
@@ -2265,15 +2197,6 @@ h2 span {
   line-height: 1.5;
 }
 
-.hero-proof {
-  margin: 16px 0 0;
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 740;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .guides-section {
   background:
     radial-gradient(circle at 90% 12%, rgba(8, 185, 137, 0.12), transparent 25%),
@@ -2317,6 +2240,7 @@ h2 span {
 .home-guide-card {
   position: relative;
   display: grid;
+  align-content: end;
   min-height: 260px;
   padding: clamp(26px, 3.2vw, 46px);
   overflow: hidden;
@@ -2330,29 +2254,14 @@ h2 span {
   grid-column: 1 / -1;
 }
 
-.home-guide-card > p {
-  margin: 36px 0 14px;
-  color: var(--signal);
-  font-size: 11px;
-  font-weight: 780;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
 .home-guide-card h3 {
   max-width: 600px;
   margin: 0;
+  padding-right: 44px;
   font-size: clamp(30px, 3.5vw, 52px);
   font-weight: 680;
   letter-spacing: -0.055em;
   line-height: 1;
-}
-
-.home-guide-number {
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 760;
-  letter-spacing: 0.12em;
 }
 
 .home-guide-card strong {
@@ -2464,16 +2373,7 @@ h2 span {
 
 .guide-hero {
   max-width: 1180px;
-  margin: 42px auto clamp(86px, 13vh, 146px);
-}
-
-.guide-eyebrow {
-  margin: 0 0 20px;
-  color: var(--signal);
-  font-size: 11px;
-  font-weight: 780;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  margin: clamp(54px, 8vh, 92px) auto clamp(86px, 13vh, 146px);
 }
 
 .guide-hero h1 {
@@ -2493,15 +2393,6 @@ h2 span {
   font-weight: 520;
   letter-spacing: -0.025em;
   line-height: 1.42;
-}
-
-.guide-updated {
-  margin: 24px 0 0;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 680;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 .guide-body {
@@ -2559,11 +2450,10 @@ h2 span {
 }
 
 .topic-facts dt {
-  color: var(--signal);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0;
 }
 
 .topic-facts dd {
@@ -2664,27 +2554,13 @@ h2 span {
   color: var(--ink);
 }
 
-.guide-callout-label {
-  margin: 0 0 22px;
-  color: var(--signal);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.guide-callout-signal .guide-callout-label,
-.guide-callout-green .guide-callout-label {
-  color: rgba(17, 17, 19, 0.62);
-}
-
 .guide-callout h2 {
   max-width: 780px;
   margin-bottom: 26px;
   color: inherit;
 }
 
-.guide-callout > p:not(.guide-callout-label) {
+.guide-callout > p {
   max-width: 720px;
   margin: 0;
   color: rgba(251, 250, 246, 0.72);
@@ -2692,8 +2568,8 @@ h2 span {
   line-height: 1.65;
 }
 
-.guide-callout-signal > p:not(.guide-callout-label),
-.guide-callout-green > p:not(.guide-callout-label) {
+.guide-callout-signal > p,
+.guide-callout-green > p {
   color: rgba(17, 17, 19, 0.72);
 }
 
@@ -3044,17 +2920,9 @@ h2 span {
   background: var(--paper);
 }
 
-.guide-card > span {
-  color: var(--signal);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-}
-
 .guide-card h3 {
   max-width: 470px;
-  margin: 28px 0 14px;
+  margin: 0 0 14px;
   font-size: clamp(27px, 3vw, 40px);
   font-weight: 670;
   letter-spacing: -0.052em;
@@ -3085,10 +2953,9 @@ h2 span {
   padding: 30px clamp(22px, 7vw, 118px) max(34px, env(safe-area-inset-bottom));
   border-top: 1px solid rgba(17, 17, 19, 0.14);
   color: var(--muted);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 560;
+  letter-spacing: 0;
 }
 
 .guide-footer nav {
@@ -3143,10 +3010,6 @@ h2 span {
   margin-bottom: 42px;
 }
 
-.guide-group-heading .guide-eyebrow {
-  grid-column: 1 / -1;
-}
-
 .guide-group-heading h2 {
   margin: 0;
   font-size: clamp(42px, 5.5vw, 78px);
@@ -3164,7 +3027,7 @@ h2 span {
 
 .guide-index-card {
   display: grid;
-  grid-template-columns: 58px minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: clamp(18px, 4vw, 58px);
   align-items: center;
   padding: clamp(34px, 6vh, 62px) 0;
@@ -3173,22 +3036,6 @@ h2 span {
 
 .guide-index-card:last-child {
   border-bottom: 1px solid rgba(17, 17, 19, 0.16);
-}
-
-.guide-index-number {
-  color: var(--signal);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-}
-
-.guide-index-card p {
-  margin: 0 0 12px;
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 760;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 .guide-index-card h2,
@@ -3237,11 +3084,7 @@ h2 span {
     color: var(--paper);
   }
 
-  .home-guide-card:hover .home-guide-number,
-  .home-guide-card:hover > p,
-  .guide-card:hover > span,
   .guide-card:hover p,
-  .guide-index-card:hover p,
   .guide-index-card:hover div > span {
     color: rgba(251, 250, 246, 0.68);
   }
@@ -3292,11 +3135,6 @@ h2 span {
     line-height: 1.42;
   }
 
-  .hero-proof {
-    margin-top: 13px;
-    font-size: 8px;
-  }
-
   .guides-heading h2 {
     font-size: clamp(52px, 15vw, 76px);
   }
@@ -3320,10 +3158,6 @@ h2 span {
   .home-guide-card {
     min-height: 220px;
     padding: 26px 22px;
-  }
-
-  .home-guide-card > p {
-    margin-top: 30px;
   }
 
   .guide-topbar {
@@ -3364,7 +3198,7 @@ h2 span {
   }
 
   .guide-body > section > p,
-  .guide-callout > p:not(.guide-callout-label) {
+  .guide-callout > p {
     font-size: 16px;
   }
 

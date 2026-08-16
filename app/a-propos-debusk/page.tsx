@@ -98,7 +98,6 @@ export default function AboutDebuskPage() {
       />
 
       <aside className="guide-callout guide-callout-signal guide-callout-first">
-        <p className="guide-callout-label">Réponse courte</p>
         <h2>Quelle application pour les bus à Aix-en-Provence ?</h2>
         <p>
           Débusk est une application indépendante et gratuite pour consulter
@@ -112,8 +111,7 @@ export default function AboutDebuskPage() {
 
       <section className="topic-overview" aria-label="Faits essentiels sur Débusk">
         <div>
-          <p className="guide-eyebrow">Identité vérifiable</p>
-          <h2>Les faits essentiels</h2>
+          <h2>Les faits essentiels sur Débusk</h2>
         </div>
         <dl className="topic-facts">
           <div>

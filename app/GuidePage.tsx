@@ -29,7 +29,6 @@ const updatedLabel = "16 août 2026";
 
 export function GuidePage({
   path,
-  eyebrow,
   title,
   intro,
   structuredType = "Article",
@@ -130,17 +129,11 @@ export function GuidePage({
               <Link href={breadcrumbParent.href}>{breadcrumbParent.label}</Link>
             </>
           ) : null}
-          <span aria-hidden="true">/</span>
-          <span aria-current="page">{eyebrow}</span>
         </nav>
 
         <header className="guide-hero">
-          <p className="guide-eyebrow">{eyebrow}</p>
           <h1>{title}</h1>
           <p className="guide-intro">{intro}</p>
-          <p className="guide-updated">
-            Vérifié le <time dateTime={UPDATED_AT}>{updatedLabel}</time>
-          </p>
         </header>
 
         <div className="guide-body">{children}</div>
@@ -148,8 +141,7 @@ export function GuidePage({
 
       <aside className="guide-download" aria-labelledby="guide-download-title">
         <div>
-          <p className="guide-eyebrow">L’app Débusk</p>
-          <h2 id="guide-download-title">Gardez les trajets à portée de main.</h2>
+          <h2 id="guide-download-title">Débusk à portée de main.</h2>
           <p>
             Horaires, itinéraires, lignes favorites, perturbations et suivi
             communautaire des bus d’Aix-en-Provence.
@@ -160,13 +152,11 @@ export function GuidePage({
 
       <section className="related-guides" aria-labelledby="related-guides-title">
         <div className="related-guides-heading">
-          <p className="guide-eyebrow">À lire ensuite</p>
-          <h2 id="related-guides-title">Préparez tout le trajet.</h2>
+          <h2 id="related-guides-title">À lire ensuite.</h2>
         </div>
         <div className="guide-card-grid">
           {relatedGuides.slice(0, 4).map((guide) => (
             <Link className="guide-card" href={guide.href} key={guide.href}>
-              <span>{guide.label}</span>
               <h3>{guide.title}</h3>
               <p>{guide.description}</p>
               <strong aria-hidden="true">→</strong>
@@ -176,7 +166,10 @@ export function GuidePage({
       </section>
 
       <footer className="guide-footer">
-        <span>Débusk · Projet indépendant conçu à Aix-en-Provence</span>
+        <span>
+          Débusk · Projet indépendant · Vérifié le{" "}
+          <time dateTime={UPDATED_AT}>{updatedLabel}</time>
+        </span>
         <nav aria-label="Informations légales">
           <Link href="/a-propos-debusk">À propos</Link>
           <Link href="/donnees-couverture-debusk">Données et couverture</Link>

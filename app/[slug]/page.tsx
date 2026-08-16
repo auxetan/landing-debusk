@@ -114,7 +114,6 @@ export default async function TopicPage({ params }: TopicPageProps) {
                 : ""
           }`}
         >
-          <p className="guide-callout-label">{guide.callout.label}</p>
           <h2>{guide.callout.title}</h2>
           <p>{guide.callout.text}</p>
         </aside>

@@ -20,7 +20,6 @@ export default function InformationsPage() {
       </Link>
 
       <header className="information-header">
-        <p className="section-eyebrow">En toute transparence</p>
         <h1>Informations</h1>
         <p>
           Les réponses claires sur le projet, les données transport, la

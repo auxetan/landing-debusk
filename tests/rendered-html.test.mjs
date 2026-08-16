@@ -50,16 +50,60 @@ test("server-renders the finished Débusk landing page", async () => {
   assert.match(html, /Vous le voyez venir\./);
   assert.match(html, /Les bus autour de vous/);
   assert.match(html, /Vos départs en un coup d’œil/);
-  assert.match(html, /Le suivi communautaire/);
   assert.match(html, /Chaque contribution/);
   assert.match(html, /aide le suivant\./);
   assert.match(html, /sa position actualise le bus sur/);
-  assert.match(html, /identité non affichée/);
+  assert.match(html, /partage reste volontaire/);
   assert.match(html, /Débusk affiche-t-il les horaires/);
   assert.match(html, /Puis-je acheter un abonnement scolaire/);
   assert.match(html, /Voir toutes les questions/);
   assert.match(html, /Le suivi consomme-t-il de la batterie/);
   assert.doesNotMatch(html, /codex-preview|Building your site|loading skeleton/i);
+});
+
+test("keeps the landing page and guide openings visually airy", async () => {
+  const [home, faq, guidePage, guideIndex, applicationPage, css] =
+    await Promise.all([
+      readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../app/FaqSection.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../app/GuidePage.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../app/guides/page.tsx", import.meta.url), "utf8"),
+      readFile(
+        new URL(
+          "../app/application-bus-aix-en-provence/page.tsx",
+          import.meta.url,
+        ),
+        "utf8",
+      ),
+      readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    ]);
+
+  assert.doesNotMatch(
+    home,
+    /className="(?:kicker|hero-proof|section-eyebrow|community-privacy)"/,
+  );
+  assert.match(home, /const homeGuideLinks = \[/);
+  assert.match(home, /featuredGuideLinks\[4\]/);
+  assert.match(home, /homeGuideLinks\.map/);
+  assert.match(home, /Découvrir l’app/);
+  assert.match(faq, /initialQuestionCount = 3/);
+  assert.doesNotMatch(faq, /section-eyebrow|faq-number/);
+  assert.doesNotMatch(guidePage, /guide-eyebrow|guide-updated/);
+  assert.doesNotMatch(guidePage, /\{guide\.label\}/);
+  assert.doesNotMatch(guideIndex, /guide-eyebrow|guide-index-number/);
+  assert.doesNotMatch(applicationPage, /moteurs de recherche/);
+
+  for (const removedClass of [
+    "kicker",
+    "hero-proof",
+    "section-eyebrow",
+    "community-privacy",
+    "guide-eyebrow",
+    "guide-updated",
+    "guide-callout-label",
+  ]) {
+    assert.doesNotMatch(css, new RegExp(`\\.${removedClass}\\b`));
+  }
 });
 
 test("ships all seven app screens in a swipeable, keyboard-friendly carousel", async () => {

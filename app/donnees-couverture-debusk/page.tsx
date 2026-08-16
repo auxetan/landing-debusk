@@ -53,7 +53,6 @@ export default function DataCoveragePage() {
       />
 
       <aside className="guide-callout guide-callout-signal guide-callout-first">
-        <p className="guide-callout-label">Réponse courte</p>
         <h2>Que couvre Débusk actuellement ?</h2>
         <p>
           Débusk exploite les lignes urbaines aixoises présentes dans son jeu
@@ -65,8 +64,7 @@ export default function DataCoveragePage() {
 
       <section className="topic-overview" aria-label="Fiche du jeu de données">
         <div>
-          <p className="guide-eyebrow">Jeu embarqué</p>
-          <h2>Version vérifiée</h2>
+          <h2>Version vérifiée du jeu embarqué</h2>
         </div>
         <dl className="topic-facts">
           <div>

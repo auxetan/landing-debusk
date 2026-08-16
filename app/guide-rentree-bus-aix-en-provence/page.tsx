@@ -84,7 +84,6 @@ export default function SchoolReturnGuidePage() {
       </section>
 
       <aside className="guide-callout guide-callout-signal">
-        <p className="guide-callout-label">À faire maintenant</p>
         <h2>Les inscriptions scolaires 2026–2027 sont ouvertes.</h2>
         <p>
           La campagne a commencé le 1er juillet 2026. Si le dossier n’est pas
