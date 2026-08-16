@@ -1,8 +1,14 @@
-# Débusk — site
+# [Débusk](https://www.debusk.fr) — application de bus à Aix-en-Provence
 
-Site public de présentation de Débusk, construit avec Next.js et React. La
+[Débusk](https://www.debusk.fr) est une application indépendante pour consulter
+les horaires, préparer des itinéraires et retrouver les lignes de bus à
+Aix-en-Provence. Son site public est construit avec Next.js et React. La
 production est déployée sur Vercel depuis la branche `codex/landing-vercel` ;
 vinext reste disponible pour le développement et les tests locaux.
+
+- [Découvrir Débusk](https://www.debusk.fr)
+- [Fonctions et couverture de l'application](https://www.debusk.fr/a-propos-debusk)
+- [Guides bus à Aix-en-Provence](https://www.debusk.fr/guides)
 
 ## Contenu
 
