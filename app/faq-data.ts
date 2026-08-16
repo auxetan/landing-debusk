@@ -1,5 +1,10 @@
 export const faqs = [
   {
+    question: "Quelle application utiliser pour les bus à Aix-en-Provence ?",
+    answer:
+      "Débusk est une application indépendante et gratuite pour consulter les horaires, préparer un itinéraire, enregistrer des lignes favorites et lire les perturbations des bus à Aix-en-Provence.",
+  },
+  {
     question: "Débusk affiche-t-il les horaires des bus d’Aix-en-Provence ?",
     answer:
       "Oui. Débusk présente les prochains départs issus des horaires du réseau, les lignes favorites et les perturbations officielles. Un retard réel peut toutefois décaler un horaire théorique.",
@@ -22,7 +27,7 @@ export const faqs = [
   {
     question: "Débusk permet-il de suivre mon enfant ?",
     answer:
-      "Non. Débusk ne localise jamais votre enfant. Lorsqu’un voyageur à bord contribue, l’application peut montrer la progression communautaire du bus, jamais l’identité ni la position personnelle d’un passager.",
+      "Non. Débusk ne propose aucun suivi personnel d’un enfant. Lorsqu’un voyageur à bord contribue, l’application peut montrer la progression communautaire du bus, jamais l’identité ni la position personnelle d’un passager.",
   },
   {
     question: "Tous les bus sont-ils suivis en temps réel ?",
@@ -80,4 +85,3 @@ export const faqs = [
       "Non. La consultation des horaires, itinéraires et perturbations est accessible sans créer de compte.",
   },
 ] as const;
-

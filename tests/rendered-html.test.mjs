@@ -38,7 +38,10 @@ test("server-renders the finished Débusk landing page", async () => {
     /<link rel="canonical" href="https:\/\/www\.debusk\.fr\/"\s*\/>/i,
   );
   assert.match(html, /"@type":"MobileApplication"/);
+  assert.match(html, /"@id":"https:\/\/www\.debusk\.fr\/#application"/);
+  assert.match(html, /"publisher":\{"@id":"https:\/\/www\.debusk\.fr\/#organization"\}/);
   assert.match(html, /"@type":"FAQPage"/);
+  assert.match(html, /Quelle application utiliser pour les bus à Aix-en-Provence/);
   assert.match(html, /Le bus à Aix\./);
   assert.match(html, /Nous contacter/);
   assert.match(html, /href="#contact"/);
@@ -97,6 +100,19 @@ test("ships all seven app screens in a swipeable, keyboard-friendly carousel", a
   assert.match(screenData, /suivi volontaire/);
   assert.match(css, /scroll-snap-type:\s*x mandatory/);
   assert.match(css, /touch-action:\s*pan-x pan-y/);
+  for (const className of [
+    "brand-logo-frame",
+    "download-logo-frame",
+    "guide-brand-icon",
+  ]) {
+    const block = css.match(
+      new RegExp(`\\.${className}\\s*\\{([\\s\\S]*?)\\}`),
+    )?.[1];
+    assert.ok(block, className);
+    assert.match(block, /overflow:\s*hidden/, className);
+    assert.match(block, /border-radius:\s*22%/, className);
+    assert.match(block, /background:\s*transparent/, className);
+  }
 });
 
 test("keeps the hamburger contact form wired to the dedicated template", async () => {
@@ -233,6 +249,16 @@ test("publishes crawlable robots and sitemap endpoints", async () => {
   const robots = await robotsResponse.text();
   assert.match(robots, /User-Agent:\s*\*/i);
   assert.match(robots, /Allow:\s*\//i);
+  for (const agent of [
+    "OAI-SearchBot",
+    "PerplexityBot",
+    "Claude-SearchBot",
+    "Google-Extended",
+    "bingbot",
+    "Applebot",
+  ]) {
+    assert.match(robots, new RegExp(`User-Agent:\\s*${agent}`, "i"));
+  }
   assert.match(robots, /Sitemap:\s*https:\/\/www\.debusk\.fr\/sitemap\.xml/i);
 
   assert.equal(sitemapResponse.status, 200);
@@ -240,6 +266,8 @@ test("publishes crawlable robots and sitemap endpoints", async () => {
   for (const pathname of [
     "/guides",
     "/application-bus-aix-en-provence",
+    "/a-propos-debusk",
+    "/donnees-couverture-debusk",
     "/guide-rentree-bus-aix-en-provence",
     "/horaires-bus-aix-en-provence",
     "/itineraire-bus-aix-en-provence",
@@ -298,6 +326,53 @@ test("publishes crawlable robots and sitemap endpoints", async () => {
   }
 
   await access(new URL("../public/og.png", import.meta.url));
+});
+
+test("publishes a citeable Débusk identity, exact coverage and agent guidance", async () => {
+  const [aboutResponse, coverageResponse, llms, indexNowKey] = await Promise.all([
+    render("/a-propos-debusk"),
+    render("/donnees-couverture-debusk"),
+    readFile(new URL("../public/llms.txt", import.meta.url), "utf8"),
+    readFile(
+      new URL(
+        "../public/ba209defc82913f8d72883481adefc74.txt",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  ]);
+
+  assert.equal(aboutResponse.status, 200);
+  const about = await aboutResponse.text();
+  assert.match(about, /Quelle application pour les bus à Aix-en-Provence/);
+  assert.match(about, /application indépendante et gratuite/);
+  assert.match(about, /"@type":"AboutPage"/);
+  assert.match(about, /"@id":"https:\/\/www\.debusk\.fr\/#application"/);
+  assert.ok(
+    about.includes(
+      '<link rel="canonical" href="https://www.debusk.fr/a-propos-debusk"/>',
+    ),
+  );
+
+  assert.equal(coverageResponse.status, 200);
+  const coverage = await coverageResponse.text();
+  assert.match(coverage, /67 lignes · 1 190 arrêts · 52 646 courses/);
+  assert.match(coverage, /29 dessertes scolaires actives le mardi 1er septembre/);
+  assert.match(coverage, /26 le mercredi 2 septembre/);
+  assert.match(coverage, /302d1b16cf3bdc0422d55dd17eded36/);
+  assert.match(coverage, /aucune course A2/);
+  assert.match(coverage, /transport à la demande n’est pas inclus/);
+  assert.match(coverage, /"isBasedOn":\[/);
+  assert.ok(
+    coverage.includes(
+      '<link rel="canonical" href="https://www.debusk.fr/donnees-couverture-debusk"/>',
+    ),
+  );
+
+  assert.match(llms, /^# Débusk/m);
+  assert.match(llms, /indépendante et non officielle/);
+  assert.match(llms, /aucune course A2/);
+  assert.equal(indexNowKey.trim(), "ba209defc82913f8d72883481adefc74");
 });
 
 test("server-renders the new transport clusters and image-rich app page", async () => {

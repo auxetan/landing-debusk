@@ -77,13 +77,17 @@ const websiteStructuredData = [
     description,
     inLanguage: "fr-FR",
     publisher: { "@id": SITE_URL + "/#organization" },
+    about: { "@id": SITE_URL + "/#application" },
   },
   {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": SITE_URL + "/#organization",
     name: SITE_NAME,
+    alternateName: "Debusk",
     url: SITE_URL,
+    description:
+      "Éditeur du site et de l’application mobile indépendante Débusk, conçue pour les déplacements en bus à Aix-en-Provence.",
     logo: {
       "@type": "ImageObject",
       url: SITE_URL + "/icon-192.png",
@@ -95,6 +99,11 @@ const websiteStructuredData = [
       "@type": "AdministrativeArea",
       name: "Aix-en-Provence et Pays d’Aix",
     },
+    knowsAbout: [
+      "Horaires de bus à Aix-en-Provence",
+      "Itinéraires de bus à Aix-en-Provence",
+      "Lignes scolaires du Pays d’Aix",
+    ],
   },
 ];
 

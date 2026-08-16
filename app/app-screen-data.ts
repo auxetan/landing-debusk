@@ -96,11 +96,7 @@ export const appScreenImageObjects: Array<Record<string, unknown>> =
       height: screen.height,
       inLanguage: "fr-FR",
       isPartOf: { "@id": absoluteUrl("/#website") },
-      about: {
-        "@type": "MobileApplication",
-        name: "Débusk",
-        url: absoluteUrl("/"),
-      },
+      about: { "@id": absoluteUrl("/#application") },
     };
   });
 

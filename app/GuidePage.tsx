@@ -11,6 +11,11 @@ type GuidePageProps = {
   eyebrow: string;
   title: string;
   intro: string;
+  structuredType?: "Article" | "AboutPage";
+  breadcrumbParent?: {
+    href: string;
+    label: string;
+  } | null;
   image?: {
     url: string;
     width: number;
@@ -27,6 +32,8 @@ export function GuidePage({
   eyebrow,
   title,
   intro,
+  structuredType = "Article",
+  breadcrumbParent = { href: "/guides", label: "Guides" },
   image,
   children,
 }: GuidePageProps) {
@@ -36,13 +43,19 @@ export function GuidePage({
   const structuredData = [
     {
       "@context": "https://schema.org",
-      "@type": "Article",
-      headline: title,
+      "@type": structuredType,
+      "@id":
+        currentUrl + (structuredType === "Article" ? "#article" : "#webpage"),
+      url: currentUrl,
+      ...(structuredType === "Article" ? { headline: title } : { name: title }),
+      ...(structuredType === "AboutPage"
+        ? { mainEntity: { "@id": absoluteUrl("/#application") } }
+        : {}),
       description: intro,
       datePublished: UPDATED_AT,
       dateModified: UPDATED_AT,
       inLanguage: "fr-FR",
-      mainEntityOfPage: currentUrl,
+      ...(structuredType === "Article" ? { mainEntityOfPage: currentUrl } : {}),
       ...(image
         ? {
             image: {
@@ -55,19 +68,12 @@ export function GuidePage({
           }
         : {}),
       author: {
-        "@type": "Organization",
-        name: "Débusk",
-        url: absoluteUrl("/"),
+        "@id": absoluteUrl("/#organization"),
       },
       publisher: {
-        "@type": "Organization",
-        name: "Débusk",
-        url: absoluteUrl("/"),
-        logo: {
-          "@type": "ImageObject",
-          url: absoluteUrl("/icon-192.png"),
-        },
+        "@id": absoluteUrl("/#organization"),
       },
+      isPartOf: { "@id": absoluteUrl("/#website") },
     },
     {
       "@context": "https://schema.org",
@@ -79,15 +85,19 @@ export function GuidePage({
           name: "Accueil",
           item: absoluteUrl("/"),
         },
+        ...(breadcrumbParent
+          ? [
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: breadcrumbParent.label,
+                item: absoluteUrl(breadcrumbParent.href),
+              },
+            ]
+          : []),
         {
           "@type": "ListItem",
-          position: 2,
-          name: "Guides",
-          item: absoluteUrl("/guides"),
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
+          position: breadcrumbParent ? 3 : 2,
           name: title,
           item: currentUrl,
         },
@@ -114,8 +124,12 @@ export function GuidePage({
       <article>
         <nav className="breadcrumbs" aria-label="Fil d’Ariane">
           <Link href="/">Accueil</Link>
-          <span aria-hidden="true">/</span>
-          <Link href="/guides">Guides</Link>
+          {breadcrumbParent ? (
+            <>
+              <span aria-hidden="true">/</span>
+              <Link href={breadcrumbParent.href}>{breadcrumbParent.label}</Link>
+            </>
+          ) : null}
           <span aria-hidden="true">/</span>
           <span aria-current="page">{eyebrow}</span>
         </nav>
@@ -164,6 +178,8 @@ export function GuidePage({
       <footer className="guide-footer">
         <span>Débusk · Projet indépendant conçu à Aix-en-Provence</span>
         <nav aria-label="Informations légales">
+          <Link href="/a-propos-debusk">À propos</Link>
+          <Link href="/donnees-couverture-debusk">Données et couverture</Link>
           <Link href="/informations#confidentialite">Confidentialité</Link>
           <Link href="/informations#mentions">Mentions</Link>
           <Link href="/informations#sources">Sources</Link>

@@ -94,6 +94,8 @@ export default function GuidesPage() {
       <footer className="guide-footer">
         <span>Débusk · Projet indépendant conçu à Aix-en-Provence</span>
         <nav aria-label="Informations légales">
+          <Link href="/a-propos-debusk">À propos</Link>
+          <Link href="/donnees-couverture-debusk">Données et couverture</Link>
           <Link href="/informations#confidentialite">Confidentialité</Link>
           <Link href="/informations#mentions">Mentions</Link>
           <Link href="/informations#sources">Sources</Link>

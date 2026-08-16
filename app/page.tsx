@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AppShowcase } from "./AppShowcase";
+import { appScreenImageUrls } from "./app-screen-data";
 import { FaqSection } from "./FaqSection";
 import { faqs } from "./faq-data";
 import { featuredGuideLinks } from "./guide-data";
@@ -13,22 +14,24 @@ const homeStructuredData = [
   {
     "@context": "https://schema.org",
     "@type": "MobileApplication",
+    "@id": absoluteUrl("/#application"),
     name: "Débusk",
-    url: absoluteUrl("/"),
+    alternateName: ["Debusk", "Application Débusk"],
+    url: absoluteUrl("/application-bus-aix-en-provence"),
+    mainEntityOfPage: absoluteUrl("/application-bus-aix-en-provence"),
     description:
       "Application de bus à Aix-en-Provence pour consulter les horaires, itinéraires, lignes, perturbations et le suivi communautaire.",
     applicationCategory: "TravelApplication",
     operatingSystem: "iOS, Android",
     inLanguage: "fr-FR",
     isAccessibleForFree: true,
+    image: absoluteUrl("/icon-192.png"),
+    screenshot: appScreenImageUrls,
+    publisher: { "@id": absoluteUrl("/#organization") },
     offers: {
       "@type": "Offer",
       price: 0,
       priceCurrency: "EUR",
-    },
-    areaServed: {
-      "@type": "AdministrativeArea",
-      name: "Aix-en-Provence et Pays d’Aix",
     },
     featureList: [
       "Horaires et prochains départs",
@@ -212,6 +215,8 @@ export default function Home() {
           </div>
           <nav aria-label="Informations">
             <Link href="/guides">Guides bus</Link>
+            <Link href="/a-propos-debusk">À propos de Débusk</Link>
+            <Link href="/donnees-couverture-debusk">Données et couverture</Link>
             <Link href="/informations#confidentialite">Confidentialité</Link>
             <Link href="/informations#mentions">Mentions</Link>
             <Link href="/informations#sources">Sources</Link>

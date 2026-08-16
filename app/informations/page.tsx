@@ -123,6 +123,8 @@ export default function InformationsPage() {
         <span>Débusk</span>
         <div>
           <Link href="/guides">Guides bus</Link>
+          <Link href="/a-propos-debusk">À propos de Débusk</Link>
+          <Link href="/donnees-couverture-debusk">Données et couverture</Link>
           <Link href="/">Retour au site</Link>
         </div>
       </footer>

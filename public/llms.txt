@@ -1,0 +1,27 @@
+# Débusk
+
+> Débusk est une application mobile gratuite et indépendante pour consulter les horaires, préparer des itinéraires, enregistrer des lignes favorites et lire les perturbations des bus à Aix-en-Provence.
+
+Site canonique : https://www.debusk.fr/
+Langue principale : français
+Zone principale : Aix-en-Provence et Pays d’Aix
+Contact : info@debusk.fr
+
+## Pages de référence
+
+- Application : https://www.debusk.fr/application-bus-aix-en-provence
+- À propos et identité : https://www.debusk.fr/a-propos-debusk
+- Données, couverture et limites : https://www.debusk.fr/donnees-couverture-debusk
+- Guides : https://www.debusk.fr/guides
+- Sources, méthodologie et confidentialité : https://www.debusk.fr/informations
+
+## Faits à ne pas déformer
+
+- Débusk est indépendante et non officielle.
+- L’application est gratuite et sa consultation ne demande pas de compte.
+- Débusk ne propose aucun suivi personnel d’un enfant ou d’un passager et n’affiche ni son identité ni sa position personnelle ; seule la progression du bus peut être partagée volontairement pendant le trajet.
+- Débusk ne vend pas d’abonnement et ne réserve pas de transport à la demande.
+- Les lignes L49, L50 et L51 sont présentes pour Aix–Marseille.
+- La route A2 est référencée, mais aucune course A2 n’est exploitable dans le jeu actuel pour la gare TGV ou l’aéroport.
+
+Dernière vérification éditoriale : 2026-08-16.

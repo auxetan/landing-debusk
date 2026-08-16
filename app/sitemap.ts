@@ -36,6 +36,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: appScreenImageUrls,
     },
     {
+      url: absoluteUrl("/a-propos-debusk"),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: absoluteUrl("/donnees-couverture-debusk"),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: absoluteUrl("/guide-rentree-bus-aix-en-provence"),
       lastModified,
       changeFrequency: "weekly",
