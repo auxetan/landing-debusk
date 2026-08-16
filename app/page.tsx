@@ -185,7 +185,7 @@ export default function Home() {
             <Image
               className="download-logo"
               src="/icon-192.png"
-              alt=""
+              alt="Icône de l’application Débusk"
               width="96"
               height="96"
               unoptimized

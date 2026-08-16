@@ -148,7 +148,7 @@ export function SiteHeader() {
             <Image
               className="brand-logo"
               src="/icon-192.png"
-              alt=""
+              alt="Logo Débusk"
               width="48"
               height="48"
               unoptimized

@@ -487,3 +487,35 @@ test("emits valid JSON-LD on the landing page and editorial pages", async () => 
     }
   }
 });
+
+test("gives every image on crawlable pages a non-empty alt attribute", async () => {
+  const sitemapResponse = await render("/sitemap.xml");
+  assert.equal(sitemapResponse.status, 200);
+
+  const sitemap = await sitemapResponse.text();
+  const pathnames = [
+    ...new Set(
+      [...sitemap.matchAll(/<loc>(https:\/\/www\.debusk\.fr[^<]*)<\/loc>/g)].map(
+        (match) => new URL(match[1]).pathname,
+      ),
+    ),
+  ];
+
+  assert.ok(pathnames.length >= 31);
+
+  for (const pathname of pathnames) {
+    const response = await render(pathname);
+    assert.equal(response.status, 200, pathname);
+    const html = await response.text();
+    const imageTags = html.match(/<img\b[^>]*>/gi) ?? [];
+
+    for (const imageTag of imageTags) {
+      const alt = imageTag.match(/\balt=(["'])(.*?)\1/i);
+      assert.ok(alt, `${pathname}: attribut alt manquant dans ${imageTag}`);
+      assert.ok(
+        alt[2].trim().length > 0,
+        `${pathname}: attribut alt vide dans ${imageTag}`,
+      );
+    }
+  }
+});
