@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { CustomCursor } from "./CustomCursor";
+import { SiteAnalytics } from "./SiteAnalytics";
 import { SITE_NAME, SITE_URL } from "./seo";
 import { StructuredData } from "./StructuredData";
 import "./globals.css";
@@ -117,6 +118,7 @@ export default function RootLayout({
       <body>
         <StructuredData data={websiteStructuredData} />
         {children}
+        <SiteAnalytics />
         <CustomCursor />
       </body>
     </html>

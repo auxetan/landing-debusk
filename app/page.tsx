@@ -162,13 +162,24 @@ export default function Home() {
         </div>
         <div className="home-guide-grid">
           {homeGuideLinks.map((guide) => (
-            <Link className="home-guide-card" href={guide.href} key={guide.href}>
+            <Link
+              className="home-guide-card"
+              href={guide.href}
+              key={guide.href}
+              data-site-event="guide_open"
+              data-site-guide={guide.href.replace(/^\//, "")}
+            >
               <h3>{guide.title}</h3>
               <strong aria-hidden="true">→</strong>
             </Link>
           ))}
         </div>
-        <Link className="guides-all-link" href="/guides">
+        <Link
+          className="guides-all-link"
+          href="/guides"
+          data-site-event="guide_open"
+          data-site-guide="guides"
+        >
           Voir tous les guides <span aria-hidden="true">↗</span>
         </Link>
       </section>

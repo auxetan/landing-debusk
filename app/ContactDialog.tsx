@@ -8,6 +8,7 @@ import {
   type MouseEvent,
 } from "react";
 import { CONTACT_EMAIL } from "./contact";
+import { trackSiteEvent } from "./SiteAnalytics";
 
 const EMAILJS_PUBLIC_KEY = "mEs-8Cr-fd6idbZLs";
 const EMAILJS_SERVICE_ID = "service_7znwy0i";
@@ -162,6 +163,9 @@ export function ContactDialog({ isOpen, onClose }: ContactDialogProps) {
       setEmail("");
       setMessage("");
       setSent(true);
+      trackSiteEvent("contact_submit", {
+        category: contactType.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+      });
     } catch (sendError) {
       console.error("[Débusk contact]", sendError);
       setError("L’envoi a échoué. Réessayez dans un instant.");

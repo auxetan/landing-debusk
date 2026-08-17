@@ -190,6 +190,8 @@ export function SiteHeader() {
             <a
               href={item.href}
               key={item.href}
+              data-site-event={item.contact ? "contact_open" : item.page ? "guide_open" : undefined}
+              data-site-guide={item.page ? item.href.replace(/^\//, "") : undefined}
               ref={index === 0 ? firstLinkRef : undefined}
               tabIndex={isOpen ? 0 : -1}
               onClick={

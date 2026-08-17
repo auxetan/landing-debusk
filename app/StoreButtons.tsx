@@ -33,6 +33,8 @@ export function StoreButtons({ compact = false }: { compact?: boolean }) {
             rel="noopener noreferrer"
             aria-label={`${store.eyebrow} ${store.label}`}
             data-cursor-theme={index === 0 ? "dark" : undefined}
+            data-site-event="store_click"
+            data-site-store={index === 0 ? "app_store" : "google_play"}
           >
             <span className="store-icon" aria-hidden="true">
               <Icon />
@@ -50,4 +52,3 @@ export function StoreButtons({ compact = false }: { compact?: boolean }) {
     </div>
   );
 }
-

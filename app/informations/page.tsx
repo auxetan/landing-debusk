@@ -40,6 +40,16 @@ export default function InformationsPage() {
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
             </p>
             <p>
+              Une mesure d’audience interne comptabilise les pages consultées,
+              le domaine d’origine, le type d’appareil et les clics vers les
+              boutiques ou le contact. Elle n’utilise aucun cookie publicitaire,
+              ne collecte ni adresse IP ni identité et ne suit personne entre
+              plusieurs sites. Un identifiant aléatoire limité à l’onglet est
+              effacé à sa fermeture ; les données brutes sont supprimées après
+              treize mois. Les signaux « Do Not Track » et Global Privacy Control
+              désactivent cette mesure.
+            </p>
+            <p>
               Dans l’application, le suivi de trajet reste volontaire. Aucun
               nom n’apparaît sur la carte et le partage s’arrête lorsque vous
               touchez « Je descends » ou quittez le mode conduite.

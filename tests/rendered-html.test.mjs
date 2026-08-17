@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render(pathname = "/") {
+async function render(pathname = "/", init = {}) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
@@ -10,6 +10,7 @@ async function render(pathname = "/") {
   return worker.fetch(
     new Request(`http://localhost${pathname}`, {
       headers: { accept: "text/html" },
+      ...init,
     }),
     {
       ASSETS: {
@@ -192,12 +193,74 @@ test("keeps the hamburger contact form wired to the dedicated template", async (
   assert.match(dialog, /Patientez 30 secondes/);
 });
 
+test("collects first-party site analytics through the guarded same-origin route", async () => {
+  const [client, route, layout, stores, information] = await Promise.all([
+    readFile(new URL("../app/SiteAnalytics.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/api/analytics/route.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/StoreButtons.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/informations/page.tsx", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(layout, /<SiteAnalytics \/>/);
+  assert.match(client, /sessionStorage/);
+  assert.doesNotMatch(client, /localStorage|document\.cookie/);
+  assert.match(client, /navigator\.doNotTrack/);
+  assert.match(client, /globalPrivacyControl/);
+  assert.match(client, /referrerHostname/);
+  assert.match(stores, /data-site-event="store_click"/);
+  assert.match(route, /DEBUSK_ANALYTICS_INGEST_TOKEN/);
+  assert.match(route, /p_ingest_token: ingestToken/);
+  assert.doesNotMatch(route, /service[_-]?role/i);
+  assert.match(information, /identifiant aléatoire limité à l’onglet/);
+  assert.match(information, /treize mois/);
+
+  const validBody = JSON.stringify({
+    event_name: "page_view",
+    session_id: "0198b9a3-3561-7000-8000-000000000001",
+    path: "/",
+    device: "desktop",
+    properties: {},
+  });
+  const disabled = await render("/api/analytics", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      origin: "https://www.debusk.fr",
+    },
+    body: validBody,
+  });
+  assert.equal(disabled.status, 204);
+
+  const invalid = await render("/api/analytics", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      origin: "https://www.debusk.fr",
+    },
+    body: JSON.stringify({ event_name: "unknown", session_id: "bad" }),
+  });
+  assert.equal(invalid.status, 400);
+
+  const crossSite = await render("/api/analytics", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      origin: "https://example.com",
+      "sec-fetch-site": "cross-site",
+    },
+    body: validBody,
+  });
+  assert.equal(crossSite.status, 403);
+});
+
 test("renders the information page and contains no unused starter or login code", async () => {
   const response = await render("/informations");
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Confidentialité/);
   assert.match(html, /Aucun nom n’apparaît sur la carte/);
+  assert.match(html, /Une mesure d’audience interne/);
   assert.match(html, /Débusk est un projet numérique indépendant/);
   assert.match(html, /mailto:info@debusk\.fr/);
   assert.match(html, /info@debusk\.fr/);
