@@ -131,7 +131,7 @@ export default function InformationsPage() {
       <footer className="information-footer">
         <span>Débusk</span>
         <div>
-          <Link href="/guides">Guides bus</Link>
+          <Link href="/guide">Guide bus</Link>
           <Link href="/a-propos-debusk">À propos de Débusk</Link>
           <Link href="/donnees-couverture-debusk">Données et couverture</Link>
           <Link href="/">Retour au site</Link>

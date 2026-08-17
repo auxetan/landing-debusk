@@ -157,8 +157,8 @@ export default function Home() {
             <span>Avant de partir.</span>
           </h2>
           <p>
-            Horaires, itinéraires, lignes et abonnement scolaire : des guides
-            vérifiés pour les voyageurs et les familles d’Aix-en-Provence.
+            Horaires, itinéraires, lignes et abonnement scolaire : un guide
+            vérifié pour les voyageurs et les familles d’Aix-en-Provence.
           </p>
         </div>
         <div className="home-guide-grid">
@@ -177,11 +177,11 @@ export default function Home() {
         </div>
         <Link
           className="guides-all-link"
-          href="/guides"
+          href="/guide"
           data-site-event="guide_open"
-          data-site-guide="guides"
+          data-site-guide="guide"
         >
-          Voir tous les guides <span aria-hidden="true">↗</span>
+          Ouvrir le guide Débusk <span aria-hidden="true">↗</span>
         </Link>
       </section>
 
@@ -216,7 +216,7 @@ export default function Home() {
             <span>Application gratuite et indépendante · sans compte.</span>
           </div>
           <nav aria-label="Informations et réseaux sociaux">
-            <Link href="/guides">Guides bus</Link>
+            <Link href="/guide">Guide bus</Link>
             <Link href="/a-propos-debusk">À propos de Débusk</Link>
             <Link href="/donnees-couverture-debusk">Données et couverture</Link>
             <Link href="/informations#confidentialite">Confidentialité</Link>

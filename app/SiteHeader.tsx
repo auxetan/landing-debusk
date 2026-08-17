@@ -22,7 +22,7 @@ const navigation: NavigationItem[] = [
   { label: "Accueil", href: "#top" },
   { label: "Comment ça marche ?", href: "#comment-ca-marche" },
   { label: "La communauté", href: "#communaute" },
-  { label: "Guides bus & rentrée", href: "/guides", page: true },
+  { label: "Guide bus & rentrée", href: "/guide", page: true },
   { label: "Questions fréquentes", href: "#questions" },
   { label: "Télécharger", href: "#telecharger" },
   {

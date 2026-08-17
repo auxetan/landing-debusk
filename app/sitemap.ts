@@ -23,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: appScreenImageUrls,
     },
     {
-      url: absoluteUrl("/guides"),
+      url: absoluteUrl("/guide"),
       lastModified,
       changeFrequency: "weekly",
       priority: 0.9,

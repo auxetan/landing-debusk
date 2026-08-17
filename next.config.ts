@@ -5,6 +5,15 @@ import { fileURLToPath } from "node:url";
 const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/guides",
+        destination: "/guide",
+        permanent: true,
+      },
+    ];
+  },
   turbopack: {
     root: projectRoot,
   },

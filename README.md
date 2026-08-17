@@ -8,7 +8,7 @@ vinext reste disponible pour le développement et les tests locaux.
 
 - [Découvrir Débusk](https://www.debusk.fr)
 - [Fonctions et couverture de l'application](https://www.debusk.fr/a-propos-debusk)
-- [Guides bus à Aix-en-Provence](https://www.debusk.fr/guides)
+- [Guide du bus à Aix-en-Provence](https://www.debusk.fr/guide)
 
 ## Contenu
 

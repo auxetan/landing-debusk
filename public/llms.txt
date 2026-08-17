@@ -12,7 +12,7 @@ Contact : info@debusk.fr
 - Application : https://www.debusk.fr/application-bus-aix-en-provence
 - À propos et identité : https://www.debusk.fr/a-propos-debusk
 - Données, couverture et limites : https://www.debusk.fr/donnees-couverture-debusk
-- Guides : https://www.debusk.fr/guides
+- Guide : https://www.debusk.fr/guide
 - Sources, méthodologie et confidentialité : https://www.debusk.fr/informations
 
 ## Faits à ne pas déformer

@@ -153,7 +153,7 @@ export default async function TopicPage({ params }: TopicPageProps) {
         </ul>
       </section>
 
-      <nav className="topic-related" aria-label="Guides liés à ce trajet">
+      <nav className="topic-related" aria-label="Pages liées à ce trajet">
         <h2>Continuer la préparation</h2>
         <div>
           {guide.related.map((link) => (

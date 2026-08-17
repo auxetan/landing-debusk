@@ -32,7 +32,7 @@ test("server-renders the finished Débusk landing page", async () => {
   const html = await response.text();
   assert.match(
     html,
-    /<title>Débusk : horaires et itinéraires de bus à Aix-en-Provence<\/title>/i,
+    /<title>Débusk — Partez au bon moment !<\/title>/,
   );
   assert.match(
     html,
@@ -46,7 +46,8 @@ test("server-renders the finished Débusk landing page", async () => {
   assert.match(html, /Le bus à Aix\./);
   assert.match(html, /Nous contacter/);
   assert.match(html, /href="#contact"/);
-  assert.match(html, /href="\/guides"/);
+  assert.match(html, /href="\/guide"/);
+  assert.doesNotMatch(html, /href="\/guides"/);
   assert.match(
     html,
     /<a[^>]+href="https:\/\/www\.instagram\.com\/debusk\.fr\?igsi=MTE4b200bzc2NTd4eQ%3D%3D&amp;utm_source=qr"[^>]+target="_blank"[^>]+rel="noopener noreferrer"[^>]+aria-label="Suivre Débusk sur Instagram \(nouvel onglet\)"/,
@@ -76,7 +77,7 @@ test("keeps the landing page and guide openings visually airy", async () => {
       readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../app/FaqSection.tsx", import.meta.url), "utf8"),
       readFile(new URL("../app/GuidePage.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../app/guides/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../app/guide/page.tsx", import.meta.url), "utf8"),
       readFile(
         new URL(
           "../app/application-bus-aix-en-provence/page.tsx",
@@ -295,7 +296,7 @@ test("renders the information page and contains no unused starter or login code"
   assert.match(page, /<SiteHeader \/>/);
   assert.match(
     layout,
-    /Débusk : horaires et itinéraires de bus à Aix-en-Provence/,
+    /Débusk — Partez au bon moment !/,
   );
   assert.doesNotMatch(layout, /headers\(\)/);
   assert.match(packageJson, /"name": "debusk-site"/);
@@ -353,6 +354,38 @@ test("server-renders the search-intent guides with unique metadata", async () =>
   }
 });
 
+test("serves the singular guide hub and permanently redirects the old URL", async () => {
+  const guideResponse = await render("/guide");
+  assert.equal(guideResponse.status, 200);
+  const guideHtml = await guideResponse.text();
+  assert.match(
+    guideHtml,
+    /<title>Guide du bus à Aix-en-Provence : horaires, lignes et rentrée<\/title>/,
+  );
+  assert.match(
+    guideHtml,
+    /<link rel="canonical" href="https:\/\/www\.debusk\.fr\/guide"\s*\/>/,
+  );
+  assert.match(guideHtml, /"url":"https:\/\/www\.debusk\.fr\/guide"/);
+
+  const legacyResponse = await render("/guides", { redirect: "manual" });
+  assert.equal(legacyResponse.status, 308);
+  assert.equal(legacyResponse.headers.get("location"), "/guide");
+});
+
+test("makes clear that Débusk is not a bus ticket shop", async () => {
+  const pathname = "/boutique-bus-aix-office-tourisme";
+  const response = await render(pathname);
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(
+    html,
+    /<title>Débusk n’est pas une boutique : acheter un titre de bus à Aix<\/title>/,
+  );
+  assert.match(html, /elle ne vend, ne crée et ne recharge aucun titre de transport/);
+  assert.match(html, /Débusk n’est pas la Boutique La Métropole Mobilité/);
+});
+
 test("publishes crawlable robots and sitemap endpoints", async () => {
   const [robotsResponse, sitemapResponse, topicGuideSource] = await Promise.all([
     render("/robots.txt"),
@@ -379,7 +412,7 @@ test("publishes crawlable robots and sitemap endpoints", async () => {
   assert.equal(sitemapResponse.status, 200);
   const sitemap = await sitemapResponse.text();
   for (const pathname of [
-    "/guides",
+    "/guide",
     "/application-bus-aix-en-provence",
     "/a-propos-debusk",
     "/donnees-couverture-debusk",
@@ -391,6 +424,7 @@ test("publishes crawlable robots and sitemap endpoints", async () => {
   ]) {
     assert.ok(sitemap.includes(`https://www.debusk.fr${pathname}`));
   }
+  assert.ok(!sitemap.includes("https://www.debusk.fr/guides"));
 
   assert.match(
     sitemap,
@@ -522,7 +556,7 @@ test("server-renders the new transport clusters and image-rich app page", async 
 test("emits valid JSON-LD on the landing page and editorial pages", async () => {
   for (const pathname of [
     "/",
-    "/guides",
+    "/guide",
     "/guide-rentree-bus-aix-en-provence",
   ]) {
     const response = await render(pathname);

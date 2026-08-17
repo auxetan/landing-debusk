@@ -6,24 +6,24 @@ import { absoluteUrl, createPageMetadata } from "../seo";
 import { StructuredData } from "../StructuredData";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Guides bus à Aix-en-Provence : horaires, lignes et rentrée",
+  title: "Guide du bus à Aix-en-Provence : horaires, lignes et rentrée",
   description:
-    "Tous les guides Débusk pour préparer un trajet en bus à Aix-en-Provence : horaires, itinéraires, lignes et abonnement scolaire 2026-2027.",
-  path: "/guides",
+    "Le guide Débusk pour préparer un trajet en bus à Aix-en-Provence : horaires, itinéraires, lignes et abonnement scolaire 2026-2027.",
+  path: "/guide",
   type: "website",
 });
 
-export default function GuidesPage() {
+export default function GuideIndexPage() {
   return (
     <main className="guide-page guide-index-page">
       <StructuredData
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "Guides bus à Aix-en-Provence",
+          name: "Guide du bus à Aix-en-Provence",
           description:
             "Horaires, itinéraires, lignes et préparation de la rentrée en bus à Aix-en-Provence.",
-          url: absoluteUrl("/guides"),
+          url: absoluteUrl("/guide"),
           inLanguage: "fr-FR",
           isPartOf: {
             "@type": "WebSite",
@@ -56,7 +56,7 @@ export default function GuidesPage() {
       </header>
 
       <header className="guide-index-hero">
-        <h1>Les guides pour prendre le bus sereinement.</h1>
+        <h1>Le guide pour prendre le bus sereinement.</h1>
         <p>
           Des réponses claires pour choisir une ligne, vérifier un horaire,
           préparer un itinéraire et organiser les trajets scolaires de la

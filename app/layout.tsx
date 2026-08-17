@@ -5,7 +5,7 @@ import { SITE_NAME, SITE_URL } from "./seo";
 import { StructuredData } from "./StructuredData";
 import "./globals.css";
 
-const title = "Débusk : horaires et itinéraires de bus à Aix-en-Provence";
+const title = "Débusk — Partez au bon moment !";
 const description =
   "Débusk réunit horaires, itinéraires, lignes, perturbations et suivi communautaire des bus à Aix-en-Provence. Téléchargez l’application.";
 

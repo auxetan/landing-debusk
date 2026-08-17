@@ -680,63 +680,64 @@ export const topicGuides: readonly TopicGuide[] = [
       { label: "Portail officiel La Métropole Mobilité", href: "https://www.lametropolemobilite.fr/" },
     ],
     related: [
-      { href: "/boutique-bus-aix-office-tourisme", label: "Boutique bus à Aix" },
+      { href: "/boutique-bus-aix-office-tourisme", label: "Acheter un titre à Aix" },
       { href: "/informations#sources", label: "Sources et méthodologie Débusk" },
     ],
   },
   {
     slug: "boutique-bus-aix-office-tourisme",
     category: "Services du réseau",
-    label: "Boutique bus",
-    title: "Boutique bus à Aix : le point de vente de l’Office de Tourisme",
+    label: "Point de vente officiel",
+    title: "Débusk n’est pas une boutique : acheter un titre de bus à Aix",
     description:
-      "Où trouver la boutique La Métropole Mobilité à Aix-en-Provence, à l’Office de Tourisme près de la Rotonde, et quelles démarches préparer.",
-    eyebrow: "Point de vente · Aix-en-Provence",
+      "Débusk est une application indépendante et ne vend aucun titre. Retrouvez le point de vente officiel d’Aix et les démarches à vérifier.",
+    eyebrow: "Application indépendante · point de vente officiel",
     intro:
-      "La boutique métropolitaine se trouve dans l’Office de Tourisme d’Aix, près de la Rotonde. Voici les informations à vérifier avant de vous déplacer pour une carte ou un abonnement.",
+      "Débusk est une application indépendante : elle ne vend, ne crée et ne recharge aucun titre de transport. Cette page vous aide à préparer votre visite à la Boutique La Métropole Mobilité, située dans l’Office de Tourisme d’Aix près de la Rotonde.",
     image: "/app-screens/favoris-choix-bus.png",
     imageWidth: 772,
     imageHeight: 1676,
     imageAlt:
-      "Écran Débusk de favoris bus, à utiliser après avoir obtenu son titre au point de vente officiel d’Aix",
+      "Capture de l’application indépendante Débusk montrant des lignes favorites ; Débusk ne vend aucun titre de transport",
     imageCaption:
-      "Le titre de transport s’obtient auprès du réseau ; Débusk sert ensuite à préparer les trajets.",
+      "La Boutique La Métropole Mobilité gère les titres de transport. Débusk aide séparément à préparer les trajets.",
     facts: [
+      { label: "Point de vente officiel", value: "Boutique La Métropole Mobilité" },
       { label: "Lieu", value: "Office de Tourisme d’Aix-en-Provence, Allées Provençales" },
-      { label: "Repère", value: "À proximité de la Rotonde" },
-      { label: "Avant de venir", value: "Vérifier horaires, justificatifs et éligibilité" },
+      { label: "Rôle de Débusk", value: "Application indépendante ; aucune vente ni recharge" },
     ],
     sections: [
       {
-        title: "Où se trouve la boutique ?",
+        title: "Où se trouve le point de vente officiel ?",
         paragraphs: [
-          "La page officielle Aix en Bus situe la boutique La Métropole Mobilité à l’intérieur de l’Office de Tourisme d’Aix-en-Provence, sur les Allées Provençales. Le site est proche des arrêts Rotonde et de la gare routière.",
+          "La Boutique La Métropole Mobilité est le point de vente officiel présenté par Aix en Bus. Elle est située à l’intérieur de l’Office de Tourisme d’Aix-en-Provence, sur les Allées Provençales, près des arrêts Rotonde et de la gare routière.",
           "Les horaires d’ouverture peuvent varier selon la saison, les jours fériés ou une situation exceptionnelle. Consultez la fiche officielle le jour du déplacement au lieu de vous fier à un ancien résultat de recherche.",
         ],
       },
       {
-        title: "Quelles démarches préparer ?",
+        title: "Quelles démarches préparer auprès du réseau ?",
         paragraphs: [
-          "Selon votre demande, vous pouvez avoir besoin d’une pièce d’identité, d’une photo, d’un justificatif de domicile, d’un certificat de scolarité ou d’une carte existante. Les conditions diffèrent entre création, renouvellement, abonnement scolaire et tarif spécifique.",
-          "Préparez les originaux ou formats acceptés et vérifiez l’éligibilité avant de faire la queue. Pour la rentrée, privilégiez la démarche en ligne lorsqu’elle est disponible.",
+          "Selon votre demande, le réseau peut exiger une pièce d’identité, une photo, un justificatif de domicile, un certificat de scolarité ou une carte existante. Les conditions diffèrent entre création, renouvellement, abonnement scolaire et tarif spécifique.",
+          "Vérifiez les pièces acceptées et votre éligibilité sur le service officiel avant de vous déplacer. Pour la rentrée, utilisez la démarche en ligne lorsqu’elle est proposée.",
         ],
       },
       {
-        title: "Ce que Débusk fait après l’achat",
+        title: "Débusk intervient-il dans l’achat ?",
         paragraphs: [
-          "Débusk ne crée, ne recharge et ne rembourse aucun titre. Une fois votre carte prête, l’app vous aide à retrouver la ligne, le sens, l’arrêt et le prochain départ, puis à enregistrer les favoris du trajet quotidien.",
+          "Non. Débusk ne crée, ne vend, ne recharge et ne rembourse aucun titre de transport. L’achat, la carte et le service après-vente relèvent exclusivement du réseau officiel.",
+          "Après avoir obtenu votre titre auprès du réseau, Débusk peut vous aider séparément à retrouver une ligne, un arrêt, un prochain départ et vos favoris.",
         ],
       },
     ],
     callout: {
-      label: "Vérification pratique",
-      title: "Consultez les horaires officiels avant de venir.",
-      text: "Cette page donne le bon emplacement, mais les heures d’ouverture et pièces demandées peuvent changer.",
-      tone: "green",
+      label: "Indépendance",
+      title: "Débusk n’est pas la Boutique La Métropole Mobilité.",
+      text: "L’achat, la recharge, le remboursement et les justificatifs relèvent du réseau officiel. Débusk fournit uniquement des informations et une application de trajets.",
+      tone: "signal",
     },
     sources: [
       {
-        label: "Agence commerciale Aix en Bus — fiche officielle",
+        label: "Boutique La Métropole Mobilité — fiche officielle Aix en Bus",
         href: "https://www.aixenbus.fr/fr/Y2z-Agence-commerciale.html",
       },
       { label: "Inscription scolaire officielle", href: officialSchool },

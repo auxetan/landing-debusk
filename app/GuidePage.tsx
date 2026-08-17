@@ -32,7 +32,7 @@ export function GuidePage({
   title,
   intro,
   structuredType = "Article",
-  breadcrumbParent = { href: "/guides", label: "Guides" },
+  breadcrumbParent = { href: "/guide", label: "Guide" },
   image,
   children,
 }: GuidePageProps) {
@@ -120,8 +120,8 @@ export function GuidePage({
           </span>
           <span>Débusk</span>
         </Link>
-        <Link className="guide-hub-link" href="/guides">
-          Tous les guides
+        <Link className="guide-hub-link" href="/guide">
+          Le guide Débusk
         </Link>
       </header>
 

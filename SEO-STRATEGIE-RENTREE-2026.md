@@ -22,7 +22,7 @@ La stratégie vise d’abord les intentions où Débusk apporte une vraie répon
 ### Pages piliers
 
 - Accueil : proposition de valeur et téléchargement.
-- `/guides` : annuaire éditorial par besoin.
+- `/guide` : annuaire éditorial par besoin.
 - `/guide-rentree-bus-aix-en-provence` : checklist parents.
 - `/transport-scolaire-aix-en-provence` : lignes et secteurs scolaires.
 - `/horaires-bus-aix-en-provence` : prochains départs.
@@ -132,7 +132,7 @@ Un lien payé doit être qualifié `rel="sponsored"` ou `nofollow`. Ne pas achet
 ## Search Console après chaque publication
 
 1. Soumettre `https://www.debusk.fr/sitemap.xml` une seule fois.
-2. Inspecter en priorité l’accueil, `/guides`, le guide de rentrée, le hub scolaire, la page application et Aix–Marseille.
+2. Inspecter en priorité l’accueil, `/guide`, le guide de rentrée, le hub scolaire, la page application et Aix–Marseille.
 3. Demander l’indexation de ces pages piliers seulement ; Google découvrira les pages liées via le sitemap et le maillage interne.
 4. Contrôler chaque semaine : pages indexées, requêtes, impressions, clics, CTR et position moyenne.
 5. Repérer les requêtes qui obtiennent beaucoup d’impressions mais peu de clics, puis améliorer titre et description sans changer l’URL.
