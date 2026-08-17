@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FaFacebookF, FaInstagram } from "react-icons/fa6";
 import { AppShowcase } from "./AppShowcase";
 import { appScreenImageUrls } from "./app-screen-data";
 import { FaqSection } from "./FaqSection";
@@ -214,7 +215,7 @@ export default function Home() {
             <span>Débusk</span>
             <span>Application gratuite et indépendante · sans compte.</span>
           </div>
-          <nav aria-label="Informations">
+          <nav aria-label="Informations et réseaux sociaux">
             <Link href="/guides">Guides bus</Link>
             <Link href="/a-propos-debusk">À propos de Débusk</Link>
             <Link href="/donnees-couverture-debusk">Données et couverture</Link>
@@ -222,6 +223,26 @@ export default function Home() {
             <Link href="/informations#mentions">Mentions</Link>
             <Link href="/informations#sources">Sources</Link>
             <a href="#contact">Contact</a>
+            <a
+              className="footer-social-link"
+              href="https://www.instagram.com/debusk.fr?igsi=MTE4b200bzc2NTd4eQ%3D%3D&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Suivre Débusk sur Instagram (nouvel onglet)"
+              title="Instagram"
+            >
+              <FaInstagram aria-hidden="true" />
+            </a>
+            <a
+              className="footer-social-link"
+              href="https://www.facebook.com/share/19Nux49viQ/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Suivre Débusk sur Facebook (nouvel onglet)"
+              title="Facebook"
+            >
+              <FaFacebookF aria-hidden="true" />
+            </a>
           </nav>
         </footer>
       </section>

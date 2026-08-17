@@ -47,6 +47,14 @@ test("server-renders the finished Débusk landing page", async () => {
   assert.match(html, /Nous contacter/);
   assert.match(html, /href="#contact"/);
   assert.match(html, /href="\/guides"/);
+  assert.match(
+    html,
+    /<a[^>]+href="https:\/\/www\.instagram\.com\/debusk\.fr\?igsi=MTE4b200bzc2NTd4eQ%3D%3D&amp;utm_source=qr"[^>]+target="_blank"[^>]+rel="noopener noreferrer"[^>]+aria-label="Suivre Débusk sur Instagram \(nouvel onglet\)"/,
+  );
+  assert.match(
+    html,
+    /<a[^>]+href="https:\/\/www\.facebook\.com\/share\/19Nux49viQ\/\?mibextid=wwXIfr"[^>]+target="_blank"[^>]+rel="noopener noreferrer"[^>]+aria-label="Suivre Débusk sur Facebook \(nouvel onglet\)"/,
+  );
   assert.match(html, /Votre bus arrive\./);
   assert.match(html, /Vous le voyez venir\./);
   assert.match(html, /Les bus autour de vous/);

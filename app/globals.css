@@ -1488,6 +1488,7 @@ h2 span {
 
 .site-footer nav {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 10px 24px;
@@ -1495,6 +1496,28 @@ h2 span {
 
 .site-footer a {
   transition: color 160ms ease;
+}
+
+.footer-social-link {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  border: 1px solid rgba(17, 17, 19, 0.16);
+  border-radius: 50%;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.footer-social-link svg {
+  width: 19px;
+  height: 19px;
 }
 
 .information-page {
@@ -1682,6 +1705,12 @@ h2 span {
   .information-back:hover,
   .information-footer a:hover {
     color: var(--signal);
+  }
+
+  .footer-social-link:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--signal) 55%, transparent);
+    background: color-mix(in srgb, var(--signal) 8%, var(--paper));
   }
 }
 
@@ -1983,7 +2012,7 @@ h2 span {
 
   .download-section {
     min-height: 100svh;
-    padding-bottom: 188px;
+    padding-bottom: 240px;
   }
 
   .store-actions-compact {
