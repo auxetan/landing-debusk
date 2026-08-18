@@ -218,10 +218,10 @@ test("collects first-party site analytics through the guarded same-origin route"
   assert.match(client, /globalPrivacyControl/);
   assert.match(client, /referrerHostname/);
   assert.match(stores, /data-site-event="store_click"/);
-  assert.match(route, /DEBUSK_ANALYTICS_INGEST_TOKEN/);
-  assert.match(route, /p_ingest_token: ingestToken/);
+  assert.match(route, /functions\/v1\/track-site-event/);
+  assert.match(route, /Origin: origin/);
   assert.doesNotMatch(route, /service[_-]?role/i);
-  assert.match(information, /identifiant aléatoire limité à l’onglet/);
+  assert.match(information, /identifiant aléatoire limité\s+à l’onglet/);
   assert.match(information, /treize mois/);
 
   const validBody = JSON.stringify({
@@ -235,7 +235,7 @@ test("collects first-party site analytics through the guarded same-origin route"
     method: "POST",
     headers: {
       "content-type": "application/json",
-      origin: "https://www.debusk.fr",
+      origin: "http://localhost",
     },
     body: validBody,
   });

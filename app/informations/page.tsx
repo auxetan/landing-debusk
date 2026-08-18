@@ -43,11 +43,13 @@ export default function InformationsPage() {
               Une mesure d’audience interne comptabilise les pages consultées,
               le domaine d’origine, le type d’appareil et les clics vers les
               boutiques ou le contact. Elle n’utilise aucun cookie publicitaire,
-              ne collecte ni adresse IP ni identité et ne suit personne entre
-              plusieurs sites. Un identifiant aléatoire limité à l’onglet est
-              effacé à sa fermeture ; les données brutes sont supprimées après
-              treize mois. Les signaux « Do Not Track » et Global Privacy Control
-              désactivent cette mesure.
+              n’enregistre aucune adresse IP ni identité dans les données
+              d’audience et ne suit personne entre plusieurs sites. Les
+              hébergeurs peuvent néanmoins traiter l’adresse IP dans leurs
+              journaux techniques de sécurité. Un identifiant aléatoire limité
+              à l’onglet est effacé à sa fermeture ; les données brutes sont
+              supprimées après treize mois. Les signaux « Do Not Track » et
+              Global Privacy Control désactivent cette mesure.
             </p>
             <p>
               Dans l’application, le suivi de trajet reste volontaire. Aucun

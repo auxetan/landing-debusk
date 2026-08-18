@@ -9,7 +9,10 @@ const ALLOWED_EVENTS = new Set([
 const PRODUCTION_ORIGINS = new Set([
   "https://debusk.fr",
   "https://www.debusk.fr",
+  "https://aixbuslive.auxetan.chatgpt.site",
 ]);
+const SUPABASE_EDGE_RELAY =
+  "https://qiclhepeypcgxawolaxk.supabase.co/functions/v1/track-site-event";
 
 type AnalyticsPayload = {
   event_name: string;
@@ -70,35 +73,20 @@ export async function POST(request: Request) {
   }
   if (!validPayload(payload)) return new Response(null, { status: 400 });
 
-  const supabaseUrl = process.env.DEBUSK_ANALYTICS_SUPABASE_URL;
-  const supabaseAnonKey = process.env.DEBUSK_ANALYTICS_SUPABASE_ANON_KEY;
-  const ingestToken = process.env.DEBUSK_ANALYTICS_INGEST_TOKEN;
-  if (!supabaseUrl || !supabaseAnonKey || !ingestToken) {
-    // A missing deployment setting disables collection without affecting pages.
-    return new Response(null, { status: 204 });
-  }
-
   try {
-    const response = await fetch(
-      `${supabaseUrl.replace(/\/$/, "")}/rest/v1/rpc/rpc_track_site_event`,
-      {
+    const origin = request.headers.get("origin") ?? "";
+    if (!PRODUCTION_ORIGINS.has(origin)) {
+      // Preview and local builds stay inert.
+      return new Response(null, { status: 204 });
+    }
+    const response = await fetch(SUPABASE_EDGE_RELAY, {
         method: "POST",
         headers: {
-          apikey: supabaseAnonKey,
-          Authorization: `Bearer ${supabaseAnonKey}`,
           "Content-Type": "application/json",
+          Origin: origin,
         },
-        body: JSON.stringify({
-          p_event_name: payload.event_name,
-          p_ingest_token: ingestToken,
-          p_session_id: payload.session_id,
-          p_path: payload.path ?? "/",
-          p_referrer: payload.referrer ?? null,
-          p_device: payload.device ?? "unknown",
-          p_properties: payload.properties ?? {},
-        }),
-      },
-    );
+        body: JSON.stringify(payload),
+      });
     if (!response.ok) return new Response(null, { status: 502 });
     return new Response(null, { status: 202 });
   } catch {
