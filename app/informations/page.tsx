@@ -4,7 +4,7 @@ import { CONTACT_EMAIL } from "../contact";
 import { createPageMetadata } from "../seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Confidentialité, sources et mentions de Débusk",
+  title: "Confidentialité, sources et mentions | App Débusk",
   description:
     "Découvrez les règles de confidentialité, les sources des horaires et le statut indépendant de l’application de bus Débusk à Aix-en-Provence.",
   path: "/informations",

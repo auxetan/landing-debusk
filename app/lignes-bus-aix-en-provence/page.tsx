@@ -6,7 +6,7 @@ import { createPageMetadata } from "../seo";
 const path = "/lignes-bus-aix-en-provence";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Lignes de bus à Aix-en-Provence : réseau et scolaires",
+  title: "Lignes de bus à Aix-en-Provence | App Débusk",
   description:
     "Retrouvez les lignes de bus disponibles dans Débusk à Aix-en-Provence : Aixpress, lignes urbaines, mini, scolaires et liaisons métropolitaines.",
   path,

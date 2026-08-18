@@ -12,7 +12,7 @@ import { StructuredData } from "../StructuredData";
 const path = "/application-bus-aix-en-provence";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Application bus à Aix-en-Provence : découvrir Débusk",
+  title: "Application Débusk : horaires et trajets de bus à Aix",
   description:
     "Découvrez Débusk en images : horaires, itinéraires, favoris, perturbations et suivi communautaire des bus à Aix-en-Provence.",
   path,

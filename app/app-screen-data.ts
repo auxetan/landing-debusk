@@ -32,7 +32,7 @@ export const appScreens = [
     src: "/app-screens/perturbations-officielles.png",
     width: 768,
     height: 1676,
-    title: "Les infos officielles",
+    title: "Les alertes du réseau",
     caption:
       "Consultez les perturbations publiées par Aix en Bus, ligne par ligne.",
     alt: "Liste Débusk des perturbations officielles Aix en Bus avec les lignes et arrêts concernés",

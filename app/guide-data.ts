@@ -32,7 +32,7 @@ export const featuredGuideLinks = [
   {
     href: "/abonnement-bus-scolaire-aix-en-provence",
     label: "Abonnement scolaire",
-    title: "S’inscrire pour la rentrée 2026–2027",
+    title: "Préparer l’inscription pour la rentrée 2026–2027",
     description:
       "Conditions, justificatifs, démarches officielles et vérifications avant septembre.",
   },

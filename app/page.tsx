@@ -27,7 +27,7 @@ const homeStructuredData = [
     url: absoluteUrl("/application-bus-aix-en-provence"),
     mainEntityOfPage: absoluteUrl("/application-bus-aix-en-provence"),
     description:
-      "Application de bus à Aix-en-Provence pour consulter les horaires, itinéraires, lignes, perturbations et le suivi communautaire.",
+      "Application de bus indépendante à Aix-en-Provence pour consulter les horaires, itinéraires, lignes, perturbations et le suivi communautaire.",
     applicationCategory: "TravelApplication",
     operatingSystem: "iOS, Android",
     inLanguage: "fr-FR",
@@ -44,7 +44,7 @@ const homeStructuredData = [
       "Horaires et prochains départs",
       "Calcul d’itinéraires",
       "Lignes et arrêts favoris",
-      "Perturbations officielles",
+      "Alertes publiées par le réseau",
       "Suivi communautaire volontaire des bus",
     ],
   },

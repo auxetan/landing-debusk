@@ -1,6 +1,6 @@
 # Stratégie SEO Débusk — rentrée 2026
 
-Dernière mise à jour : 16 août 2026
+Dernière mise à jour : 18 août 2026
 
 ## Objectif
 
@@ -11,6 +11,7 @@ La stratégie vise d’abord les intentions où Débusk apporte une vraie répon
 ## Positionnement à conserver partout
 
 - Débusk est une application indépendante et non officielle.
+- Chaque titre de résultat présente explicitement Débusk comme une app, avec la signature `| App Débusk` sur les pages thématiques.
 - Débusk consulte et présente des données de transport ; il ne vend pas les abonnements.
 - Une position de bus communautaire n’est visible que lorsqu’un voyageur contribue.
 - Les démarches, tarifs, réservations et décisions contractuelles relèvent des organismes officiels.

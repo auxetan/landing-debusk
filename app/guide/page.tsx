@@ -6,7 +6,7 @@ import { absoluteUrl, createPageMetadata } from "../seo";
 import { StructuredData } from "../StructuredData";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Guide du bus à Aix-en-Provence : horaires, lignes et rentrée",
+  title: "Le guide du bus à Aix-en-Provence | App Débusk",
   description:
     "Le guide Débusk pour préparer un trajet en bus à Aix-en-Provence : horaires, itinéraires, lignes et abonnement scolaire 2026-2027.",
   path: "/guide",

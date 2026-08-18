@@ -6,7 +6,7 @@ import { createPageMetadata } from "../seo";
 const path = "/horaires-bus-aix-en-provence";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Horaires de bus à Aix-en-Provence et prochains départs",
+  title: "Horaires de bus à Aix-en-Provence | App Débusk",
   description:
     "Consultez les horaires de bus à Aix-en-Provence, les prochains départs, vos arrêts favoris et les perturbations du réseau avec Débusk.",
   path,

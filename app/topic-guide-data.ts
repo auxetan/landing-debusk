@@ -9,6 +9,7 @@ export type TopicGuide = {
   category: "Rentrée et famille" | "Grands trajets" | "Services du réseau" | "Quartiers et communes";
   label: string;
   title: string;
+  seoTitle: string;
   description: string;
   eyebrow: string;
   intro: string;
@@ -39,6 +40,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Rentrée et famille",
     label: "Transport scolaire",
     title: "Transport scolaire à Aix-en-Provence : lignes et trajet de rentrée",
+    seoTitle: "Transport scolaire à Aix-en-Provence | App Débusk",
     description:
       "Lignes scolaires à Aix-en-Provence, secteurs desservis, abonnement et préparation du trajet pour la rentrée 2026-2027 avec Débusk.",
     eyebrow: "Transport scolaire · Aix-en-Provence",
@@ -105,6 +107,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Grands trajets",
     label: "Aix ↔ Marseille",
     title: "Bus Aix–Marseille : comparer les lignes L49, L50 et L51",
+    seoTitle: "Bus Aix–Marseille : lignes et horaires | App Débusk",
     description:
       "Préparez un trajet en bus entre Aix-en-Provence et Marseille avec les lignes L49, L50 et L51 disponibles dans Débusk.",
     eyebrow: "Bus Aix–Marseille",
@@ -169,6 +172,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Grands trajets",
     label: "Ligne L49",
     title: "Ligne L49 Aix–Marseille Arenc : parcours et jours de circulation",
+    seoTitle: "Ligne L49 Aix–Marseille Arenc | App Débusk",
     description:
       "Préparez la ligne L49 entre Aix-en-Provence, Bouffan et Marseille Arenc : parcours, jours de circulation, terminus et horaires dans Débusk.",
     eyebrow: "L49 · Aix–Marseille Arenc",
@@ -233,6 +237,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Grands trajets",
     label: "Ligne L50",
     title: "Ligne L50 Aix–Marseille Saint-Charles : trajet et horaires",
+    seoTitle: "Ligne L50 Aix–Marseille Saint-Charles | App Débusk",
     description:
       "Préparez la ligne L50 entre la gare routière d’Aix et Marseille Saint-Charles : variantes, jours de circulation et prochains départs dans Débusk.",
     eyebrow: "L50 · Aix–Marseille Saint-Charles",
@@ -297,6 +302,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Grands trajets",
     label: "Ligne L51",
     title: "Ligne L51 Aix–Marseille par RN : arrêts et horaires",
+    seoTitle: "Ligne L51 Aix–Marseille par RN | App Débusk",
     description:
       "Préparez la ligne L51 entre Aix et Marseille par la route nationale : Luynes, Bouc-Bel-Air, Plan de Campagne, Septèmes et Saint-Charles.",
     eyebrow: "L51 · Aix–Marseille par RN",
@@ -361,6 +367,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Grands trajets",
     label: "Aix ↔ Aéroport",
     title: "Bus Aix–Aéroport Marseille Provence : préparer la ligne A2",
+    seoTitle: "Bus Aix–Aéroport Marseille Provence | App Débusk",
     description:
       "Guide de la ligne A2 entre Aix, la gare TGV et l’aéroport Marseille Provence, avec l’état actuel de sa disponibilité dans Débusk.",
     eyebrow: "Aix · Gare TGV · Aéroport",
@@ -429,6 +436,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Grands trajets",
     label: "Aix ↔ Gare TGV",
     title: "Bus Aix–Gare TGV : préparer son trajet sans rater son train",
+    seoTitle: "Bus Aix–Gare TGV : préparer son trajet | App Débusk",
     description:
       "Comment rejoindre la gare Aix-en-Provence TGV en bus depuis Aix : ligne A2, Plan d’Aillane, marge de sécurité et état dans Débusk.",
     eyebrow: "Aix-en-Provence · Gare TGV",
@@ -491,6 +499,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Services du réseau",
     label: "Bus à la demande",
     title: "Bus à la demande à Aix et au Pays d’Aix : secteurs et réservation",
+    seoTitle: "Bus à la demande au Pays d’Aix | App Débusk",
     description:
       "Comprendre le bus à la demande à Aix et au Pays d’Aix : secteurs, réservation officielle et différence avec les horaires disponibles dans Débusk.",
     eyebrow: "Transport à la demande · Pays d’Aix",
@@ -573,6 +582,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Services du réseau",
     label: "Perturbations",
     title: "Perturbations de bus à Aix-en-Provence : quoi vérifier avant de partir",
+    seoTitle: "Perturbations de bus à Aix-en-Provence | App Débusk",
     description:
       "Consultez les perturbations de bus à Aix-en-Provence, distinguez l’information officielle du suivi communautaire et préparez un plan B.",
     eyebrow: "Info trafic bus · Aix-en-Provence",
@@ -630,6 +640,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Services du réseau",
     label: "Qui fait quoi ?",
     title: "Keolis, Aix en Bus et La Métropole Mobilité : qui fait quoi ?",
+    seoTitle: "Keolis et Aix en Bus : qui fait quoi ? | App Débusk",
     description:
       "Comprendre les rôles de Keolis Pays d’Aix, Aix en Bus, La Métropole Mobilité et Débusk, application indépendante et non officielle.",
     eyebrow: "Acteurs du réseau aixois",
@@ -680,7 +691,7 @@ export const topicGuides: readonly TopicGuide[] = [
       { label: "Portail officiel La Métropole Mobilité", href: "https://www.lametropolemobilite.fr/" },
     ],
     related: [
-      { href: "/boutique-bus-aix-office-tourisme", label: "Acheter un titre à Aix" },
+      { href: "/boutique-bus-aix-office-tourisme", label: "Trouver le point de vente officiel" },
       { href: "/informations#sources", label: "Sources et méthodologie Débusk" },
     ],
   },
@@ -689,6 +700,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Services du réseau",
     label: "Point de vente officiel",
     title: "Débusk n’est pas une boutique : acheter un titre de bus à Aix",
+    seoTitle: "Où acheter un titre de bus à Aix ? | App Débusk",
     description:
       "Débusk est une application indépendante et ne vend aucun titre. Retrouvez le point de vente officiel d’Aix et les démarches à vérifier.",
     eyebrow: "Application indépendante · point de vente officiel",
@@ -752,6 +764,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Quartiers et communes",
     label: "La Duranne",
     title: "Bus La Duranne–Aix-en-Provence : lignes 15, 18 et scolaires",
+    seoTitle: "Bus La Duranne–Aix : lignes et horaires | App Débusk",
     description:
       "Lignes de bus entre La Duranne et Aix-en-Provence : lignes 15 et 18, dessertes scolaires 8305, arrêts et conseils de trajet.",
     eyebrow: "Bus La Duranne · Aix",
@@ -800,6 +813,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Quartiers et communes",
     label: "Les Milles",
     title: "Bus Les Milles–Aix-en-Provence : ligne 14 et scolaires 8301/8305",
+    seoTitle: "Bus Les Milles–Aix : lignes et horaires | App Débusk",
     description:
       "Préparez un trajet en bus entre Les Milles et Aix-en-Provence : ligne 14, services scolaires 8301 et 8305, sens et favoris.",
     eyebrow: "Bus Les Milles · Aix",
@@ -848,6 +862,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Quartiers et communes",
     label: "Puyricard–Couteron",
     title: "Bus Puyricard, Couteron et Aix : lignes 11, 12, 13 et scolaires",
+    seoTitle: "Bus Puyricard–Aix : lignes et horaires | App Débusk",
     description:
       "Lignes de bus entre Puyricard, Couteron et Aix-en-Provence : 11, 12, 13, services scolaires 8301/8303 et conseils de trajet.",
     eyebrow: "Bus Puyricard–Couteron · Aix",
@@ -896,6 +911,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Quartiers et communes",
     label: "Luynes",
     title: "Bus Luynes–Aix-en-Provence : ligne 11 et scolaires 8404",
+    seoTitle: "Bus Luynes–Aix : lignes et horaires | App Débusk",
     description:
       "Bus entre Luynes et Aix-en-Provence : ligne 11, services scolaires 8404, lycée Georges Duby, sens et préparation du trajet.",
     eyebrow: "Bus Luynes · Aix",
@@ -944,6 +960,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Quartiers et communes",
     label: "Venelles",
     title: "Bus Venelles–Aix-en-Provence : ligne 25 et scolaires 8377/8379",
+    seoTitle: "Bus Venelles–Aix : lignes et horaires | App Débusk",
     description:
       "Bus entre Venelles et Aix-en-Provence : ligne 25, services scolaires 8377 et 8379, gare routière et préparation du trajet.",
     eyebrow: "Bus Venelles · Aix",
@@ -992,6 +1009,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Quartiers et communes",
     label: "Éguilles",
     title: "Bus Éguilles–Aix-en-Provence : ligne 26 et bus à la demande",
+    seoTitle: "Bus Éguilles–Aix : lignes et horaires | App Débusk",
     description:
       "Bus entre Éguilles et Aix-en-Provence : ligne 26, gare routière Mouret, secteur de bus à la demande et conseils de trajet.",
     eyebrow: "Bus Éguilles · Aix",
@@ -1043,6 +1061,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Quartiers et communes",
     label: "Le Tholonet",
     title: "Bus Le Tholonet–Aix-en-Provence : ligne 13 et scolaire 8405",
+    seoTitle: "Bus Le Tholonet–Aix : lignes et horaires | App Débusk",
     description:
       "Bus entre Le Tholonet et Aix-en-Provence : ligne 13, service scolaire 8405, Palette et conseils pour le trajet quotidien.",
     eyebrow: "Bus Le Tholonet · Aix",
@@ -1091,6 +1110,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Quartiers et communes",
     label: "Saint-Marc-Jaumegarde",
     title: "Bus Saint-Marc-Jaumegarde–Aix : ligne 21 et arrêts",
+    seoTitle: "Bus Saint-Marc-Jaumegarde–Aix | App Débusk",
     description:
       "Préparez un trajet en bus entre Saint-Marc-Jaumegarde et Aix-en-Provence avec la ligne 21 : sens, arrêts, horaires et favoris.",
     eyebrow: "Bus Saint-Marc-Jaumegarde · Aix",
@@ -1139,6 +1159,7 @@ export const topicGuides: readonly TopicGuide[] = [
     category: "Quartiers et communes",
     label: "Célony",
     title: "Bus Célony–Aix-en-Provence : ligne 22 et trajet vers la Rotonde",
+    seoTitle: "Bus Célony–Aix : lignes et horaires | App Débusk",
     description:
       "Préparez un trajet en bus entre Célony et Aix-en-Provence avec la ligne 22 : arrêts, terminus Rotonde Bonaparte et favoris.",
     eyebrow: "Bus Célony · Aix",

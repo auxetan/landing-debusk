@@ -6,7 +6,7 @@ import { createPageMetadata } from "../seo";
 const path = "/abonnement-bus-scolaire-aix-en-provence";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Abonnement bus scolaire Aix 2026-2027 : inscription",
+  title: "Abonnement bus scolaire à Aix | App Débusk",
   description:
     "Comment demander l’abonnement bus scolaire 2026-2027 à Aix-en-Provence : conditions, justificatifs, portail officiel et préparation du trajet.",
   path,

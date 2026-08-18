@@ -7,7 +7,7 @@ import { StructuredData } from "../StructuredData";
 const path = "/a-propos-debusk";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Débusk : application de bus indépendante à Aix-en-Provence",
+  title: "Débusk : l’application de bus indépendante à Aix",
   description:
     "Présentation factuelle de Débusk : application gratuite pour les horaires, itinéraires, lignes et perturbations des bus à Aix-en-Provence.",
   path,

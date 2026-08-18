@@ -6,7 +6,7 @@ import { createPageMetadata } from "../seo";
 const path = "/guide-rentree-bus-aix-en-provence";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Bus scolaire à Aix : préparer la rentrée 2026-2027",
+  title: "Bus scolaire à Aix : préparer la rentrée | App Débusk",
   description:
     "Abonnement, ligne, arrêt, horaires et premier trajet : la checklist des parents pour préparer la rentrée 2026-2027 en bus à Aix-en-Provence.",
   path,

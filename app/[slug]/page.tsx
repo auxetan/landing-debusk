@@ -28,7 +28,7 @@ export async function generateMetadata({
   }
 
   return createPageMetadata({
-    title: guide.title,
+    title: guide.seoTitle,
     description: guide.description,
     path: `/${guide.slug}`,
     image: guide.image,

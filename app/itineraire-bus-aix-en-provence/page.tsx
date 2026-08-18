@@ -6,7 +6,7 @@ import { createPageMetadata } from "../seo";
 const path = "/itineraire-bus-aix-en-provence";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Itinéraire bus à Aix-en-Provence : calculer son trajet",
+  title: "Itinéraires de bus à Aix-en-Provence | App Débusk",
   description:
     "Trouvez un itinéraire en bus à Aix-en-Provence : départ, arrivée, durée, correspondances et étapes du trajet dans l’application Débusk.",
   path,

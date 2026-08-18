@@ -32,7 +32,7 @@ test("server-renders the finished Débusk landing page", async () => {
   const html = await response.text();
   assert.match(
     html,
-    /<title>Débusk — Partez au bon moment !<\/title>/,
+    /<title>Débusk, l’app bus d’Aix — Partez au bon moment !<\/title>/,
   );
   assert.match(
     html,
@@ -296,7 +296,7 @@ test("renders the information page and contains no unused starter or login code"
   assert.match(page, /<SiteHeader \/>/);
   assert.match(
     layout,
-    /Débusk — Partez au bon moment !/,
+    /Débusk, l’app bus d’Aix — Partez au bon moment !/,
   );
   assert.doesNotMatch(layout, /headers\(\)/);
   assert.match(packageJson, /"name": "debusk-site"/);
@@ -308,27 +308,27 @@ test("server-renders the search-intent guides with unique metadata", async () =>
   const pages = [
     [
       "/guide-rentree-bus-aix-en-provence",
-      "Bus scolaire à Aix : préparer la rentrée 2026-2027",
+      "Bus scolaire à Aix : préparer la rentrée | App Débusk",
       "Bus scolaire à Aix-en-Provence : préparer la rentrée 2026–2027",
     ],
     [
       "/horaires-bus-aix-en-provence",
-      "Horaires de bus à Aix-en-Provence et prochains départs",
+      "Horaires de bus à Aix-en-Provence | App Débusk",
       "Trouver le prochain bus à Aix-en-Provence",
     ],
     [
       "/itineraire-bus-aix-en-provence",
-      "Itinéraire bus à Aix-en-Provence : calculer son trajet",
+      "Itinéraires de bus à Aix-en-Provence | App Débusk",
       "Calculer un itinéraire en bus à Aix-en-Provence",
     ],
     [
       "/lignes-bus-aix-en-provence",
-      "Lignes de bus à Aix-en-Provence : réseau et scolaires",
+      "Lignes de bus à Aix-en-Provence | App Débusk",
       "Les lignes de bus disponibles dans Débusk",
     ],
     [
       "/abonnement-bus-scolaire-aix-en-provence",
-      "Abonnement bus scolaire Aix 2026-2027 : inscription",
+      "Abonnement bus scolaire à Aix | App Débusk",
       "Abonnement bus scolaire à Aix : les démarches pour 2026–2027",
     ],
   ];
@@ -360,7 +360,7 @@ test("serves the singular guide hub and permanently redirects the old URL", asyn
   const guideHtml = await guideResponse.text();
   assert.match(
     guideHtml,
-    /<title>Guide du bus à Aix-en-Provence : horaires, lignes et rentrée<\/title>/,
+    /<title>Le guide du bus à Aix-en-Provence \| App Débusk<\/title>/,
   );
   assert.match(
     guideHtml,
@@ -380,7 +380,7 @@ test("makes clear that Débusk is not a bus ticket shop", async () => {
   const html = await response.text();
   assert.match(
     html,
-    /<title>Débusk n’est pas une boutique : acheter un titre de bus à Aix<\/title>/,
+    /<title>Où acheter un titre de bus à Aix \? \| App Débusk<\/title>/,
   );
   assert.match(html, /elle ne vend, ne crée et ne recharge aucun titre de transport/);
   assert.match(html, /Débusk n’est pas la Boutique La Métropole Mobilité/);
@@ -593,7 +593,7 @@ test("emits valid JSON-LD on the landing page and editorial pages", async () => 
   }
 });
 
-test("gives every image on crawlable pages a non-empty alt attribute", async () => {
+test("brands every crawlable result as an app and gives images useful alt text", async () => {
   const sitemapResponse = await render("/sitemap.xml");
   assert.equal(sitemapResponse.status, 200);
 
@@ -607,11 +607,36 @@ test("gives every image on crawlable pages a non-empty alt attribute", async () 
   ];
 
   assert.ok(pathnames.length >= 31);
+  const seenTitles = new Set();
 
   for (const pathname of pathnames) {
     const response = await render(pathname);
     assert.equal(response.status, 200, pathname);
     const html = await response.text();
+    const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
+    assert.ok(title, `${pathname}: titre HTML manquant`);
+    assert.match(
+      title,
+      /(?:\b(?:app|application)\s+Débusk\b|\bDébusk\b.{0,12}\b(?:app|application)\b)/iu,
+      `${pathname}: le titre ne présente pas Débusk comme une app`,
+    );
+    assert.ok(!seenTitles.has(title), `${pathname}: titre dupliqué « ${title} »`);
+    seenTitles.add(title);
+    assert.ok(
+      title.length <= 60,
+      `${pathname}: dépasse le budget éditorial interne de 60 caractères (${title.length})`,
+    );
+    assert.equal(
+      html.match(/<meta property="og:title" content="([^"]+)"\s*\/>/)?.[1],
+      title,
+      `${pathname}: og:title incohérent`,
+    );
+    assert.equal(
+      html.match(/<meta name="twitter:title" content="([^"]+)"\s*\/>/)?.[1],
+      title,
+      `${pathname}: twitter:title incohérent`,
+    );
+
     const imageTags = html.match(/<img\b[^>]*>/gi) ?? [];
 
     for (const imageTag of imageTags) {

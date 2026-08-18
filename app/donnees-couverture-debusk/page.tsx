@@ -7,7 +7,7 @@ import { StructuredData } from "../StructuredData";
 const path = "/donnees-couverture-debusk";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Données et couverture de Débusk à Aix-en-Provence",
+  title: "Données et couverture à Aix | App Débusk",
   description:
     "Sources, date, lignes couvertes et limites connues des données de bus utilisées par Débusk à Aix-en-Provence au 16 août 2026.",
   path,
@@ -55,8 +55,8 @@ export default function DataCoveragePage() {
       <aside className="guide-callout guide-callout-signal guide-callout-first">
         <h2>Que couvre Débusk actuellement ?</h2>
         <p>
-          Débusk exploite les lignes urbaines aixoises présentes dans son jeu
-          de données, 29 dessertes scolaires actives le mardi 1er septembre
+          Débusk intègre les données des lignes urbaines aixoises présentes
+          dans son jeu de données, 29 dessertes scolaires actives le mardi 1er septembre
           2026 et les lignes L49, L50 et L51 entre Aix et Marseille. L’A2 et
           le transport à la demande ne sont pas encore exploitables dans l’app.
         </p>

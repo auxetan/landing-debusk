@@ -5,9 +5,9 @@ import { SITE_NAME, SITE_URL } from "./seo";
 import { StructuredData } from "./StructuredData";
 import "./globals.css";
 
-const title = "Débusk — Partez au bon moment !";
+const title = "Débusk, l’app bus d’Aix — Partez au bon moment !";
 const description =
-  "Débusk réunit horaires, itinéraires, lignes, perturbations et suivi communautaire des bus à Aix-en-Provence. Téléchargez l’application.";
+  "Débusk est l’application bus indépendante d’Aix-en-Provence pour consulter horaires, itinéraires, lignes, perturbations et suivi communautaire.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

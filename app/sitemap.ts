@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 import { appScreenImageUrls } from "./app-screen-data";
-import { absoluteUrl, UPDATED_AT } from "./seo";
+import { absoluteUrl } from "./seo";
 import { topicGuides } from "./topic-guide-data";
 
-const lastModified = new Date(UPDATED_AT + "T00:00:00+02:00");
+const lastModified = new Date("2026-08-18T00:00:00+02:00");
 
 const topicGuideEntries: MetadataRoute.Sitemap = topicGuides.map((guide) => ({
   url: absoluteUrl("/" + guide.slug),
