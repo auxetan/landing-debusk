@@ -10,6 +10,7 @@ import {
   type MouseEvent,
 } from "react";
 import { ContactDialog } from "./ContactDialog";
+import { trackSiteEvent } from "./SiteAnalytics";
 
 type NavigationItem = {
   label: string;
@@ -38,6 +39,7 @@ export function SiteHeader() {
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const contactTimerRef = useRef<number | null>(null);
+  const contactOpenTrackedRef = useRef(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("menu-open", isOpen);
@@ -74,6 +76,16 @@ export function SiteHeader() {
       window.removeEventListener("hashchange", openContactFromHash);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isContactOpen) {
+      contactOpenTrackedRef.current = false;
+      return;
+    }
+    if (contactOpenTrackedRef.current) return;
+    contactOpenTrackedRef.current = true;
+    trackSiteEvent("contact_open");
+  }, [isContactOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -190,7 +202,7 @@ export function SiteHeader() {
             <a
               href={item.href}
               key={item.href}
-              data-site-event={item.contact ? "contact_open" : item.page ? "guide_open" : undefined}
+              data-site-event={item.page ? "guide_open" : undefined}
               data-site-guide={item.page ? item.href.replace(/^\//, "") : undefined}
               ref={index === 0 ? firstLinkRef : undefined}
               tabIndex={isOpen ? 0 : -1}

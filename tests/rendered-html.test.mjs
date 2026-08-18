@@ -179,6 +179,11 @@ test("keeps the hamburger contact form wired to the dedicated template", async (
   assert.match(header, /label:\s*"Nous contacter"/);
   assert.match(header, /contact:\s*true/);
   assert.match(header, /<ContactDialog/);
+  assert.equal(
+    (header.match(/trackSiteEvent\("contact_open"\)/g) ?? []).length,
+    1,
+  );
+  assert.doesNotMatch(header, /item\.contact \? "contact_open"/);
 
   assert.match(dialog, /template_qp34ygq/);
   assert.match(dialog, /service_7znwy0i/);
@@ -212,16 +217,29 @@ test("collects first-party site analytics through the guarded same-origin route"
   ]);
 
   assert.match(layout, /<SiteAnalytics \/>/);
+  assert.match(layout, /<Suspense fallback=\{null\}>/);
   assert.match(client, /sessionStorage/);
   assert.doesNotMatch(client, /localStorage|document\.cookie/);
   assert.match(client, /navigator\.doNotTrack/);
   assert.match(client, /globalPrivacyControl/);
   assert.match(client, /referrerHostname/);
+  assert.match(client, /SESSION_TIMEOUT_MS\s*=\s*30 \* 60 \* 1_000/);
+  assert.match(client, /MAX_NETWORK_RETRIES\s*=\s*1/);
+  assert.match(client, /RETRY_QUEUE_KEY/);
+  assert.match(client, /deliverWithAcknowledgement/);
+  assert.match(client, /response\.status === 202/);
+  assert.match(client, /useSearchParams\(\)\.toString\(\)/);
+  assert.match(client, /\[pathname, search\]/);
+  assert.match(client, /pagehide/);
+  assert.equal((client.match(/navigator\.sendBeacon/g) ?? []).length, 2);
+  assert.doesNotMatch(client, /trackedPageViews/);
   assert.match(stores, /data-site-event="store_click"/);
   assert.match(route, /functions\/v1\/track-site-event/);
   assert.match(route, /Origin: origin/);
   assert.doesNotMatch(route, /service[_-]?role/i);
   assert.match(information, /identifiant aléatoire limité\s+à l’onglet/);
+  assert.match(information, /trente minutes d’inactivité/);
+  assert.match(information, /une unique\s+nouvelle tentative/);
   assert.match(information, /treize mois/);
 
   const validBody = JSON.stringify({

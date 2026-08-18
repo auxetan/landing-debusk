@@ -47,9 +47,12 @@ export default function InformationsPage() {
               d’audience et ne suit personne entre plusieurs sites. Les
               hébergeurs peuvent néanmoins traiter l’adresse IP dans leurs
               journaux techniques de sécurité. Un identifiant aléatoire limité
-              à l’onglet est effacé à sa fermeture ; les données brutes sont
-              supprimées après treize mois. Les signaux « Do Not Track » et
-              Global Privacy Control désactivent cette mesure.
+              à l’onglet expire après trente minutes d’inactivité et est effacé
+              à sa fermeture. En cas de coupure réseau, une petite file
+              d’attente reste uniquement dans cet onglet le temps d’une unique
+              nouvelle tentative. Les données brutes sont supprimées après
+              treize mois. Les signaux « Do Not Track » et Global Privacy
+              Control désactivent cette mesure.
             </p>
             <p>
               Dans l’application, le suivi de trajet reste volontaire. Aucun

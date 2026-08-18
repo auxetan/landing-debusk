@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { CustomCursor } from "./CustomCursor";
 import { SiteAnalytics } from "./SiteAnalytics";
 import { SITE_NAME, SITE_URL } from "./seo";
@@ -118,7 +119,9 @@ export default function RootLayout({
       <body>
         <StructuredData data={websiteStructuredData} />
         {children}
-        <SiteAnalytics />
+        <Suspense fallback={null}>
+          <SiteAnalytics />
+        </Suspense>
         <CustomCursor />
       </body>
     </html>
