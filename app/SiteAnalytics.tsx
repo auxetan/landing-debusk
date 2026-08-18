@@ -8,9 +8,12 @@ export type SiteAnalyticsEvent =
   | "store_click"
   | "contact_open"
   | "contact_submit"
-  | "guide_open";
+  | "guide_open"
+  | "web_vital"
+  | "engagement"
+  | "heartbeat";
 
-type SiteAnalyticsProperties = Record<string, string>;
+export type SiteAnalyticsProperties = Record<string, string | number>;
 
 type AnalyticsSession = {
   id: string;
@@ -31,10 +34,15 @@ type RetryQueueEntry = {
 const SESSION_KEY = "debusk:site-analytics-session:v1";
 const ATTRIBUTION_KEY = "debusk:site-analytics-attribution:v1";
 const RETRY_QUEUE_KEY = "debusk:site-analytics-retry:v1";
+const CONTACT_ANNOTATION_KEY = "debusk:site-analytics-contact:v1";
+export const ANALYTICS_OPT_OUT_KEY = "debusk:site-analytics-opt-out:v1";
+export const ANALYTICS_PREFERENCE_EVENT = "debusk:site-analytics-preference";
 const SESSION_TIMEOUT_MS = 30 * 60 * 1_000;
+const HEARTBEAT_INTERVAL_MS = 60_000;
 const RETRY_DELAY_MS = 2_000;
 const MAX_RETRY_QUEUE_SIZE = 20;
 const MAX_NETWORK_RETRIES = 1;
+const CONTACT_ANNOTATION_TTL_MS = 15_000;
 const UUID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -44,11 +52,54 @@ let memoryRetryQueue: RetryQueueEntry[] = [];
 let retryTimer: number | null = null;
 let retryFlushInProgress = false;
 
-function analyticsAllowed() {
+export function browserPrivacySignalActive() {
   const privacyNavigator = navigator as Navigator & {
     globalPrivacyControl?: boolean;
   };
-  return navigator.doNotTrack !== "1" && privacyNavigator.globalPrivacyControl !== true;
+  return navigator.doNotTrack === "1" ||
+    privacyNavigator.globalPrivacyControl === true;
+}
+
+export function siteAnalyticsOptedOut() {
+  try {
+    return localStorage.getItem(ANALYTICS_OPT_OUT_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function analyticsAllowed() {
+  return !browserPrivacySignalActive() && !siteAnalyticsOptedOut();
+}
+
+function clearAnalyticsTransientState() {
+  memorySession = null;
+  memoryAttribution = null;
+  memoryRetryQueue = [];
+  if (retryTimer !== null) {
+    window.clearTimeout(retryTimer);
+    retryTimer = null;
+  }
+  try {
+    sessionStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem(ATTRIBUTION_KEY);
+    sessionStorage.removeItem(RETRY_QUEUE_KEY);
+    sessionStorage.removeItem(CONTACT_ANNOTATION_KEY);
+  } catch {
+    // Privacy state is still enforced in memory when storage is unavailable.
+  }
+}
+
+export function setSiteAnalyticsOptOut(optOut: boolean) {
+  try {
+    if (optOut) localStorage.setItem(ANALYTICS_OPT_OUT_KEY, "1");
+    else localStorage.removeItem(ANALYTICS_OPT_OUT_KEY);
+  } catch {
+    // The browser privacy signals still apply when persistent storage is blocked.
+  }
+  // Both disabling and re-enabling start from a clean anonymous session.
+  clearAnalyticsTransientState();
+  window.dispatchEvent(new Event(ANALYTICS_PREFERENCE_EVENT));
 }
 
 function persistSession(session: AnalyticsSession) {
@@ -64,9 +115,6 @@ function storedSession(now: number) {
   try {
     const raw = sessionStorage.getItem(SESSION_KEY);
     if (!raw) return null;
-
-    // Keep sessions created by the first tracker version, which stored only
-    // the UUID, and upgrade them to the inactivity-aware representation.
     if (UUID_PATTERN.test(raw)) {
       return { id: raw, last_activity_at: now } satisfies AnalyticsSession;
     }
@@ -143,15 +191,9 @@ function readAttribution(sessionId: string) {
           memoryAttribution = candidate as StoredAttribution;
           return memoryAttribution.properties;
         }
-
-        // Upgrade the first tracker version, which stored the UTM object
-        // directly, while the associated legacy session is still active.
         if (!("session_id" in parsed) && validAttribution(parsed)) {
           memoryAttribution = { session_id: sessionId, properties: parsed };
-          sessionStorage.setItem(
-            ATTRIBUTION_KEY,
-            JSON.stringify(memoryAttribution),
-          );
+          sessionStorage.setItem(ATTRIBUTION_KEY, JSON.stringify(memoryAttribution));
           return memoryAttribution.properties;
         }
       }
@@ -182,19 +224,47 @@ function referrerHostname() {
   }
 }
 
-function coarseDevice() {
-  const ua = navigator.userAgent.toLowerCase();
-  if (/ipad|tablet/.test(ua)) return "tablet";
-  if (/android|iphone|ipod|mobile/.test(ua)) return "mobile";
-  return "desktop";
+function viewportBucket() {
+  const width = window.innerWidth;
+  if (width < 480) return "xs";
+  if (width < 768) return "sm";
+  if (width < 1_024) return "md";
+  if (width < 1_440) return "lg";
+  return "xl";
+}
+
+function currentPagePath() {
+  return `${window.location.pathname}${window.location.search}`;
+}
+
+function rememberAnnotatedContactOpen() {
+  try {
+    sessionStorage.setItem(CONTACT_ANNOTATION_KEY, String(Date.now()));
+  } catch {
+    // In-memory delivery still works; dialog-level tracking may duplicate only
+    // when browser storage itself is unavailable.
+  }
+}
+
+function consumeAnnotatedContactOpen() {
+  try {
+    const raw = sessionStorage.getItem(CONTACT_ANNOTATION_KEY);
+    sessionStorage.removeItem(CONTACT_ANNOTATION_KEY);
+    if (!raw) return false;
+    const annotatedAt = Number(raw);
+    const age = Date.now() - annotatedAt;
+    return Number.isFinite(annotatedAt) && age >= 0 &&
+      age <= CONTACT_ANNOTATION_TTL_MS;
+  } catch {
+    return false;
+  }
 }
 
 function validRetryEntry(value: unknown): value is RetryQueueEntry {
   if (!value || typeof value !== "object" || Array.isArray(value)) return false;
   const candidate = value as Partial<RetryQueueEntry>;
   return Boolean(candidate.id && UUID_PATTERN.test(candidate.id)) &&
-    typeof candidate.body === "string" &&
-    candidate.body.length <= 2_048 &&
+    typeof candidate.body === "string" && candidate.body.length <= 2_048 &&
     Number.isInteger(candidate.retry_count) &&
     (candidate.retry_count as number) >= 0 &&
     (candidate.retry_count as number) < MAX_NETWORK_RETRIES;
@@ -203,10 +273,7 @@ function validRetryEntry(value: unknown): value is RetryQueueEntry {
 function readRetryQueue() {
   try {
     const raw = sessionStorage.getItem(RETRY_QUEUE_KEY);
-    if (!raw) {
-      memoryRetryQueue = [];
-      return memoryRetryQueue;
-    }
+    if (!raw) return memoryRetryQueue;
     const parsed = JSON.parse(raw) as unknown;
     memoryRetryQueue = Array.isArray(parsed)
       ? parsed.filter(validRetryEntry).slice(-MAX_RETRY_QUEUE_SIZE)
@@ -235,13 +302,10 @@ function removeRetryEntry(id: string) {
 }
 
 function enqueueNetworkFailure(body: string) {
-  const queue = readRetryQueue();
-  const entry: RetryQueueEntry = {
-    id: crypto.randomUUID(),
-    body,
-    retry_count: 0,
-  };
-  writeRetryQueue([...queue, entry]);
+  writeRetryQueue([
+    ...readRetryQueue(),
+    { id: crypto.randomUUID(), body, retry_count: 0 },
+  ]);
 }
 
 function postAnalytics(body: string) {
@@ -266,12 +330,10 @@ function scheduleRetry() {
 async function deliverWithAcknowledgement(body: string) {
   try {
     const response = await postAnalytics(body);
-    // Any HTTP response proves the server answered. In particular, a 202 is
-    // already accepted and must never be retried. Non-2xx responses are also
-    // not retried because this tracker has no database idempotency key yet.
+    // Never retry after any HTTP response, especially an accepted 202. Without
+    // a database idempotency key, only explicit network rejection is retried.
     return response.status === 202;
   } catch {
-    // Only an explicit network rejection enters the one-shot retry queue.
     enqueueNetworkFailure(body);
     scheduleRetry();
     return false;
@@ -281,7 +343,7 @@ async function deliverWithAcknowledgement(body: string) {
 async function flushQueuedEvents() {
   if (retryFlushInProgress) return;
   if (!analyticsAllowed()) {
-    writeRetryQueue([]);
+    clearAnalyticsTransientState();
     return;
   }
   if (navigator.onLine === false) return;
@@ -291,11 +353,9 @@ async function flushQueuedEvents() {
     for (const entry of [...readRetryQueue()]) {
       try {
         await postAnalytics(entry.body);
-        // A response, accepted or rejected, completes this one-shot retry.
         removeRetryEntry(entry.id);
       } catch {
-        const retryCount = entry.retry_count + 1;
-        if (retryCount >= MAX_NETWORK_RETRIES) {
+        if (entry.retry_count + 1 >= MAX_NETWORK_RETRIES) {
           removeRetryEntry(entry.id);
         }
       }
@@ -307,7 +367,7 @@ async function flushQueuedEvents() {
 
 function flushQueuedEventsWithBeacon() {
   if (!analyticsAllowed()) {
-    writeRetryQueue([]);
+    clearAnalyticsTransientState();
     return;
   }
   if (!navigator.sendBeacon) return;
@@ -321,38 +381,166 @@ function flushQueuedEventsWithBeacon() {
   }
 }
 
-export function trackSiteEvent(
+function analyticsBody(
   eventName: SiteAnalyticsEvent,
-  properties: SiteAnalyticsProperties = {},
+  properties: SiteAnalyticsProperties,
+  path = currentPagePath(),
 ) {
-  if (!analyticsAllowed()) return;
-
   const sessionId = analyticsSessionId();
-  const body = JSON.stringify({
+  return JSON.stringify({
     event_name: eventName,
     session_id: sessionId,
-    path: window.location.pathname,
+    path,
     referrer: referrerHostname(),
-    device: coarseDevice(),
+    viewport: viewportBucket(),
     properties: eventName === "page_view"
       ? { ...readAttribution(sessionId), ...properties }
       : properties,
   });
+}
 
-  void deliverWithAcknowledgement(body);
+export function trackSiteEvent(
+  eventName: SiteAnalyticsEvent,
+  properties: SiteAnalyticsProperties = {},
+) {
+  if (!analyticsAllowed()) {
+    clearAnalyticsTransientState();
+    return;
+  }
+  void deliverWithAcknowledgement(analyticsBody(eventName, properties));
+}
+
+export function trackContactDialogOpen() {
+  if (!analyticsAllowed()) {
+    clearAnalyticsTransientState();
+    return;
+  }
+  if (consumeAnnotatedContactOpen()) return;
+  trackSiteEvent("contact_open");
+}
+
+function sendEngagementOnDeparture(
+  path: string,
+  properties: SiteAnalyticsProperties,
+) {
+  if (!analyticsAllowed()) {
+    clearAnalyticsTransientState();
+    return;
+  }
+  const body = analyticsBody("engagement", properties, path);
+  const queued = navigator.sendBeacon?.(
+    "/api/analytics",
+    new Blob([body], { type: "application/json" }),
+  ) ?? false;
+  if (!queued) void deliverWithAcknowledgement(body);
+}
+
+function scrollDepthBucket() {
+  const totalHeight = Math.max(
+    document.documentElement.scrollHeight,
+    document.body?.scrollHeight ?? 0,
+  );
+  if (totalHeight <= 0) return 0;
+  const reached = Math.min(
+    100,
+    Math.max(0, ((window.scrollY + window.innerHeight) / totalHeight) * 100),
+  );
+  if (reached >= 100) return 100;
+  if (reached >= 75) return 75;
+  if (reached >= 50) return 50;
+  if (reached >= 25) return 25;
+  return 0;
+}
+
+function usePageEngagement(path: string, locationKey: string) {
+  useEffect(() => {
+    let activeMilliseconds = 0;
+    let visibleSince = document.visibilityState === "visible"
+      ? performance.now()
+      : null;
+    let maximumScrollDepth = scrollDepthBucket();
+    let sent = false;
+
+    const pause = () => {
+      if (visibleSince === null) return;
+      activeMilliseconds += performance.now() - visibleSince;
+      visibleSince = null;
+    };
+    const resume = () => {
+      if (visibleSince === null && document.visibilityState === "visible") {
+        visibleSince = performance.now();
+      }
+    };
+    const updateScrollDepth = () => {
+      maximumScrollDepth = Math.max(maximumScrollDepth, scrollDepthBucket());
+    };
+    const sendSummary = (departure: boolean) => {
+      if (sent) return;
+      pause();
+      const activeSeconds = Math.min(
+        1_800,
+        Math.floor(activeMilliseconds / 1_000),
+      );
+      if (activeSeconds < 1) return;
+      sent = true;
+      const properties = {
+        active_seconds: activeSeconds,
+        scroll_depth: maximumScrollDepth,
+      };
+      if (departure) sendEngagementOnDeparture(path, properties);
+      else if (analyticsAllowed()) {
+        void deliverWithAcknowledgement(
+          analyticsBody("engagement", properties, path),
+        );
+      }
+    };
+    const visibilityChanged = () => {
+      if (document.visibilityState === "visible") resume();
+      else pause();
+    };
+    const privacyChanged = () => {
+      activeMilliseconds = 0;
+      maximumScrollDepth = scrollDepthBucket();
+      sent = false;
+      visibleSince = analyticsAllowed() && document.visibilityState === "visible"
+        ? performance.now()
+        : null;
+    };
+    const storedPreferenceChanged = (event: StorageEvent) => {
+      if (event.key === ANALYTICS_OPT_OUT_KEY) privacyChanged();
+    };
+    const pageHidden = () => sendSummary(true);
+
+    document.addEventListener("visibilitychange", visibilityChanged);
+    window.addEventListener("scroll", updateScrollDepth, { passive: true });
+    window.addEventListener("pagehide", pageHidden);
+    window.addEventListener(ANALYTICS_PREFERENCE_EVENT, privacyChanged);
+    window.addEventListener("storage", storedPreferenceChanged);
+    return () => {
+      document.removeEventListener("visibilitychange", visibilityChanged);
+      window.removeEventListener("scroll", updateScrollDepth);
+      window.removeEventListener("pagehide", pageHidden);
+      window.removeEventListener(ANALYTICS_PREFERENCE_EVENT, privacyChanged);
+      window.removeEventListener("storage", storedPreferenceChanged);
+      sendSummary(false);
+    };
+  }, [path, locationKey]);
 }
 
 export function SiteAnalytics() {
   const pathname = usePathname();
   const search = useSearchParams().toString();
+  const locationKey = search ? `${pathname}?${search}` : pathname;
   const lastTrackedLocation = useRef<string | null>(null);
+  const lastHeartbeatAt = useRef(0);
+
+  usePageEngagement(locationKey, locationKey);
 
   useEffect(() => {
-    const key = search ? `${pathname}?${search}` : pathname;
-    if (lastTrackedLocation.current === key) return;
-    lastTrackedLocation.current = key;
+    if (lastTrackedLocation.current === locationKey) return;
+    lastTrackedLocation.current = locationKey;
     trackSiteEvent("page_view");
-  }, [pathname, search]);
+  }, [locationKey]);
 
   useEffect(() => {
     const trackAnnotatedClick = (event: MouseEvent) => {
@@ -365,24 +553,88 @@ export function SiteAnalytics() {
       const properties: SiteAnalyticsProperties = {};
       if (target.dataset.siteStore) properties.store = target.dataset.siteStore;
       if (target.dataset.siteGuide) properties.guide = target.dataset.siteGuide;
+      if (eventName === "contact_open" && analyticsAllowed()) {
+        rememberAnnotatedContactOpen();
+      }
       trackSiteEvent(eventName, properties);
     };
     const flushWhenOnline = () => void flushQueuedEvents();
     const flushOnDeparture = () => flushQueuedEventsWithBeacon();
+    const enforcePrivacy = () => {
+      if (!analyticsAllowed()) clearAnalyticsTransientState();
+    };
+    const preferenceChanged = () => {
+      if (!analyticsAllowed()) {
+        clearAnalyticsTransientState();
+        return;
+      }
+      // Re-enabling creates one fresh page view for the current URL. The
+      // regular location effect will see the same key and cannot duplicate it.
+      clearAnalyticsTransientState();
+      lastTrackedLocation.current = currentPagePath();
+      lastHeartbeatAt.current = 0;
+      trackSiteEvent("page_view");
+    };
+    const storedPreferenceChanged = (event: StorageEvent) => {
+      if (event.key === ANALYTICS_OPT_OUT_KEY) preferenceChanged();
+    };
 
     document.addEventListener("click", trackAnnotatedClick, { capture: true });
     window.addEventListener("online", flushWhenOnline);
     window.addEventListener("pagehide", flushOnDeparture);
-    void flushQueuedEvents();
+    window.addEventListener(ANALYTICS_PREFERENCE_EVENT, preferenceChanged);
+    window.addEventListener("storage", storedPreferenceChanged);
+    enforcePrivacy();
+    if (analyticsAllowed()) void flushQueuedEvents();
 
     return () => {
       document.removeEventListener("click", trackAnnotatedClick, { capture: true });
       window.removeEventListener("online", flushWhenOnline);
       window.removeEventListener("pagehide", flushOnDeparture);
+      window.removeEventListener(ANALYTICS_PREFERENCE_EVENT, preferenceChanged);
+      window.removeEventListener("storage", storedPreferenceChanged);
       if (retryTimer !== null) {
         window.clearTimeout(retryTimer);
         retryTimer = null;
       }
+    };
+  }, []);
+
+  useEffect(() => {
+    const sendHeartbeatWhenDue = () => {
+      if (document.visibilityState !== "visible") return;
+      if (!analyticsAllowed()) {
+        clearAnalyticsTransientState();
+        return;
+      }
+      const now = Date.now();
+      if (now - lastHeartbeatAt.current < HEARTBEAT_INTERVAL_MS) return;
+      lastHeartbeatAt.current = now;
+      trackSiteEvent("heartbeat");
+    };
+    const visibilityChanged = () => {
+      if (document.visibilityState === "visible") sendHeartbeatWhenDue();
+    };
+    const storedPreferenceChanged = (event: StorageEvent) => {
+      if (event.key === ANALYTICS_OPT_OUT_KEY) sendHeartbeatWhenDue();
+    };
+
+    sendHeartbeatWhenDue();
+    const timer = window.setInterval(
+      sendHeartbeatWhenDue,
+      HEARTBEAT_INTERVAL_MS,
+    );
+    document.addEventListener("visibilitychange", visibilityChanged);
+    window.addEventListener(ANALYTICS_PREFERENCE_EVENT, sendHeartbeatWhenDue);
+    window.addEventListener("storage", storedPreferenceChanged);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", visibilityChanged);
+      window.removeEventListener(
+        ANALYTICS_PREFERENCE_EVENT,
+        sendHeartbeatWhenDue,
+      );
+      window.removeEventListener("storage", storedPreferenceChanged);
     };
   }, []);
 

@@ -1608,6 +1608,41 @@ h2 span {
   text-underline-offset: 4px;
 }
 
+.analytics-privacy-control {
+  max-width: 700px;
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid rgba(17, 17, 19, 0.16);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.analytics-privacy-control p {
+  margin: 0 0 14px;
+}
+
+.analytics-privacy-control button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.analytics-privacy-control button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.analytics-privacy-control button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--signal) 65%, transparent);
+  outline-offset: 4px;
+}
+
 .information-footer {
   display: flex;
   justify-content: space-between;

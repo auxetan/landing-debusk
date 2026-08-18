@@ -10,7 +10,7 @@ import {
   type MouseEvent,
 } from "react";
 import { ContactDialog } from "./ContactDialog";
-import { trackSiteEvent } from "./SiteAnalytics";
+import { trackContactDialogOpen } from "./SiteAnalytics";
 
 type NavigationItem = {
   label: string;
@@ -84,7 +84,7 @@ export function SiteHeader() {
     }
     if (contactOpenTrackedRef.current) return;
     contactOpenTrackedRef.current = true;
-    trackSiteEvent("contact_open");
+    trackContactDialogOpen();
   }, [isContactOpen]);
 
   useEffect(() => {
@@ -202,7 +202,11 @@ export function SiteHeader() {
             <a
               href={item.href}
               key={item.href}
-              data-site-event={item.page ? "guide_open" : undefined}
+              data-site-event={item.contact
+                ? "contact_open"
+                : item.page
+                  ? "guide_open"
+                  : undefined}
               data-site-guide={item.page ? item.href.replace(/^\//, "") : undefined}
               ref={index === 0 ? firstLinkRef : undefined}
               tabIndex={isOpen ? 0 : -1}

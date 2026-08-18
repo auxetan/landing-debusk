@@ -180,10 +180,10 @@ test("keeps the hamburger contact form wired to the dedicated template", async (
   assert.match(header, /contact:\s*true/);
   assert.match(header, /<ContactDialog/);
   assert.equal(
-    (header.match(/trackSiteEvent\("contact_open"\)/g) ?? []).length,
+    (header.match(/trackContactDialogOpen\(\)/g) ?? []).length,
     1,
   );
-  assert.doesNotMatch(header, /item\.contact \? "contact_open"/);
+  assert.match(header, /item\.contact\s*\n?\s*\? "contact_open"/);
 
   assert.match(dialog, /template_qp34ygq/);
   assert.match(dialog, /service_7znwy0i/);
@@ -207,46 +207,83 @@ test("keeps the hamburger contact form wired to the dedicated template", async (
   assert.match(dialog, /Patientez 30 secondes/);
 });
 
-test("collects first-party site analytics through the guarded same-origin route", async () => {
-  const [client, route, layout, stores, information] = await Promise.all([
+test("collects privacy-minimal first-party site analytics through the guarded route", async () => {
+  const [client, route, layout, stores, information, privacy, webVitals] = await Promise.all([
     readFile(new URL("../app/SiteAnalytics.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/api/analytics/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/StoreButtons.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/informations/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/AnalyticsPrivacyControl.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/WebVitals.tsx", import.meta.url), "utf8"),
   ]);
 
   assert.match(layout, /<SiteAnalytics \/>/);
+  assert.match(layout, /<WebVitals \/>/);
   assert.match(layout, /<Suspense fallback=\{null\}>/);
   assert.match(client, /sessionStorage/);
-  assert.doesNotMatch(client, /localStorage|document\.cookie/);
+  assert.match(client, /localStorage\.setItem\(ANALYTICS_OPT_OUT_KEY, "1"\)/);
+  assert.doesNotMatch(client, /document\.cookie/);
   assert.match(client, /navigator\.doNotTrack/);
   assert.match(client, /globalPrivacyControl/);
+  assert.match(client, /clearAnalyticsTransientState/);
+  assert.match(client, /lastTrackedLocation\.current = currentPagePath\(\)/);
+  assert.match(client, /lastHeartbeatAt\.current = 0/);
   assert.match(client, /referrerHostname/);
+  assert.match(client, /viewportBucket/);
   assert.match(client, /SESSION_TIMEOUT_MS\s*=\s*30 \* 60 \* 1_000/);
+  assert.match(client, /HEARTBEAT_INTERVAL_MS\s*=\s*60_000/);
   assert.match(client, /MAX_NETWORK_RETRIES\s*=\s*1/);
   assert.match(client, /RETRY_QUEUE_KEY/);
   assert.match(client, /deliverWithAcknowledgement/);
   assert.match(client, /response\.status === 202/);
   assert.match(client, /useSearchParams\(\)\.toString\(\)/);
-  assert.match(client, /\[pathname, search\]/);
+  assert.match(client, /\[locationKey\]/);
   assert.match(client, /pagehide/);
-  assert.equal((client.match(/navigator\.sendBeacon/g) ?? []).length, 2);
+  assert.equal((client.match(/navigator\.sendBeacon/g) ?? []).length, 3);
+  assert.match(client, /trackSiteEvent\("heartbeat"\)/);
+  assert.match(client, /trackContactDialogOpen/);
+  assert.match(client, /analyticsBody\("engagement"/);
+  assert.match(client, /active_seconds/);
+  assert.match(client, /scroll_depth/);
   assert.doesNotMatch(client, /trackedPageViews/);
+  assert.match(webVitals, /from "next\/web-vitals"/);
+  assert.match(webVitals, /"LCP", "CLS", "INP", "TTFB"/);
+  assert.match(webVitals, /trackSiteEvent\("web_vital"/);
+  assert.doesNotMatch(webVitals, /metric\.(?:id|entries|navigationType|delta)/);
+  assert.match(privacy, /role="switch"/);
+  assert.match(privacy, /setSiteAnalyticsOptOut/);
   assert.match(stores, /data-site-event="store_click"/);
   assert.match(route, /functions\/v1\/track-site-event/);
   assert.match(route, /Origin: origin/);
   assert.doesNotMatch(route, /service[_-]?role/i);
+  assert.match(route, /x-vercel-ip-country/);
+  assert.match(route, /x-vercel-ip-country-region/);
+  assert.match(route, /x-vercel-ip-latitude/);
+  assert.match(route, /x-vercel-ip-longitude/);
+  assert.match(route, /Math\.round\(coordinate\)/);
+  assert.match(route, /const hasCoordinatePair = latitude !== null && longitude !== null/);
+  assert.match(route, /latitude_bucket: hasCoordinatePair \? latitude : null/);
+  assert.match(route, /longitude_bucket: hasCoordinatePair \? longitude : null/);
+  assert.match(route, /serverTechnology\(request\.headers\.get\("user-agent"\)\)/);
+  assert.match(route, /primaryLanguage\(request\.headers\.get\("accept-language"\)\)/);
+  assert.match(route, /const enrichedPayload = \{/);
+  assert.match(route, /body: JSON\.stringify\(enrichedPayload\)/);
+  assert.doesNotMatch(route, /JSON\.stringify\(payload\)/);
+  assert.doesNotMatch(route, /x-forwarded-for|x-real-ip|x-vercel-ip-city|postal/i);
   assert.match(information, /identifiant aléatoire limité\s+à l’onglet/);
-  assert.match(information, /trente minutes d’inactivité/);
+  assert.match(information, /trente\s+minutes d’inactivité/);
   assert.match(information, /une unique\s+nouvelle tentative/);
+  assert.match(information, /arrondie au degré entier/);
+  assert.match(information, /vingt-quatre\s+heures/);
   assert.match(information, /treize mois/);
+  assert.match(information, /href="\/#contact" data-site-event="contact_open"/);
 
   const validBody = JSON.stringify({
     event_name: "page_view",
     session_id: "0198b9a3-3561-7000-8000-000000000001",
     path: "/",
-    device: "desktop",
+    viewport: "lg",
     properties: {},
   });
   const disabled = await render("/api/analytics", {
@@ -279,6 +316,71 @@ test("collects first-party site analytics through the guarded same-origin route"
     body: validBody,
   });
   assert.equal(crossSite.status, 403);
+
+  const privacySignal = await render("/api/analytics", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      origin: "https://www.debusk.fr",
+      dnt: "1",
+    },
+    body: validBody,
+  });
+  assert.equal(privacySignal.status, 204);
+
+  let relayedPayload;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (_input, init) => {
+    relayedPayload = JSON.parse(String(init?.body));
+    return new Response(null, { status: 202 });
+  };
+  try {
+    const accepted = await render("/api/analytics", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        origin: "https://www.debusk.fr",
+        "user-agent":
+          "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 CriOS/128.0 Mobile/15E148 Safari/604.1",
+        "accept-language": "fr-FR,fr;q=0.9,en;q=0.8",
+        "x-vercel-ip-country": "fr",
+        "x-vercel-ip-country-region": "pac",
+        // A partial coordinate must not violate the DB's all-or-none pair.
+        "x-vercel-ip-latitude": "43.53",
+      },
+      body: JSON.stringify({
+        ...JSON.parse(validBody),
+        country_code: "US",
+        browser: "edge",
+        os: "windows",
+        device: "desktop",
+        language: "en",
+        latitude_bucket: 1,
+        longitude_bucket: 2,
+        properties: { utm_source: "test", secret: "ignored" },
+      }),
+    });
+    assert.equal(accepted.status, 202);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+
+  assert.deepEqual(relayedPayload, {
+    event_name: "page_view",
+    session_id: "0198b9a3-3561-7000-8000-000000000001",
+    path: "/",
+    referrer: null,
+    device: "mobile",
+    properties: { utm_source: "test" },
+    country_code: "FR",
+    region_code: "PAC",
+    latitude_bucket: null,
+    longitude_bucket: null,
+    browser: "chrome",
+    os: "ios",
+    language: "fr",
+    viewport: "lg",
+  });
 });
 
 test("renders the information page and contains no unused starter or login code", async () => {

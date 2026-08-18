@@ -222,7 +222,7 @@ export default function Home() {
             <Link href="/informations#confidentialite">Confidentialité</Link>
             <Link href="/informations#mentions">Mentions</Link>
             <Link href="/informations#sources">Sources</Link>
-            <a href="#contact">Contact</a>
+            <a href="#contact" data-site-event="contact_open">Contact</a>
             <a
               className="footer-social-link"
               href="https://www.instagram.com/debusk.fr?igsi=MTE4b200bzc2NTd4eQ%3D%3D&utm_source=qr"

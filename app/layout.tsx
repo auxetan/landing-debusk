@@ -4,6 +4,7 @@ import { CustomCursor } from "./CustomCursor";
 import { SiteAnalytics } from "./SiteAnalytics";
 import { SITE_NAME, SITE_URL } from "./seo";
 import { StructuredData } from "./StructuredData";
+import { WebVitals } from "./WebVitals";
 import "./globals.css";
 
 const title = "Débusk, l’app bus d’Aix — Partez au bon moment !";
@@ -122,6 +123,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <SiteAnalytics />
         </Suspense>
+        <WebVitals />
         <CustomCursor />
       </body>
     </html>

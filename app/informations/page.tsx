@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AnalyticsPrivacyControl } from "../AnalyticsPrivacyControl";
 import { CONTACT_EMAIL } from "../contact";
 import { createPageMetadata } from "../seo";
 
@@ -44,16 +45,30 @@ export default function InformationsPage() {
               le domaine d’origine, le type d’appareil et les clics vers les
               boutiques ou le contact. Elle n’utilise aucun cookie publicitaire,
               n’enregistre aucune adresse IP ni identité dans les données
-              d’audience et ne suit personne entre plusieurs sites. Les
-              hébergeurs peuvent néanmoins traiter l’adresse IP dans leurs
-              journaux techniques de sécurité. Un identifiant aléatoire limité
-              à l’onglet expire après trente minutes d’inactivité et est effacé
-              à sa fermeture. En cas de coupure réseau, une petite file
-              d’attente reste uniquement dans cet onglet le temps d’une unique
-              nouvelle tentative. Les données brutes sont supprimées après
-              treize mois. Les signaux « Do Not Track » et Global Privacy
-              Control désactivent cette mesure.
+              d’audience et ne suit personne entre plusieurs sites. Le pays, la
+              région et une position arrondie au degré entier peuvent être
+              déduits côté serveur par Vercel ; aucune ville, code postal,
+              adresse IP ni coordonnée précise n’est conservé dans l’audience.
+              Le navigateur, le système et la langue sont réduits à des
+              catégories, sans conserver le user-agent. La largeur d’écran est
+              enregistrée par tranche. Des mesures de performance arrondies et
+              un résumé d’engagement par page peuvent aussi être comptés. Un
+              signal de présence est envoyé au maximum une fois par minute
+              lorsque l’onglet est visible et supprimé après vingt-quatre
+              heures.
             </p>
+            <p>
+              Un identifiant aléatoire limité à l’onglet expire après trente
+              minutes d’inactivité et est effacé à sa fermeture. En cas de
+              coupure réseau, une petite file d’attente reste uniquement dans
+              cet onglet le temps d’une unique nouvelle tentative. Les autres
+              données brutes sont supprimées après treize mois. Les signaux
+              « Do Not Track » et Global Privacy Control désactivent la mesure
+              et effacent la session locale. Vous pouvez aussi la désactiver
+              durablement ci-dessous ; seule cette préférence est conservée
+              dans le navigateur.
+            </p>
+            <AnalyticsPrivacyControl />
             <p>
               Dans l’application, le suivi de trajet reste volontaire. Aucun
               nom n’apparaît sur la carte et le partage s’arrête lorsque vous
@@ -74,7 +89,11 @@ export default function InformationsPage() {
             <p>
               Pour toute demande, écrivez à{" "}
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> ou utilisez
-              le <Link href="/#contact">formulaire de contact</Link>.
+              le{" "}
+              <Link href="/#contact" data-site-event="contact_open">
+                formulaire de contact
+              </Link>
+              .
             </p>
           </div>
         </section>
