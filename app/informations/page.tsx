@@ -70,9 +70,47 @@ export default function InformationsPage() {
             </p>
             <AnalyticsPrivacyControl />
             <p>
-              Dans l’application, le suivi de trajet reste volontaire. Aucun
-              nom n’apparaît sur la carte et le partage s’arrête lorsque vous
-              touchez « Je descends » ou quittez le mode conduite.
+              <strong>Dans l’application mobile, le compte reste facultatif.</strong>{" "}
+              Lors d’une connexion par e-mail ou d’une connexion OAuth via Apple
+              ou Google, Supabase et le fournisseur choisi traitent l’adresse e-mail, le nom d’affichage,
+              l’identifiant technique de compte et les données de session
+              nécessaires à l’authentification, selon leurs propres politiques.
+            </p>
+            <p>
+              Les lignes et arrêts favoris, le domicile, le travail, les lieux
+              enregistrés et les trajets récents restent sur l’appareil et
+              peuvent être synchronisés avec le compte. L’historique peut être
+              effacé depuis l’application. Un signalement comprend son type, la
+              ligne, l’arrêt ou le trajet concerné, la position utile, son
+              horodatage et les validations ou contestations de la communauté ;
+              l’identité de son auteur n’est pas affichée publiquement.
+            </p>
+            <p>
+              Si les notifications sont activées, Débusk enregistre dans
+              Supabase un identifiant aléatoire d’installation, le token APNs
+              fourni par Apple, la plateforme, l’environnement technique et les
+              préférences nécessaires à l’envoi des alertes demandées. Ce token
+              n’est ni un identifiant publicitaire ni un moyen de suivi entre
+              applications. Il est désactivé ou supprimé lors de la
+              désactivation, de la déconnexion, de la suppression du compte ou
+              de son invalidation par Apple.
+            </p>
+            <p>
+              Mapbox fournit les cartes et peut recevoir les requêtes nécessaires
+              à leur chargement ainsi que l’adresse IP et des informations
+              techniques ou de diagnostic sur l’appareil ou l’application,
+              conformément à sa propre politique. Débusk n’utilise ces
+              informations ni pour la publicité ciblée ni pour suivre une
+              personne entre les services d’autres entreprises. La mesure
+              produit de l’application mobile reste désactivée tant qu’un
+              dispositif d’information, de choix et d’opposition n’est pas
+              disponible.
+            </p>
+            <p>
+              Le suivi de trajet reste volontaire. Aucun nom n’apparaît sur la
+              carte et le partage s’arrête lorsque vous touchez « Je descends »
+              ou quittez le mode conduite. Le compte et les données synchronisées
+              peuvent être supprimés directement depuis Profil ▸ Zone de danger.
             </p>
           </div>
         </section>
@@ -146,7 +184,7 @@ export default function InformationsPage() {
             <p>
               Débusk distingue ces trois niveaux pour ne pas présenter une
               estimation comme une position réelle. Cette page a été vérifiée
-              le <time dateTime="2026-08-16">16 août 2026</time>.
+              le <time dateTime="2026-08-20">20 août 2026</time>.
             </p>
           </div>
         </section>
