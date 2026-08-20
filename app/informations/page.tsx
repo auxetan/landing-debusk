@@ -71,8 +71,8 @@ export default function InformationsPage() {
             <AnalyticsPrivacyControl />
             <p>
               <strong>Dans l’application mobile, le compte reste facultatif.</strong>{" "}
-              Lors d’une connexion par e-mail ou d’une connexion OAuth via Apple
-              ou Google, Supabase et le fournisseur choisi traitent l’adresse e-mail, le nom d’affichage,
+              Lors d’une connexion par e-mail ou d’une connexion OAuth via Apple,
+              Supabase et Apple traitent l’adresse e-mail, le nom d’affichage,
               l’identifiant technique de compte et les données de session
               nécessaires à l’authentification, selon leurs propres politiques.
             </p>
