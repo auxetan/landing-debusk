@@ -207,6 +207,44 @@ test("keeps the hamburger contact form wired to the dedicated template", async (
   assert.match(dialog, /Patientez 30 secondes/);
 });
 
+test("opens an accessible store watchlist and emails the requested address", async () => {
+  const [stores, contact, css, information] = await Promise.all([
+    readFile(new URL("../app/StoreButtons.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/contact.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../app/informations/page.tsx", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(stores, /^"use client";/);
+  assert.match(stores, /L’app sera disponible très prochainement\./);
+  assert.match(stores, /Bientôt sur/);
+  assert.match(stores, /aria-haspopup="dialog"/);
+  assert.match(stores, /role="dialog"/);
+  assert.match(stores, /aria-modal="true"/);
+  assert.match(stores, /createPortal/);
+  assert.match(stores, /event\.key === "Escape"/);
+  assert.match(stores, /document\.body\.style\.overflow = "hidden"/);
+  assert.match(stores, /triggerRef\.current\?\.focus/);
+  assert.match(stores, /type="email"/);
+  assert.match(stores, /autoComplete="email"/);
+  assert.match(stores, /api\.emailjs\.com\/api\/v1\.0\/email\/send/);
+  assert.match(stores, /service_7znwy0i/);
+  assert.match(stores, /template_qp34ygq/);
+  assert.match(stores, /to_email:\s*CONTACT_EMAIL/);
+  assert.match(stores, /flag:\s*"watchlist"/);
+  assert.match(stores, /contact_type:\s*"Watchlist"/);
+  assert.match(stores, /source:\s*"Site Débusk — watchlist"/);
+  assert.match(stores, /Patientez 30 secondes/);
+  assert.match(contact, /info@debusk\.fr/);
+  assert.doesNotMatch(stores, /apps\.apple\.com|play\.google\.com/);
+  assert.doesNotMatch(stores, /fetch\("\/api\/waitlist"/);
+  assert.match(css, /\.availability-dialog\s*\{/);
+  assert.match(css, /backdrop-filter:\s*blur\(18px\)/);
+  assert.match(css, /\.availability-form-row\s*\{/);
+  assert.match(information, /même\s*\n?\s*service EmailJS/);
+  assert.match(information, /catégorie\s*\n?\s*« Watchlist »/);
+});
+
 test("collects privacy-minimal first-party site analytics through the guarded route", async () => {
   const [client, route, layout, stores, information, privacy, webVitals] = await Promise.all([
     readFile(new URL("../app/SiteAnalytics.tsx", import.meta.url), "utf8"),

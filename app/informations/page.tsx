@@ -41,6 +41,17 @@ export default function InformationsPage() {
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
             </p>
             <p>
+              Si vous demandez à être prévenu du lancement, votre adresse e-mail
+              et la boutique choisie sont envoyées à{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> par le même
+              service EmailJS que le formulaire de contact, avec la catégorie
+              « Watchlist ». Elles servent uniquement à vous annoncer la
+              disponibilité de l’application et ne sont ni revendues ni ajoutées
+              aux données d’audience. Vous pouvez demander la suppression de ce
+              message à{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+            </p>
+            <p>
               Une mesure d’audience interne comptabilise les pages consultées,
               le domaine d’origine, le type d’appareil et les clics vers les
               boutiques ou le contact. Elle n’utilise aucun cookie publicitaire,
@@ -184,7 +195,7 @@ export default function InformationsPage() {
             <p>
               Débusk distingue ces trois niveaux pour ne pas présenter une
               estimation comme une position réelle. Cette page a été vérifiée
-              le <time dateTime="2026-08-20">20 août 2026</time>.
+              le <time dateTime="2026-08-22">22 août 2026</time>.
             </p>
           </div>
         </section>

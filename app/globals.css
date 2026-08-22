@@ -799,6 +799,9 @@ h2 span {
   background: rgba(251, 250, 246, 0.52);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.74) inset;
   backdrop-filter: blur(12px);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
   transition:
     color 180ms ease,
     background 180ms ease,
@@ -850,6 +853,267 @@ h2 span {
   border-radius: 50%;
   font-size: 15px;
   transition: transform 180ms ease;
+}
+
+.availability-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  padding: clamp(16px, 4vw, 42px);
+  place-items: center;
+  overflow-y: auto;
+  background: rgba(17, 17, 19, 0.62);
+  backdrop-filter: blur(18px);
+  animation: contact-backdrop-in 300ms ease both;
+}
+
+.availability-card {
+  position: relative;
+  width: min(100%, 570px);
+  max-height: calc(100svh - clamp(32px, 8vw, 84px));
+  padding: clamp(28px, 4.4vw, 48px);
+  overflow-y: auto;
+  border: 1px solid rgba(17, 17, 19, 0.1);
+  border-radius: clamp(26px, 4vw, 38px);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 32px 100px rgba(0, 0, 0, 0.28);
+  animation: contact-card-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.availability-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.availability-platform {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(17, 17, 19, 0.12);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 720;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.availability-platform svg {
+  width: 14px;
+  height: 14px;
+  color: var(--ink);
+}
+
+.availability-close {
+  position: relative;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(17, 17, 19, 0.14);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.availability-close span {
+  position: absolute;
+  top: 21px;
+  left: 12px;
+  width: 19px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.availability-close span:first-child {
+  transform: rotate(45deg);
+}
+
+.availability-close span:last-child {
+  transform: rotate(-45deg);
+}
+
+.availability-copy {
+  margin-top: clamp(32px, 5vw, 50px);
+}
+
+.availability-eyebrow {
+  margin: 0 0 12px;
+  color: var(--signal);
+  font-size: 10px;
+  font-weight: 760;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.availability-card h2 {
+  max-width: 500px;
+  margin: 0;
+  font-size: clamp(38px, 6vw, 56px);
+  font-weight: 680;
+  letter-spacing: -0.06em;
+  line-height: 0.98;
+}
+
+#availability-description {
+  max-width: 450px;
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: clamp(15px, 1.7vw, 17px);
+  line-height: 1.55;
+}
+
+.availability-form {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.availability-form > label {
+  padding-left: 3px;
+  font-size: 11px;
+  font-weight: 720;
+  letter-spacing: 0.02em;
+}
+
+.availability-form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.availability-form-row input {
+  min-width: 0;
+  height: 56px;
+  padding: 0 16px;
+  border: 1px solid rgba(17, 17, 19, 0.12);
+  border-radius: 17px;
+  outline: none;
+  background: var(--limestone);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.availability-form-row input::placeholder {
+  color: rgba(104, 101, 95, 0.65);
+}
+
+.availability-form-row input:focus {
+  border-color: var(--signal);
+  background: var(--paper);
+  box-shadow: 0 0 0 4px rgba(255, 79, 47, 0.12);
+}
+
+.availability-form-row button {
+  min-width: 142px;
+  min-height: 56px;
+  padding: 0 20px;
+  border: 1px solid var(--ink);
+  border-radius: 17px;
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 720;
+  white-space: nowrap;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.availability-form-row button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.availability-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.availability-error {
+  margin: 2px 3px 0;
+  color: #c93420;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.availability-privacy {
+  margin: 4px 3px 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.availability-privacy a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--signal);
+  text-underline-offset: 3px;
+}
+
+.availability-success {
+  display: grid;
+  min-height: 390px;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+.availability-success-mark {
+  display: grid;
+  width: 62px;
+  height: 62px;
+  margin-bottom: 24px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green);
+  color: white;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.availability-success p {
+  max-width: 360px;
+  margin: 16px 0 28px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.availability-success button {
+  min-width: 150px;
+  min-height: 48px;
+  border: 1px solid rgba(17, 17, 19, 0.15);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
 }
 
 .route-art {
@@ -1659,6 +1923,11 @@ h2 span {
 .contact-close:focus-visible,
 .contact-submit:focus-visible,
 .contact-success button:focus-visible,
+.availability-close:focus-visible,
+.availability-form-row input:focus-visible,
+.availability-form-row button:focus-visible,
+.availability-success button:focus-visible,
+.availability-privacy a:focus-visible,
 .store-button:focus-visible,
 .showcase-arrow:focus-visible,
 .showcase-dots button:focus-visible,
@@ -1695,6 +1964,24 @@ h2 span {
     transform: rotate(5deg);
   }
 
+  .availability-close:hover {
+    border-color: var(--ink);
+    background: var(--limestone);
+    transform: rotate(5deg);
+  }
+
+  .availability-form-row button:hover {
+    border-color: var(--signal);
+    background: var(--signal);
+    transform: translateY(-2px);
+  }
+
+  .availability-success button:hover {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
   .contact-submit:hover {
     border-color: var(--signal);
     background: var(--signal);
@@ -1716,7 +2003,7 @@ h2 span {
   }
 
   .store-button:hover .store-arrow {
-    transform: rotate(45deg);
+    transform: translateX(3px);
   }
 
   .showcase-arrow:hover {
@@ -1869,6 +2156,42 @@ h2 span {
 
   .contact-submit {
     min-height: 56px;
+  }
+
+  .availability-dialog {
+    align-items: end;
+    padding: 10px;
+  }
+
+  .availability-card {
+    width: 100%;
+    max-height: calc(100svh - 20px);
+    padding: 24px 20px max(24px, env(safe-area-inset-bottom));
+    border-radius: 28px;
+  }
+
+  .availability-copy {
+    margin-top: 30px;
+  }
+
+  .availability-card h2 {
+    font-size: clamp(38px, 11.8vw, 54px);
+  }
+
+  .availability-form {
+    margin-top: 24px;
+  }
+
+  .availability-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .availability-form-row button {
+    width: 100%;
+  }
+
+  .availability-success {
+    min-height: min(430px, 64svh);
   }
 
   .hero {
