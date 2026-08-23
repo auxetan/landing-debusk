@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-orange-192.png", type: "image/png", sizes: "192x192" },
     ],
-    apple: [{ url: "/icon-192.png", sizes: "192x192" }],
+    apple: [{ url: "/icon-orange-192.png", sizes: "192x192" }],
   },
   robots: {
     index: true,
@@ -93,7 +93,7 @@ const websiteStructuredData = [
       "Éditeur du site et de l’application mobile indépendante Débusk, conçue pour les déplacements en bus à Aix-en-Provence.",
     logo: {
       "@type": "ImageObject",
-      url: SITE_URL + "/icon-192.png",
+      url: SITE_URL + "/icon-orange-192.png",
       width: 192,
       height: 192,
     },

@@ -159,7 +159,7 @@ export function SiteHeader() {
           <span className="brand-logo-frame" aria-hidden="true">
             <Image
               className="brand-logo"
-              src="/icon-192.png"
+              src="/icon-orange-192.png"
               alt="Logo Débusk"
               width="48"
               height="48"

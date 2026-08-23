@@ -32,7 +32,7 @@ const homeStructuredData = [
     operatingSystem: "iOS, Android",
     inLanguage: "fr-FR",
     isAccessibleForFree: true,
-    image: absoluteUrl("/icon-192.png"),
+    image: absoluteUrl("/icon-orange-192.png"),
     screenshot: appScreenImageUrls,
     publisher: { "@id": absoluteUrl("/#organization") },
     offers: {
@@ -196,7 +196,7 @@ export default function Home() {
           <span className="download-logo-frame" aria-hidden="true">
             <Image
               className="download-logo"
-              src="/icon-192.png"
+              src="/icon-orange-192.png"
               alt="Icône de l’application Débusk"
               width="96"
               height="96"

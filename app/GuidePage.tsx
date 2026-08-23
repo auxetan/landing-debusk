@@ -112,7 +112,7 @@ export function GuidePage({
         <Link className="guide-brand" href="/" aria-label="Débusk, accueil">
           <span className="guide-brand-icon" aria-hidden="true">
             <Image
-              src="/icon-192.png"
+              src="/icon-orange-192.png"
               alt="Logo Débusk"
               width={42}
               height={42}
