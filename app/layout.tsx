@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og.png",
+        url: "/og-v2.png",
         width: 1734,
         height: 907,
         alt: "Débusk, l’application bus d’Aix-en-Provence",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/og.png"],
+    images: ["/og-v2.png"],
   },
 };
 
