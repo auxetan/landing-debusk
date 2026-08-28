@@ -38,10 +38,22 @@ test("server-renders the finished Débusk landing page", async () => {
     html,
     /<link rel="canonical" href="https:\/\/www\.debusk\.fr\/"\s*\/>/i,
   );
+  assert.match(
+    html,
+    /<link rel="icon" href="https:\/\/www\.debusk\.fr\/debusk-favicon-192\.png" sizes="192x192" type="image\/png"\s*\/>/i,
+  );
+  assert.match(
+    html,
+    /<link rel="shortcut icon" href="https:\/\/www\.debusk\.fr\/debusk-favicon-192\.png"\s*\/>/i,
+  );
   assert.match(html, /"@type":"MobileApplication"/);
   assert.match(html, /"@id":"https:\/\/www\.debusk\.fr\/#application"/);
   assert.match(html, /"publisher":\{"@id":"https:\/\/www\.debusk\.fr\/#organization"\}/);
   assert.match(html, /"@type":"FAQPage"/);
+  assert.match(
+    html,
+    /"logo":\{"@type":"ImageObject","url":"https:\/\/www\.debusk\.fr\/debusk-logo\.png","contentUrl":"https:\/\/www\.debusk\.fr\/debusk-logo\.png","width":1024,"height":1024,"caption":"Débusk"\}/,
+  );
   assert.match(html, /Quelle application utiliser pour les bus à Aix-en-Provence/);
   assert.match(html, /Le bus à Aix\./);
   assert.match(html, /Nous contacter/);
@@ -644,7 +656,11 @@ test("publishes crawlable robots and sitemap endpoints", async () => {
     );
   }
 
-  await access(new URL("../public/og.png", import.meta.url));
+  await Promise.all([
+    access(new URL("../public/og.png", import.meta.url)),
+    access(new URL("../public/debusk-favicon-192.png", import.meta.url)),
+    access(new URL("../public/favicon.ico", import.meta.url)),
+  ]);
 });
 
 test("publishes a citeable Débusk identity, exact coverage and agent guidance", async () => {

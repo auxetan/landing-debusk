@@ -10,6 +10,7 @@ import "./globals.css";
 const title = "Débusk, l’app bus d’Aix — Partez au bon moment !";
 const description =
   "Débusk est l’application bus indépendante d’Aix-en-Provence pour consulter horaires, itinéraires, lignes, perturbations et suivi communautaire.";
+const faviconPath = "/debusk-favicon-192.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -25,9 +26,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon-orange-192.png", type: "image/png", sizes: "192x192" },
+      { url: faviconPath, type: "image/png", sizes: "192x192" },
+      { url: "/favicon.ico", type: "image/x-icon", sizes: "48x48" },
     ],
-    apple: [{ url: "/icon-orange-192.png", sizes: "192x192" }],
+    shortcut: faviconPath,
+    apple: [{ url: faviconPath, type: "image/png", sizes: "192x192" }],
   },
   robots: {
     index: true,
@@ -93,9 +96,11 @@ const websiteStructuredData = [
       "Éditeur du site et de l’application mobile indépendante Débusk, conçue pour les déplacements en bus à Aix-en-Provence.",
     logo: {
       "@type": "ImageObject",
-      url: SITE_URL + "/icon-orange-192.png",
-      width: 192,
-      height: 192,
+      url: SITE_URL + "/debusk-logo.png",
+      contentUrl: SITE_URL + "/debusk-logo.png",
+      width: 1024,
+      height: 1024,
+      caption: "Débusk",
     },
     email: "info@debusk.fr",
     areaServed: {
