@@ -64,6 +64,10 @@ test("server-renders the finished Débusk landing page", async () => {
   assert.match(html, /aide le suivant\./);
   assert.match(html, /sa position actualise le bus sur/);
   assert.match(html, /partage reste volontaire/);
+  assert.match(
+    html,
+    /<a[^>]+href="https:\/\/apps\.apple\.com\/us\/app\/d%C3%A9busk-bus-%C3%A0-aix-en-provence\/id6803274728"[^>]+target="_blank"[^>]+rel="noopener noreferrer"[^>]+data-site-store="app_store"/,
+  );
   assert.match(html, /Débusk affiche-t-il les horaires/);
   assert.match(html, /Puis-je acheter un abonnement scolaire/);
   assert.match(html, /Voir toutes les questions/);
@@ -207,7 +211,7 @@ test("keeps the hamburger contact form wired to the dedicated template", async (
   assert.match(dialog, /Patientez 30 secondes/);
 });
 
-test("opens an accessible store watchlist and emails the requested address", async () => {
+test("links to the App Store and keeps an accessible Google Play watchlist", async () => {
   const [stores, contact, css, information] = await Promise.all([
     readFile(new URL("../app/StoreButtons.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/contact.ts", import.meta.url), "utf8"),
@@ -218,6 +222,14 @@ test("opens an accessible store watchlist and emails the requested address", asy
   assert.match(stores, /^"use client";/);
   assert.match(stores, /L’app sera disponible très prochainement\./);
   assert.match(stores, /Bientôt sur/);
+  assert.match(stores, /Télécharger dans/);
+  assert.match(
+    stores,
+    /https:\/\/apps\.apple\.com\/us\/app\/d%C3%A9busk-bus-%C3%A0-aix-en-provence\/id6803274728/,
+  );
+  assert.match(stores, /href=\{store\.href\}/);
+  assert.match(stores, /target="_blank"/);
+  assert.match(stores, /rel="noopener noreferrer"/);
   assert.match(stores, /aria-haspopup="dialog"/);
   assert.match(stores, /role="dialog"/);
   assert.match(stores, /aria-modal="true"/);
@@ -236,7 +248,7 @@ test("opens an accessible store watchlist and emails the requested address", asy
   assert.match(stores, /source:\s*"Site Débusk — watchlist"/);
   assert.match(stores, /Patientez 30 secondes/);
   assert.match(contact, /info@debusk\.fr/);
-  assert.doesNotMatch(stores, /apps\.apple\.com|play\.google\.com/);
+  assert.doesNotMatch(stores, /play\.google\.com/);
   assert.doesNotMatch(stores, /fetch\("\/api\/waitlist"/);
   assert.match(css, /\.availability-dialog\s*\{/);
   assert.match(css, /backdrop-filter:\s*blur\(18px\)/);

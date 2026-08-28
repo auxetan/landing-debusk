@@ -16,14 +16,17 @@ import { CONTACT_EMAIL } from "./contact";
 const EMAILJS_PUBLIC_KEY = "mEs-8Cr-fd6idbZLs";
 const EMAILJS_SERVICE_ID = "service_7znwy0i";
 const EMAILJS_TEMPLATE_ID = "template_qp34ygq";
+const APP_STORE_URL =
+  "https://apps.apple.com/us/app/d%C3%A9busk-bus-%C3%A0-aix-en-provence/id6803274728";
 
 export const storeLinks = [
   {
     id: "app_store",
-    eyebrow: "Bientôt sur",
+    eyebrow: "Télécharger dans",
     label: "l’App Store",
     dialogLabel: "App Store",
     Icon: FaApple,
+    href: APP_STORE_URL,
   },
   {
     id: "google_play",
@@ -213,6 +216,38 @@ export function StoreButtons({ compact = false }: { compact?: boolean }) {
       >
         {storeLinks.map((store, index) => {
           const Icon = store.Icon;
+          const content = (
+            <>
+              <span className="store-icon" aria-hidden="true">
+                <Icon />
+              </span>
+              <span className="store-copy">
+                <span className="store-eyebrow">{store.eyebrow}</span>
+                <span className="store-name">{store.label}</span>
+              </span>
+              <span className="store-arrow" aria-hidden="true">
+                →
+              </span>
+            </>
+          );
+
+          if ("href" in store) {
+            return (
+              <a
+                className={`store-button ${index === 0 ? "store-button-primary" : ""}`}
+                href={store.href}
+                key={store.label}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Télécharger Débusk dans ${store.label} (nouvel onglet)`}
+                data-cursor-theme={index === 0 ? "dark" : undefined}
+                data-site-event="store_click"
+                data-site-store={store.id}
+              >
+                {content}
+              </a>
+            );
+          }
 
           return (
             <button
@@ -228,16 +263,7 @@ export function StoreButtons({ compact = false }: { compact?: boolean }) {
               data-site-event="store_click"
               data-site-store={store.id}
             >
-              <span className="store-icon" aria-hidden="true">
-                <Icon />
-              </span>
-              <span className="store-copy">
-                <span className="store-eyebrow">{store.eyebrow}</span>
-                <span className="store-name">{store.label}</span>
-              </span>
-              <span className="store-arrow" aria-hidden="true">
-                →
-              </span>
+              {content}
             </button>
           );
         })}
