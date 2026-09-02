@@ -781,10 +781,13 @@ h2 span {
 
 .store-options {
   width: min(100%, 460px);
+  max-width: 100%;
+  min-width: 0;
 }
 
 .store-actions {
   display: flex;
+  max-width: 100%;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: clamp(34px, 4.7vh, 52px);
@@ -2536,10 +2539,21 @@ h2 span {
   }
 
   .store-button {
+    flex: none;
+    width: 100%;
     grid-template-columns: 27px 1fr 27px;
     gap: 8px;
     padding-right: 10px;
     padding-left: 11px;
+  }
+
+  .store-options,
+  .store-actions {
+    width: 100%;
+  }
+
+  .store-actions {
+    flex-direction: column;
   }
 
   .store-icon {
