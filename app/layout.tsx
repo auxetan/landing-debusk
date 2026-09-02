@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { CustomCursor } from "./CustomCursor";
 import { SiteAnalytics } from "./SiteAnalytics";
 import { SITE_NAME, SITE_URL } from "./seo";
@@ -130,6 +131,7 @@ export default function RootLayout({
         </Suspense>
         <WebVitals />
         <CustomCursor />
+        <Analytics />
       </body>
     </html>
   );
