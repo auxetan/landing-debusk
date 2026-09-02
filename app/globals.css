@@ -779,6 +779,10 @@ h2 span {
   white-space: nowrap;
 }
 
+.store-options {
+  width: min(100%, 460px);
+}
+
 .store-actions {
   display: flex;
   flex-wrap: wrap;
@@ -852,6 +856,33 @@ h2 span {
   border: 1px solid currentColor;
   border-radius: 50%;
   font-size: 15px;
+  transition: transform 180ms ease;
+}
+
+.web-app-button {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 11px 18px;
+  border: 1px solid rgba(17, 17, 19, 0.16);
+  border-radius: 16px;
+  background: rgba(251, 250, 246, 0.52);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.web-app-arrow {
+  font-size: 17px;
   transition: transform 180ms ease;
 }
 
@@ -1073,6 +1104,41 @@ h2 span {
   text-underline-offset: 3px;
 }
 
+.availability-web-option {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(17, 17, 19, 0.12);
+}
+
+.availability-web-option p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.availability-web-link {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 11px 18px;
+  border: 1px solid var(--ink);
+  border-radius: 16px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 14px;
+  font-weight: 720;
+  text-align: center;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
 .availability-success {
   display: grid;
   min-height: 390px;
@@ -1114,6 +1180,11 @@ h2 span {
     color 180ms ease,
     border-color 180ms ease,
     background 180ms ease;
+}
+
+.availability-success .availability-web-link {
+  width: min(100%, 280px);
+  margin-top: 12px;
 }
 
 .route-art {
@@ -1928,6 +1999,8 @@ h2 span {
 .availability-form-row button:focus-visible,
 .availability-success button:focus-visible,
 .availability-privacy a:focus-visible,
+.availability-web-link:focus-visible,
+.web-app-button:focus-visible,
 .store-button:focus-visible,
 .showcase-arrow:focus-visible,
 .showcase-dots button:focus-visible,
@@ -1982,6 +2055,13 @@ h2 span {
     color: var(--paper);
   }
 
+  .availability-web-link:hover {
+    border-color: var(--signal);
+    background: var(--signal);
+    color: var(--paper);
+    transform: translateY(-2px);
+  }
+
   .contact-submit:hover {
     border-color: var(--signal);
     background: var(--signal);
@@ -2003,6 +2083,18 @@ h2 span {
   }
 
   .store-button:hover .store-arrow {
+    transform: translateX(3px);
+  }
+
+  .web-app-button:hover {
+    border-color: var(--signal);
+    background: var(--signal);
+    color: var(--paper);
+    box-shadow: 0 14px 32px rgba(255, 79, 47, 0.18);
+    transform: translateY(-3px);
+  }
+
+  .web-app-button:hover .web-app-arrow {
     transform: translateX(3px);
   }
 
@@ -3272,6 +3364,16 @@ h2 span {
   flex-direction: column;
 }
 
+.guide-download .store-options {
+  width: 224px;
+}
+
+.guide-download .web-app-button {
+  border-color: rgba(251, 250, 246, 0.34);
+  background: rgba(251, 250, 246, 0.04);
+  color: var(--paper);
+}
+
 .guide-download .store-button:not(.store-button-primary) {
   border-color: rgba(251, 250, 246, 0.34);
   color: var(--paper);
@@ -3503,6 +3605,10 @@ h2 span {
   .guide-download .store-actions {
     width: min(100%, 480px);
     flex-direction: row;
+  }
+
+  .guide-download .store-options {
+    width: min(100%, 480px);
   }
 
   .topic-overview {

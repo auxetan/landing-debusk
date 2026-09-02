@@ -235,6 +235,11 @@ test("links to the App Store and keeps an accessible Google Play watchlist", asy
   assert.match(stores, /L’app sera disponible très prochainement\./);
   assert.match(stores, /Bientôt sur/);
   assert.match(stores, /Télécharger dans/);
+  assert.match(stores, /const WEB_APP_URL = "https:\/\/app\.debusk\.fr"/);
+  assert.equal((stores.match(/Accéder à l’app web/g) ?? []).length, 3);
+  assert.match(stores, /En attendant la version Android/);
+  assert.match(stores, /className="web-app-button" href=\{WEB_APP_URL\}/);
+  assert.match(stores, /className="availability-web-link" href=\{WEB_APP_URL\}/);
   assert.match(
     stores,
     /https:\/\/apps\.apple\.com\/us\/app\/d%C3%A9busk-bus-%C3%A0-aix-en-provence\/id6803274728/,
@@ -265,6 +270,9 @@ test("links to the App Store and keeps an accessible Google Play watchlist", asy
   assert.match(css, /\.availability-dialog\s*\{/);
   assert.match(css, /backdrop-filter:\s*blur\(18px\)/);
   assert.match(css, /\.availability-form-row\s*\{/);
+  assert.match(css, /\.web-app-button\s*\{/);
+  assert.match(css, /\.availability-web-option\s*\{/);
+  assert.match(css, /\.availability-web-link\s*\{/);
   assert.match(information, /même\s*\n?\s*service EmailJS/);
   assert.match(information, /catégorie\s*\n?\s*« Watchlist »/);
 });

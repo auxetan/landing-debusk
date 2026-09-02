@@ -18,6 +18,7 @@ const EMAILJS_SERVICE_ID = "service_7znwy0i";
 const EMAILJS_TEMPLATE_ID = "template_qp34ygq";
 const APP_STORE_URL =
   "https://apps.apple.com/us/app/d%C3%A9busk-bus-%C3%A0-aix-en-provence/id6803274728";
+const WEB_APP_URL = "https://app.debusk.fr";
 
 export const storeLinks = [
   {
@@ -210,63 +211,72 @@ export function StoreButtons({ compact = false }: { compact?: boolean }) {
 
   return (
     <>
-      <div
-        className={`store-actions ${compact ? "store-actions-compact" : ""}`}
-        aria-label="Disponibilité de l’application Débusk"
-      >
-        {storeLinks.map((store, index) => {
-          const Icon = store.Icon;
-          const content = (
-            <>
-              <span className="store-icon" aria-hidden="true">
-                <Icon />
-              </span>
-              <span className="store-copy">
-                <span className="store-eyebrow">{store.eyebrow}</span>
-                <span className="store-name">{store.label}</span>
-              </span>
-              <span className="store-arrow" aria-hidden="true">
-                →
-              </span>
-            </>
-          );
+      <div className={`store-options ${compact ? "store-options-compact" : ""}`}>
+        <div
+          className={`store-actions ${compact ? "store-actions-compact" : ""}`}
+          aria-label="Disponibilité de l’application Débusk"
+        >
+          {storeLinks.map((store, index) => {
+            const Icon = store.Icon;
+            const content = (
+              <>
+                <span className="store-icon" aria-hidden="true">
+                  <Icon />
+                </span>
+                <span className="store-copy">
+                  <span className="store-eyebrow">{store.eyebrow}</span>
+                  <span className="store-name">{store.label}</span>
+                </span>
+                <span className="store-arrow" aria-hidden="true">
+                  →
+                </span>
+              </>
+            );
 
-          if ("href" in store) {
+            if ("href" in store) {
+              return (
+                <a
+                  className={`store-button ${index === 0 ? "store-button-primary" : ""}`}
+                  href={store.href}
+                  key={store.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Télécharger Débusk dans ${store.label} (nouvel onglet)`}
+                  data-cursor-theme={index === 0 ? "dark" : undefined}
+                  data-site-event="store_click"
+                  data-site-store={store.id}
+                >
+                  {content}
+                </a>
+              );
+            }
+
             return (
-              <a
+              <button
                 className={`store-button ${index === 0 ? "store-button-primary" : ""}`}
-                href={store.href}
+                type="button"
                 key={store.label}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Télécharger Débusk dans ${store.label} (nouvel onglet)`}
+                onClick={(event) => openDialog(store.id, event)}
+                aria-label={`${store.eyebrow} ${store.label} — être prévenu de sa sortie`}
+                aria-haspopup="dialog"
+                aria-controls="store-availability-dialog"
+                aria-expanded={activeStoreId === store.id}
                 data-cursor-theme={index === 0 ? "dark" : undefined}
                 data-site-event="store_click"
                 data-site-store={store.id}
               >
                 {content}
-              </a>
+              </button>
             );
-          }
+          })}
+        </div>
 
-          return (
-            <button
-              className={`store-button ${index === 0 ? "store-button-primary" : ""}`}
-              type="button"
-              key={store.label}
-              onClick={(event) => openDialog(store.id, event)}
-              aria-label={`${store.eyebrow} ${store.label} — être prévenu de sa sortie`}
-              aria-haspopup="dialog"
-              aria-controls="store-availability-dialog"
-              aria-expanded={activeStoreId === store.id}
-              data-cursor-theme={index === 0 ? "dark" : undefined}
-              data-site-event="store_click"
-              data-site-store={store.id}
-            >
-              {content}
-            </button>
-          );
-        })}
+        <a className="web-app-button" href={WEB_APP_URL}>
+          <span>Accéder à l’app web</span>
+          <span className="web-app-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
       </div>
 
       {activeStore && typeof document !== "undefined"
@@ -327,6 +337,10 @@ export function StoreButtons({ compact = false }: { compact?: boolean }) {
                     >
                       Fermer
                     </button>
+                    <a className="availability-web-link" href={WEB_APP_URL}>
+                      Accéder à l’app web
+                      <span aria-hidden="true">→</span>
+                    </a>
                   </div>
                 ) : (
                   <>
@@ -403,6 +417,17 @@ export function StoreButtons({ compact = false }: { compact?: boolean }) {
                         </Link>
                       </p>
                     </form>
+
+                    <div className="availability-web-option">
+                      <p>
+                        En attendant la version Android, utilisez Débusk dès
+                        maintenant dans votre navigateur.
+                      </p>
+                      <a className="availability-web-link" href={WEB_APP_URL}>
+                        Accéder à l’app web
+                        <span aria-hidden="true">→</span>
+                      </a>
+                    </div>
                   </>
                 )}
               </section>
