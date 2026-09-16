@@ -98,13 +98,34 @@ export default function InformationsPage() {
             </p>
             <p>
               Si les notifications sont activées, Débusk enregistre dans
-              Supabase un identifiant aléatoire d’installation, le token APNs
-              fourni par Apple, la plateforme, l’environnement technique et les
-              préférences nécessaires à l’envoi des alertes demandées. Ce token
-              n’est ni un identifiant publicitaire ni un moyen de suivi entre
-              applications. Il est désactivé ou supprimé lors de la
-              désactivation, de la déconnexion, de la suppression du compte ou
-              de son invalidation par Apple.
+              Supabase un identifiant aléatoire d’installation, le token fourni
+              par Apple Push Notification service (APNs) sur les appareils Apple
+              ou Firebase Cloud Messaging (FCM) de Google sur Android, la
+              plateforme, l’environnement technique et les préférences
+              nécessaires à l’envoi des alertes demandées. Ce token n’est pas
+              un identifiant publicitaire. Il est désactivé ou supprimé du
+              service Débusk lors de la désactivation des notifications, de la
+              déconnexion, de la suppression du compte ou de son invalidation
+              par Apple ou Google.
+            </p>
+            <p>
+              Sur Android, Firebase Cloud Messaging et son composant
+              Installations peuvent aussi transmettre à Google un identifiant
+              d’installation et des informations techniques sur l’application
+              et l’appareil pour fournir et maintenir le service. Cette
+              initialisation peut intervenir indépendamment de
+              l’autorisation d’afficher des notifications dans les anciennes
+              versions Android. Dans la version Android avec choix d’âge, ces
+              composants restent désactivés en mode consultation. Pour le détail des
+              données traitées par ces composants, consultez la{" "}
+              <a
+                href="https://firebase.google.com/docs/android/play-data-disclosure?hl=fr"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                documentation de confidentialité Firebase
+              </a>
+              .
             </p>
             <p>
               Mapbox fournit les cartes et peut recevoir les requêtes nécessaires
@@ -118,10 +139,36 @@ export default function InformationsPage() {
               disponible.
             </p>
             <p>
+              La recherche d’adresses des fonctions complètes utilise les
+              services de géocodage de la Base Adresse Nationale ou Photon.
+              Ils reçoivent les termes recherchés et, lorsque la recherche
+              utilise votre position, les coordonnées de proximité utiles aux
+              résultats. Les contributions peuvent aussi afficher le pseudonyme
+              choisi dans les espaces communautaires, sans afficher votre
+              adresse e-mail.
+            </p>
+            <p>
+              <strong>Public jeune sur Android.</strong> La version avec choix
+              d’âge propose une consultation des lignes, arrêts et horaires
+              embarqués sans compte, sans géolocalisation et sans chargement de
+              carte externe. Ce mode est proposé aux moins de 15 ans et aux
+              personnes qui préfèrent ne pas indiquer leur catégorie d’âge.
+              Avant ce choix, seul l’écran de sélection est chargé, sans les
+              services connectés de l’application. La catégorie choisie reste sur l’appareil ;
+              aucune date de naissance n’est demandée. Les fonctions de compte,
+              les contributions et les notifications ne sont pas proposées
+              dans ce mode.
+            </p>
+            <p>
               Le suivi de trajet reste volontaire. Aucun nom n’apparaît sur la
               carte et le partage s’arrête lorsque vous touchez « Je descends »
               ou quittez le mode conduite. Le compte et les données synchronisées
               peuvent être supprimés directement depuis Profil ▸ Zone de danger.
+              Vous pouvez aussi{" "}
+              <Link href="/suppression-compte">
+                demander la suppression du compte et de ses données par e-mail
+              </Link>
+              , sans réinstaller l’application.
             </p>
           </div>
         </section>
