@@ -82,10 +82,14 @@ export default function InformationsPage() {
             <AnalyticsPrivacyControl />
             <p>
               <strong>Dans l’application mobile, le compte reste facultatif.</strong>{" "}
-              Lors d’une connexion par e-mail ou d’une connexion OAuth via Apple,
-              Supabase et Apple traitent l’adresse e-mail, le nom d’affichage,
+              Lors d’une connexion volontaire par e-mail, avec Apple ou avec
+              Google, Supabase et, selon le choix effectué, Apple ou Google
+              traitent l’adresse e-mail, les informations de profil de base,
               l’identifiant technique de compte et les données de session
               nécessaires à l’authentification, selon leurs propres politiques.
+              La connexion Google demande uniquement l’identifiant, l’adresse
+              e-mail et le profil de base ; elle ne donne pas accès à vos
+              messages, contacts ou fichiers Google.
             </p>
             <p>
               Les lignes et arrêts favoris, le domicile, le travail, les lieux
